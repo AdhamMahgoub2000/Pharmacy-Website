@@ -1,99 +1,104 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" ng-app="pharmacyApp">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PharmaCare</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PharmaCare</title>
 
-  <!-- Google Fonts (from Adam) -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
 
-  <!-- Bootstrap Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="assets/css/adhamCSS.css" />
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+    <script src="app.js"></script>
+  </head>
 
-  <!-- custom CSS (always last) -->
-  <link rel="stylesheet" href="assets/css/style.css"/>
-</head>
+  <body>
+    <div ng-include="'views/navbar.html'" ng-if="currentUser"></div>
 
-<body>
+    <div
+      class="main-content"
+      ng-class="{'with-sidebar': currentUser && currentUser.role === 'admin'}"
+    >
+      <div
+        ng-include="'views/sidebar.html'"
+        ng-if="currentUser && currentUser.role === 'admin'"
+      ></div>
 
-  <!-- Navbar (shows only when logged in) -->
-  <div ng-include="'views/navbar.html'" ng-if="currentUser"></div>
-
-  <!-- Main Layout -->
-  <div class="main-content" ng-class="{'with-sidebar': currentUser && currentUser.role === 'admin'}">
-
-    <!-- Sidebar (admin only) -->
-    <div ng-include="'views/sidebar.html'" ng-if="currentUser && currentUser.role === 'admin'"></div>
-
-    <!-- Pages load here -->
-    <div class="content-area">
-      <ng-view></ng-view>
+      <div class="content-area">
+        <ng-view></ng-view>
+      </div>
     </div>
 
-  </div>
+    <!-- Footer (shows only when logged in) -->
+    <footer-directive ng-if="currentUser"></footer-directive>
 
-  <!-- Footer (shows only when logged in) -->
-  <footer-directive ng-if="currentUser"></footer-directive>
+    <!-- ===================== -->
+    <!-- JS Libraries          -->
+    <!-- ===================== -->
 
-  <!-- ===================== -->
-  <!-- JS Libraries          -->
-  <!-- ===================== -->
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <!-- Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- AngularJS -->
 
-  <!-- AngularJS -->
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- ===================== -->
+    <!-- App Core              -->
+    <!-- ===================== -->
 
-  <!-- ===================== -->
-  <!-- App Core              -->
-  <!-- ===================== -->
-  <script src="app.js"></script>
+    <!-- ===================== -->
+    <!-- Services              -->
+    <!-- ===================== -->
+    <script src="services/supabase.service.js"></script>
+    <script src="services/auth.service.js"></script>
+    <script src="services/medicines.service.js"></script>
+    <script src="services/customers.service.js"></script>
+    <script src="services/invoice.service.js"></script>
+    <script src="services/orders.service.js"></script>
+    <script src="services/users.service.js"></script>
 
-  <!-- ===================== -->
-  <!-- Services              -->
-  <!-- ===================== -->
-  <script src="services/supabase.service.js"></script>
-  <script src="services/auth.service.js"></script>
-  <script src="services/medicines.service.js"></script>
-  <script src="services/customers.service.js"></script>
-  <script src="services/invoice.service.js"></script>
-  <script src="services/orders.service.js"></script>
-  <script src="services/users.service.js"></script>
+    <!-- ===================== -->
+    <!-- Directives            -->
+    <!-- ===================== -->
+    <script src="directives/footer.directive.js"></script>
+    <script src="directives/navbar.directive.js"></script>
+    <script src="directives/sidebar.directive.js"></script>
+    <script src="directives/medicine-card.directive.js"></script>
 
-  <!-- ===================== -->
-  <!-- Directives            -->
-  <!-- ===================== -->
-  <script src="directives/footer.directive.js"></script>
-  <script src="directives/navbar.directive.js"></script>
-  <script src="directives/sidebar.directive.js"></script>
-  <script src="directives/medicine-card.directive.js"></script>
-
-  <!-- ===================== -->
-  <!-- Controllers           -->
-  <!-- ===================== -->
-  <script src="controllers/auth.controller.js"></script>
-  <script src="controllers/dashboard.controller.js"></script>
-  <script src="controllers/medicines.controller.js"></script>
-  <script src="controllers/customers.controller.js"></script>
-  <script src="controllers/invoice.controller.js"></script>
-  <script src="controllers/users.controller.js"></script>
-  <script src="controllers/orders-history.controller.js"></script>
-  <script src="controllers/shop.controller.js"></script>
-  <script src="controllers/confirmation.controller.js"></script>
-  <script src="controllers/account.controller.js"></script>
-
-</body>
+    <!-- ===================== -->
+    <!-- Controllers           -->
+    <!-- ===================== -->
+    <script src="controllers/auth.controller.js"></script>
+    <script src="controllers/dashboard.controller.js"></script>
+    <script src="controllers/medicines.controller.js"></script>
+    <script src="controllers/customers.controller.js"></script>
+    <script src="controllers/invoice.controller.js"></script>
+    <script src="controllers/users.controller.js"></script>
+    <script src="controllers/orders-history.controller.js"></script>
+    <script src="controllers/shop.controller.js"></script>
+    <script src="controllers/confirmation.controller.js"></script>
+    <script src="controllers/register.controller.js"></script>
+    <script src="controllers/auth.controller.js"></script>
+  </body>
 </html>

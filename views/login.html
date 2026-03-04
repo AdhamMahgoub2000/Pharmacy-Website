@@ -1,0 +1,183 @@
+<section class="auth-section d-flex justify-content-center align-items-center">
+  <div class="auth-card">
+    <!-- Blue Header -->
+    <div class="auth-header">
+      <div class="lock-circle">
+        <i class="fas fa-lock"></i>
+      </div>
+    </div>
+
+    <!-- Card Body -->
+    <div class="auth-body">
+      <h3 class="auth-title text-center">Welcome Back</h3>
+      <p class="auth-subtitle text-center">
+        Access your pharmacy management dashboard
+      </p>
+
+      <!-- Login Form -->
+      <form
+        name="loginForm"
+        novalidate
+        ng-submit="login()"
+        ng-show="!showResetForm"
+      >
+        <!-- Username -->
+        <div class="form-group">
+          <label>Username</label>
+          <input
+            type="text"
+            name="username"
+            class="form-control"
+            placeholder="Enter your username"
+            ng-model="user.username"
+            required
+            ng-class="{'is-invalid': loginForm.username.$touched && loginForm.username.$invalid}"
+          />
+          <div
+            class="error-text"
+            ng-show="loginForm.username.$touched && loginForm.username.$invalid"
+          >
+            <span ng-show="loginForm.username.$error.required"
+              >Username is required</span
+            >
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <div class="d-flex justify-content-between">
+            <label>Password</label>
+            <a
+              href="javascript:void(0);"
+              class="forgot-link"
+              ng-click="showResetForm = true"
+            >
+              Forgot password?
+            </a>
+          </div>
+
+          <input
+            type="password"
+            name="password"
+            class="form-control"
+            placeholder="Enter your password"
+            ng-model="user.password"
+            required
+            ng-minlength="8"
+            ng-class="{'is-invalid': loginForm.password.$touched && loginForm.password.$invalid}"
+          />
+          <div
+            class="error-text"
+            ng-show="loginForm.password.$touched && loginForm.password.$invalid"
+          >
+            <span ng-show="loginForm.password.$error.required"
+              >Password is required</span
+            >
+            <span ng-show="loginForm.password.$error.minlength"
+              >Password must be at least 8 characters</span
+            >
+          </div>
+        </div>
+
+        <!-- Remember -->
+        <div class="form-check mb-3">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="remember"
+            ng-model="user.remember"
+          />
+          <label class="form-check-label" for="remember"
+            >Keep me signed in</label
+          >
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          class="btn btn-primary w-100"
+          style="background-color: var(--orange-color); border: none"
+          ng-disabled="loginForm.$invalid || loading"
+        >
+          <span ng-if="!loading">Sign In to Dashboard →</span>
+          <span ng-if="loading">Logging in...</span>
+        </button>
+        <div class="text-center mt-3">
+          New here? <a ng-href="#!/register">Sign up</a>
+        </div>
+
+        <!-- Supabase Login Error -->
+        <div class="alert alert-danger mt-3 text-center" ng-if="loginError">
+          {{ loginError }}
+        </div>
+      </form>
+
+      <!-- Reset Password Form -->
+      <div ng-show="showResetForm">
+        <h3 class="auth-title text-center mt-4">Reset Your Password</h3>
+
+        <form name="resetForm" novalidate ng-submit="resetPassword()">
+          <div class="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              name="resetEmail"
+              class="form-control"
+              placeholder="Enter your email"
+              ng-model="resetData.email"
+              required
+              ng-class="{'is-invalid': resetForm.resetEmail.$touched && resetForm.resetEmail.$invalid}"
+            />
+            <div
+              class="error-text"
+              ng-show="resetForm.resetEmail.$touched && resetForm.resetEmail.$invalid"
+            >
+              <span ng-show="resetForm.resetEmail.$error.required"
+                >Email is required</span
+              >
+              <span ng-show="resetForm.resetEmail.$error.email"
+                >Invalid email format</span
+              >
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary w-100"
+            style="background-color: var(--orange-color); border: none"
+            ng-disabled="resetForm.$invalid || resetLoading"
+          >
+            <span ng-if="!resetLoading">Send Reset Link</span>
+            <span ng-if="resetLoading">Sending...</span>
+          </button>
+
+          <div
+            class="alert alert-success mt-3 text-center"
+            ng-if="resetSuccess"
+          >
+            {{ resetSuccess }}
+          </div>
+
+          <div class="alert alert-danger mt-3 text-center" ng-if="resetError">
+            {{ resetError }}
+          </div>
+
+          <div class="text-center mt-3">
+            <a
+              href=""
+              ng-click="showResetForm = false"
+              style="color: var(--blue-color); cursor: pointer"
+            >
+              Back to login
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="auth-footer text-center mt-3">
+      🔒 Secure encrypted connection
+    </div>
+  </div>
+</section>
