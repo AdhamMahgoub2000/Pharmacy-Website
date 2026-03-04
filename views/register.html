@@ -59,24 +59,6 @@
         </div>
 
         <!-- Last Name -->
-        <div class="form-group mb-3">
-          <input
-            type="text"
-            name="lname"
-            class="form-control"
-            placeholder="Last Name"
-            ng-model="user.lname"
-            required
-            ng-minlength="2"
-            ng-class="{'is-invalid': registerForm.lname.$touched && registerForm.lname.$invalid}"
-          />
-          <div
-            class="error-text"
-            ng-show="registerForm.lname.$touched && registerForm.lname.$invalid"
-          >
-            Minimum 2 characters required
-          </div>
-        </div>
 
         <div class="form-group mb-3">
           <input
@@ -94,6 +76,24 @@
             ng-show="registerForm.phone.$touched && registerForm.phone.$invalid"
           >
             Enter valid phone number
+          </div>
+        </div>
+        <div class="form-group mb-3">
+          <input
+            type="text"
+            name="address"
+            class="form-control"
+            placeholder="Address"
+            ng-model="user.address"
+            required
+            ng-minlength="2"
+            ng-class="{'is-invalid': registerForm.address.$touched && registerForm.address.$invalid}"
+          />
+          <div
+            class="error-text"
+            ng-show="registerForm.address.$touched && registerForm.address.$invalid"
+          >
+            Minimum 2 characters required
           </div>
         </div>
 
