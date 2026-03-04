@@ -6,8 +6,8 @@ angular.module('pharmacyApp', ['ngRoute'])
 
     // ─── Public ───────────────────────────────
     .when('/login', {
-      templateUrl: 'views/login.html'
-    //   controller: 'AuthController'
+      templateUrl: 'views/login.html',
+      controller: 'AuthController'
     })    
     .when('/register', {
       templateUrl: 'views/register.html',

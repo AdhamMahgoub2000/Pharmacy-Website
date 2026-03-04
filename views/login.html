@@ -23,22 +23,22 @@
       >
         <!-- Username -->
         <div class="form-group">
-          <label>Username</label>
+          <label>Email</label>
           <input
             type="text"
-            name="username"
+            name="email"
             class="form-control"
-            placeholder="Enter your username"
-            ng-model="user.username"
+            placeholder="Enter your email"
+            ng-model="user.email"
             required
-            ng-class="{'is-invalid': loginForm.username.$touched && loginForm.username.$invalid}"
+            ng-class="{'is-invalid': loginForm.email.$touched && loginForm.email.$invalid}"
           />
           <div
             class="error-text"
-            ng-show="loginForm.username.$touched && loginForm.username.$invalid"
+            ng-show="loginForm.email.$touched && loginForm.email.$invalid"
           >
-            <span ng-show="loginForm.username.$error.required"
-              >Username is required</span
+            <span ng-show="loginForm.email.$error.required"
+              >Email is required</span
             >
           </div>
         </div>

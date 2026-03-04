@@ -58,7 +58,6 @@
           </div>
         </div>
 
-        <!-- Last Name -->
 
         <div class="form-group mb-3">
           <input
@@ -163,8 +162,8 @@
           style="background-color: var(--orange-color); border: none"
           ng-disabled="registerForm.$invalid || user.password !== user.confirmPassword || loading"
         >
-          <span ng-if="!loading">Register</span>
-          <span ng-if="loading">Creating Account...</span>
+          <span ng-show="!loading">Register</span>
+          <span ng-show="loading">Creating Account...</span>
         </button>
 
         <!-- Error Message -->
