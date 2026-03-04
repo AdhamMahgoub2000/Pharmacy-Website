@@ -1,0 +1,200 @@
+<section class="auth-section d-flex justify-content-center align-items-center">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="lock-circle">
+        <i class="fas fa-lock"></i>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="auth-body" ng-show="!registrationSuccess">
+      <h3 class="auth-title text-center">Create Your Account</h3>
+      <p class="auth-subtitle text-center mb-3">
+        Access your pharmacy management dashboard
+      </p>
+
+      <form name="registerForm" novalidate ng-submit="register()">
+        <!-- Email -->
+        <div class="form-group mb-3">
+          <input
+            type="email"
+            name="email"
+            class="form-control"
+            placeholder="Email Address"
+            ng-model="user.email"
+            required
+            ng-class="{'is-invalid': registerForm.email.$touched && registerForm.email.$invalid}"
+          />
+          <div
+            class="error-text"
+            ng-show="registerForm.email.$touched && registerForm.email.$invalid"
+          >
+            <span ng-show="registerForm.email.$error.required"
+              >Email is required</span
+            >
+            <span ng-show="registerForm.email.$error.email"
+              >Invalid email format</span
+            >
+          </div>
+        </div>
+
+        <!-- First Name -->
+        <div class="form-group mb-3">
+          <input
+            type="text"
+            name="fname"
+            class="form-control"
+            placeholder="First Name"
+            ng-model="user.fname"
+            required
+            ng-minlength="2"
+            ng-class="{'is-invalid': registerForm.fname.$touched && registerForm.fname.$invalid}"
+          />
+          <div
+            class="error-text"
+            ng-show="registerForm.fname.$touched && registerForm.fname.$invalid"
+          >
+            Minimum 2 characters required
+          </div>
+        </div>
+
+        <!-- Last Name -->
+        <div class="form-group mb-3">
+          <input
+            type="text"
+            name="lname"
+            class="form-control"
+            placeholder="Last Name"
+            ng-model="user.lname"
+            required
+            ng-minlength="2"
+            ng-class="{'is-invalid': registerForm.lname.$touched && registerForm.lname.$invalid}"
+          />
+          <div
+            class="error-text"
+            ng-show="registerForm.lname.$touched && registerForm.lname.$invalid"
+          >
+            Minimum 2 characters required
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <input
+            type="tel"
+            name="phone"
+            class="form-control"
+            placeholder="Phone Number"
+            ng-model="user.phone"
+            required
+            ng-pattern="/^[0-9]{10,15}$/"
+            ng-class="{'is-invalid': registerForm.phone.$touched && registerForm.phone.$invalid}"
+          />
+          <div
+            class="error-text"
+            ng-show="registerForm.phone.$touched && registerForm.phone.$invalid"
+          >
+            Enter valid phone number
+          </div>
+        </div>
+
+        <!-- Date of Birth -->
+        <div class="form-group mb-3">
+          <label>Date of Birth</label>
+          <input
+            type="date"
+            name="dob"
+            class="form-control"
+            ng-model="user.dob"
+            max="{{maxDate}}"
+            required
+            ng-class="{'is-invalid': registerForm.dob.$touched && registerForm.dob.$invalid}"
+          />
+          <div
+            class="error-text"
+            ng-show="registerForm.dob.$touched && registerForm.dob.$invalid"
+          >
+            Select a valid date
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group mb-3">
+          <input
+            type="password"
+            name="password"
+            class="form-control"
+            placeholder="Password"
+            ng-model="user.password"
+            required
+            ng-minlength="8"
+            ng-class="{'is-invalid': registerForm.password.$touched && registerForm.password.$invalid}"
+          />
+          <div
+            class="error-text"
+            ng-show="registerForm.password.$touched && registerForm.password.$error.minlength"
+          >
+            Password must be at least 8 characters
+          </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group mb-3">
+          <input
+            type="password"
+            name="confirmPassword"
+            class="form-control"
+            placeholder="Confirm Password"
+            ng-model="user.confirmPassword"
+            required
+            ng-class="{'is-invalid': registerForm.confirmPassword.$touched && user.password !== user.confirmPassword}"
+          />
+          <div
+            class="error-text"
+            ng-show="registerForm.confirmPassword.$touched && user.password !== user.confirmPassword"
+          >
+            Passwords do not match
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          class="btn btn-primary w-100"
+          style="background-color: var(--orange-color); border: none"
+          ng-disabled="registerForm.$invalid || user.password !== user.confirmPassword || loading"
+        >
+          <span ng-if="!loading">Register</span>
+          <span ng-if="loading">Creating Account...</span>
+        </button>
+
+        <!-- Error Message -->
+        <div class="alert alert-danger mt-3 text-center" ng-if="registerError">
+          {{ registerError }}
+        </div>
+
+        <div class="text-center mt-3">
+          Already have an account? <a ng-href="#!/login">Login</a>
+        </div>
+      </form>
+    </div>
+
+    <!-- Success Message -->
+    <div ng-show="registrationSuccess" class="text-center mt-4">
+      <div class="mb-4">
+        <i
+          class="fas fa-envelope-open-text text-success"
+          style="font-size: 4rem"
+        ></i>
+      </div>
+      <h3 class="mb-3">Check your email!</h3>
+      <p class="text-muted">
+        Registration successful. A confirmation link has been sent to
+        <strong>{{ user.email }}</strong>.
+      </p>
+      <p class="text-muted" style="font-size: 0.9em">
+        Please verify your account before logging in.
+      </p>
+      <a ng-href="#!/login" class="btn btn-success mt-3 w-100">Go to Login</a>
+    </div>
+  </div>
+</section>

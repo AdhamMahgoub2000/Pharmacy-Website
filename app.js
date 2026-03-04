@@ -6,8 +6,12 @@ angular.module('pharmacyApp', ['ngRoute'])
 
     // ─── Public ───────────────────────────────
     .when('/login', {
-      templateUrl: 'views/login.html',
-      controller: 'AuthController'
+      templateUrl: 'views/login.html'
+    //   controller: 'AuthController'
+    })    
+    .when('/register', {
+      templateUrl: 'views/register.html',
+      controller: 'RegisterController'
     })
 
     // ─── Customer Routes ──────────────────────
@@ -61,12 +65,12 @@ angular.module('pharmacyApp', ['ngRoute'])
 
     // ─── TEMPORARY: Fake customer login for testing ───
     // we need to delete once login page is ready 
-    $rootScope.currentUser = {
-        id: '123',
-        name: 'Youmna',
-        email: 'youmna@test.com',
-        role: 'customer'
-    };
+    // $rootScope.currentUser = {
+    //     id: '123',
+    //     name: 'Youmna',
+    //     email: 'youmna@test.com',
+    //     role: 'customer'
+    // };
     // ─────────────────────────────────────────────────
 
     const customerPages = ['/shop', '/confirmation', '/orders', '/account'];
@@ -76,25 +80,25 @@ angular.module('pharmacyApp', ['ngRoute'])
       const user = $rootScope.currentUser;
       const path = $location.path();
 
-      if (!user && path !== '/login') {
-        $location.path('/login');
-        return;
-      }
+    //   if (!user && path !== '/login') {
+    //     $location.path('/login');
+    //     return;
+    //   }
 
-      if (user && user.role === 'customer' && adminPages.includes(path)) {
-        $location.path('/shop');
-        return;
-      }
+    //   if (user && user.role === 'customer' && adminPages.includes(path)) {
+    //     $location.path('/shop');
+    //     return;
+    //   }
 
-      if (user && user.role === 'admin' && customerPages.includes(path)) {
-        $location.path('/dashboard');
-        return;
-      }
+    //   if (user && user.role === 'admin' && customerPages.includes(path)) {
+    //     $location.path('/dashboard');
+    //     return;
+    //   }
 
-      if (user && path === '/login') {
-        $location.path(user.role === 'admin' ? '/dashboard' : '/shop');
-        return;
-      }
+    //   if (user && path === '/login') {
+    //     $location.path(user.role === 'admin' ? '/dashboard' : '/shop');
+    //     return;
+    //   }
     });
 }]);
 
