@@ -14,7 +14,7 @@ angular.module('pharmacyApp')
                     <span class="nav-brand-name">PharmaCare</span>
                 </a>
 
-                <!-- Customer Links (only for customers) -->
+                <!-- Customer Links -->
                 <div class="nav-links" ng-if="currentUser.role === 'customer'">
                     <a class="nav-link-item" href="#/shop">
                         <i class="fas fa-store me-1"></i> Shop
@@ -24,7 +24,7 @@ angular.module('pharmacyApp')
                     </a>
                 </div>
 
-                <!-- Admin Links (only for admins) -->
+                <!-- Admin Links -->
                 <div class="nav-links" ng-if="currentUser.role === 'admin'">
                     <a class="nav-link-item" href="#/dashboard">
                         <i class="fas fa-chart-bar me-1"></i> Dashboard
@@ -43,19 +43,16 @@ angular.module('pharmacyApp')
                 <!-- Right Side -->
                 <div class="nav-right">
 
-                    <!-- Welcome chip -->
-                    <div class="welcome-chip">
+                    <div class="welcome-chip" ng-if="currentUser">
                         👋 <span>{{ currentUser.name }}</span>
                     </div>
 
-                    <!-- Account icon -->
                     <a class="nav-icon-btn" href="#/account"
                         ng-if="currentUser.role === 'customer'"
                         title="My Account">
                         <i class="fas fa-user"></i>
                     </a>
 
-                    <!-- Cart icon (customer only) -->
                     <button class="nav-cart-btn"
                         ng-if="currentUser.role === 'customer'"
                         data-bs-toggle="offcanvas"
@@ -63,13 +60,14 @@ angular.module('pharmacyApp')
                         <i class="fas fa-shopping-cart me-2"></i>
                         Cart
                         <span class="nav-cart-badge"
-                            ng-show="cart && cart.length > 0">
+                            ng-show="cartCount() > 0">
                             {{ cartCount() }}
                         </span>
                     </button>
 
-                    <!-- Logout -->
-                    <button class="nav-logout-btn" ng-click="logout()">
+                    <button class="nav-logout-btn"
+                        ng-click="logout()"
+                        title="Logout">
                         <i class="fas fa-sign-out-alt"></i>
                     </button>
 
@@ -77,10 +75,12 @@ angular.module('pharmacyApp')
             </div>
         </nav>
         `,
-        controller: ['$scope', '$rootScope', '$location',
-        function($scope, $rootScope, $location) {
+        controller: ['$scope', '$rootScope', '$location', 'AuthService',
+        function($scope, $rootScope, $location, AuthService) {
 
-            $scope.currentUser = $rootScope.currentUser;
+            $rootScope.$watch('currentUser', function(newVal) {
+                $scope.currentUser = newVal;
+            }, true);
 
             $scope.cartCount = function() {
                 if (!$rootScope.cart) return 0;
@@ -88,9 +88,13 @@ angular.module('pharmacyApp')
             };
 
             $scope.logout = function() {
-                $rootScope.currentUser = null;
-                $rootScope.cart = [];
-                $location.path('/login');
+                AuthService.logout().then(function() {
+                    $rootScope.$apply(function() {
+                        $rootScope.currentUser = null;
+                        $rootScope.cart = [];
+                        $location.path('/login');
+                    });
+                });
             };
 
         }]
