@@ -1,188 +1,242 @@
 <div class="shop-page">
 
-  <!-- ─── Header ─────────────────────────── -->
-  <div class="shop-header py-4 px-4">
-    <div class="container-fluid">
-      <div class="row align-items-center">
+  <!-- ─── HERO SLIDER ────────────────────────── -->
+  <div class="hero-section mx-3 mt-3 rounded-4 overflow-hidden position-relative"
+    style="height: 260px;">
 
-        <!-- Welcome message -->
-        <div class="col-md-4">
-          <h4 class="fw-bold mb-0">
-            👋 Welcome, {{ currentUser.name }}!
-          </h4>
-          <p class="text-muted mb-0 small">Find your medicines below</p>
-        </div>
-
-        <!-- Search box -->
-        <div class="col-md-4">
-          <div class="input-group">
-            <span class="input-group-text bg-white">
-              <i class="fas fa-search text-muted"></i>
-            </span>
-            <input
-              type="text"
-              class="form-control border-start-0"
-              placeholder="Search medicines..."
-              ng-model="searchQuery"/>
-          </div>
-        </div>
-
-        <!-- Cart button -->
-        <div class="col-md-4 text-end">
-          <button class="btn btn-primary position-relative"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#cartOffcanvas">
-            <i class="fas fa-shopping-cart me-2"></i> Cart
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-              ng-show="cartCount() > 0">
-              {{ cartCount() }}
-            </span>
-          </button>
-        </div>
-
+    <!-- Slide 1 -->
+    <div class="hero-slide active"
+      style="background: linear-gradient(135deg, #0a2463 0%, #1e5fc2 60%, #3d8ef8 100%)">
+      <div class="hero-content">
+        <div class="hero-tag">✨ Trusted Pharmacy</div>
+        <h2 class="hero-title">Your Health,<br/>Our Priority</h2>
+        <p class="hero-sub">Shop from 40+ trusted medicines & beauty products</p>
+        <button class="hero-btn" ng-click="selectCategory('All')">
+          Shop Now →
+        </button>
+      </div>
+      <div class="hero-bg-image">
+        <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&q=60"
+          style="width:220px; height:220px; object-fit:cover;
+                 border-radius:50%; opacity:0.15;"/>
       </div>
     </div>
-  </div>
 
-  <!-- ─── Category Filter ──────────────────── -->
-  <div class="container-fluid px-4 my-3">
-    <div class="d-flex gap-2 flex-wrap">
-      <button
-        ng-repeat="cat in categories"
-        class="btn btn-sm"
-        ng-class="selectedCategory === cat ? 'btn-primary' : 'btn-outline-primary'"
-        ng-click="selectCategory(cat)">
-        {{ cat }}
-      </button>
-    </div>
-  </div>
-
-  <!-- ─── Loading ──────────────────────────── -->
-  <div ng-if="loading" class="text-center py-5">
-    <div class="spinner-border text-primary"></div>
-    <p class="mt-2 text-muted">Loading medicines...</p>
-  </div>
-
-  <!-- ─── Error ────────────────────────────── -->
-  <div ng-if="error" class="container-fluid px-4">
-    <div class="alert alert-danger">{{ error }}</div>
-  </div>
-
-  <!-- ─── Medicines Grid ───────────────────── -->
-  <div class="container-fluid px-4" ng-if="!loading && !error">
-
-    <!-- No results message -->
-    <div ng-if="filteredMedicines().length === 0" class="text-center py-5">
-      <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
-      <p class="text-muted">No medicines found</p>
-    </div>
-
-    <div class="row g-3">
-      <div class="col-md-3 col-sm-6"
-        ng-repeat="medicine in filteredMedicines()">
-        <div class="card h-100 shadow-sm medicine-card">
-
-          <!-- Category badge -->
-          <div class="card-header bg-white border-0 pb-0">
-            <span class="badge bg-primary-subtle text-primary small">
-              {{ medicine.category }}
-            </span>
-            <!-- Out of stock badge -->
-            <span ng-if="medicine.stock === 0"
-              class="badge bg-danger-subtle text-danger small ms-1">
-              Out of Stock
-            </span>
-          </div>
-
-          <div class="card-body">
-            <!-- Medicine name -->
-            <h6 class="fw-bold mb-1">{{ medicine.name }}</h6>
-
-            <!-- Description -->
-            <p class="text-muted small mb-3">{{ medicine.description }}</p>
-
-            <!-- Price + Stock -->
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <span class="fw-bold text-primary fs-5">
-                EGP {{ medicine.price }}
-              </span>
-              <span class="text-muted small">
-                {{ medicine.stock }} left
-              </span>
-            </div>
-
-            <!-- Add to cart button -->
-            <button
-              class="btn btn-primary w-100 btn-sm"
-              ng-click="addToCart(medicine)"
-              ng-disabled="medicine.stock === 0">
-              <i class="fas fa-cart-plus me-1"></i>
-              {{ medicine.stock === 0 ? 'Out of Stock' : 'Add to Cart' }}
-            </button>
-          </div>
-
-        </div>
+    <!-- Slide 2 -->
+    <div class="hero-slide"
+      style="background: linear-gradient(135deg, #00796b 0%, #00c9a7 100%)">
+      <div class="hero-content">
+        <div class="hero-tag">💄 New Category</div>
+        <h2 class="hero-title">Beauty &<br/>Personal Care</h2>
+        <p class="hero-sub">Skincare, moisturizers and more</p>
+        <button class="hero-btn"
+          ng-click="selectCategory('Beauty & Personal Care')">
+          Explore →
+        </button>
+      </div>
+      <div class="hero-bg-image">
+        <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&q=60"
+          style="width:220px; height:220px; object-fit:cover;
+                 border-radius:50%; opacity:0.15;"/>
       </div>
     </div>
-  </div>
 
-  <!-- ─── Cart Sidebar ─────────────────────── -->
-  <div class="offcanvas offcanvas-end" id="cartOffcanvas">
-    <div class="offcanvas-header border-bottom">
-      <h5 class="offcanvas-title fw-bold">
-        <i class="fas fa-shopping-cart me-2 text-primary"></i> Your Cart
-      </h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    <!-- Slide 3 -->
+    <div class="hero-slide"
+      style="background: linear-gradient(135deg, #1565c0 0%, #7b1fa2 100%)">
+      <div class="hero-content">
+        <div class="hero-tag">🍊 Top Sellers</div>
+        <h2 class="hero-title">Vitamins &<br/>Supplements</h2>
+        <p class="hero-sub">Boost your immunity every day</p>
+        <button class="hero-btn"
+          ng-click="selectCategory('Vitamins & Supplements')">
+          Shop Now →
+        </button>
+      </div>
+      <div class="hero-bg-image">
+        <img src="https://images.unsplash.com/photo-1550572017-edd951b55104?w=400&q=60"
+          style="width:220px; height:220px; object-fit:cover;
+                 border-radius:50%; opacity:0.15;"/>
+      </div>
     </div>
 
-    <div class="offcanvas-body d-flex flex-column">
+    <!-- Dots -->
+    <div class="hero-dots">
+      <span class="hero-dot active" ng-click="goToSlide(0)"></span>
+      <span class="hero-dot" ng-click="goToSlide(1)"></span>
+      <span class="hero-dot" ng-click="goToSlide(2)"></span>
+    </div>
 
-      <!-- Empty cart -->
-      <div ng-if="cart.length === 0" class="text-center py-5 flex-grow-1">
-        <i class="fas fa-cart-plus fa-3x text-muted mb-3"></i>
-        <p class="text-muted">Your cart is empty</p>
+    <!-- Arrows -->
+    <button class="hero-arrow left" ng-click="prevSlide()">‹</button>
+    <button class="hero-arrow right" ng-click="nextSlide()">›</button>
+  </div>
+
+  <!-- ─── SEARCH + CART BAR ─────────────────── -->
+  <div class="container-fluid px-4 mt-4">
+    <div class="row align-items-center g-3">
+
+      <!-- Welcome -->
+      <div class="col-md-3">
+        <h5 class="fw-bold mb-0" style="color:#0a2463">
+          👋 Welcome, {{ currentUser.name }}!
+        </h5>
+        <p class="text-muted mb-0 small">What do you need today?</p>
       </div>
 
-      <!-- Cart items -->
-      <div ng-if="cart.length > 0" class="flex-grow-1">
-        <div ng-repeat="item in cart"
-          class="d-flex align-items-center justify-content-between py-2 border-bottom">
-
-          <!-- Item info -->
-          <div>
-            <p class="mb-0 fw-bold small">{{ item.name }}</p>
-            <p class="mb-0 text-muted small">EGP {{ item.price }} each</p>
-          </div>
-
-          <!-- Quantity controls -->
-          <div class="d-flex align-items-center gap-2">
-            <button class="btn btn-outline-secondary btn-sm"
-              ng-click="decreaseQty(item)">-</button>
-            <span class="fw-bold">{{ item.qty }}</span>
-            <button class="btn btn-outline-secondary btn-sm"
-              ng-click="increaseQty(item)">+</button>
-            <button class="btn btn-outline-danger btn-sm"
-              ng-click="removeFromCart(item)">
-              <i class="fas fa-trash"></i>
-            </button>
-          </div>
-
+      <!-- Search -->
+      <div class="col-md-6">
+        <div class="input-group search-bar">
+          <span class="input-group-text bg-white border-end-0">
+            <i class="fas fa-search text-muted"></i>
+          </span>
+          <input type="text"
+            class="form-control border-start-0"
+            placeholder="Search medicines, beauty products..."
+            ng-model="searchQuery"/>
         </div>
       </div>
 
-      <!-- Cart footer -->
-      <div ng-if="cart.length > 0" class="border-top pt-3">
-        <div class="d-flex justify-content-between fw-bold fs-5 mb-3">
-          <span>Total:</span>
-          <span class="text-primary">EGP {{ cartTotal() }}</span>
-        </div>
-        <button class="btn btn-primary w-100"
-          ng-click="checkout()">
-          <i class="fas fa-check-circle me-2"></i> Checkout
+      <!-- Cart -->
+      <div class="col-md-3 text-end">
+        <button class="btn cart-main-btn position-relative"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#cartOffcanvas">
+          <i class="fas fa-shopping-cart me-2"></i> My Cart
+          <span class="cart-count-badge" ng-show="cartCount() > 0">
+            {{ cartCount() }}
+          </span>
         </button>
       </div>
 
     </div>
   </div>
 
-</div>
+  <!-- ─── CATEGORY FILTERS ──────────────────── -->
+  <div class="container-fluid px-4 mt-3">
+    <div class="d-flex gap-2 flex-wrap">
+      <button ng-repeat="cat in categories"
+        class="cat-filter-btn"
+        ng-class="{'active': selectedCategory === cat}"
+        ng-click="selectCategory(cat)">
+        {{ cat }}
+      </button>
+    </div>
+  </div>
+
+  <!-- ─── LOADING ───────────────────────────── -->
+  <div ng-if="loading" class="text-center py-5">
+    <div class="spinner-border text-primary"></div>
+    <p class="mt-2 text-muted">Loading products...</p>
+  </div>
+
+  <!-- ─── ERROR ─────────────────────────────── -->
+  <div ng-if="error" class="container-fluid px-4 mt-3">
+    <div class="alert alert-danger">{{ error }}</div>
+  </div>
+
+  <!-- ─── MEDICINES GRID ────────────────────── -->
+  <div class="container-fluid px-4 mt-4" ng-if="!loading && !error">
+
+    <!-- Results count -->
+    <p class="text-muted small mb-3">
+      Showing <strong>{{ filteredMedicines().length }}</strong> products
+      <span ng-if="selectedCategory !== 'All'">
+        in <strong>{{ selectedCategory }}</strong>
+      </span>
+    </p>
+
+    <!-- No results -->
+    <div ng-if="filteredMedicines().length === 0" class="text-center py-5">
+      <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=200&q=60"
+        style="width:120px; opacity:0.3; border-radius:12px;" class="mb-3"/>
+      <p class="text-muted">No products found</p>
+    </div>
+
+    <!-- Grid -->
+    <div class="row g-3">
+      <div class="col-xl-3 col-md-4 col-sm-6"
+        ng-repeat="medicine in filteredMedicines()">
+        <div class="product-card">
+
+          <!-- Image -->
+          <div class="product-image-wrap">
+            <img
+              ng-src="{{ medicine.image_url || getCategoryImage(medicine.category) }}"
+              class="product-image"
+              alt="{{ medicine.name }}"/>
+          </div>
+
+          <!-- Body -->
+          <div class="product-body">
+            <span class="product-category">{{ medicine.category }}</span>
+            <h6 class="product-name">{{ medicine.name }}</h6>
+            <p class="product-desc">{{ medicine.description }}</p>
+
+            <div class="product-footer">
+              <div>
+                <div class="product-price">EGP {{ medicine.price }}</div>
+                <div class="product-stock"
+                  ng-class="medicine.stock < 20 ? 'text-danger' : 'text-muted'">
+                  <i class="fas fa-box me-1"></i>{{ medicine.stock }} left
+                </div>
+              </div>
+            </div>
+
+            <!-- Add to cart -->
+            <button class="add-cart-btn"
+              ng-click="addToCart(medicine)"
+              ng-disabled="medicine.stock === 0"
+              ng-class="{
+                'out-of-stock': medicine.stock === 0,
+                'added': isInCart(medicine)
+              }">
+              <span ng-if="medicine.stock === 0">
+                <i class="fas fa-times me-1"></i> Out of Stock
+              </span>
+              <span ng-if="medicine.stock > 0 && !isInCart(medicine)">
+                <i class="fas fa-cart-plus me-1"></i> Add to Cart
+              </span>
+              <span ng-if="medicine.stock > 0 && isInCart(medicine)">
+                <i class="fas fa-check me-1"></i> Added!
+              </span>
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── CART SIDEBAR ──────────────────────── -->
+  <div class="offcanvas offcanvas-end" id="cartOffcanvas"
+    style="width: 380px;">
+    <div class="offcanvas-header border-bottom">
+      <h5 class="fw-bold" style="color:#0a2463">
+        <i class="fas fa-shopping-cart me-2 text-primary"></i>
+        My Cart
+      </h5>
+      <button class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+
+    <div class="offcanvas-body d-flex flex-column p-0">
+
+      <!-- Empty -->
+      <div ng-if="cart.length === 0"
+        class="text-center py-5 flex-grow-1
+               d-flex flex-column align-items-center justify-content-center">
+        <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=120&q=60"
+          style="width:80px; opacity:0.3; border-radius:12px;" class="mb-3"/>
+        <p class="text-muted fw-bold">Your cart is empty</p>
+        <small class="text-muted">Add some products to get started!</small>
+      </div>
+
+      <!-- Items -->
+      <div ng-if="cart.length > 0" class="flex-grow-1 overflow-auto p-3">
+        <div ng-repeat="item in cart" class="cart-item">
+          <div class="cart-item-info">
+            <p class="cart-item-name">{{ item.name }}</p>
+            <p class="cart-item-price">EGP {{ item.price }} each</p>
+          </div>
+          <div class="cart-item-controls">
+            <button class="qty

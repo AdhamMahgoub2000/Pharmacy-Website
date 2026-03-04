@@ -25,13 +25,14 @@
 <body>
 
   <!-- Navbar (shows only when logged in) -->
-  <div ng-include="'views/navbar.html'" ng-if="currentUser"></div>
+  <!--<div ng-include="'views/navbar.html'" ng-if="currentUser"></div>-->
+  <app-navbar ng-if="currentUser"></app-navbar>
 
   <!-- Main Layout -->
   <div class="main-content" ng-class="{'with-sidebar': currentUser && currentUser.role === 'admin'}">
 
     <!-- Sidebar (admin only) -->
-    <div ng-include="'views/sidebar.html'" ng-if="currentUser && currentUser.role === 'admin'"></div>
+    <app-sidebar ng-if="currentUser && currentUser.role === 'admin'"></app-sidebar>
 
     <!-- Pages load here -->
     <div class="content-area">
