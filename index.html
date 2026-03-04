@@ -23,9 +23,20 @@
   </head>
 
   <body>
+    <div ng-include="'views/navbar.html'" ng-if="currentUser"></div>
 
-    <!-- Navbar (shows only when logged in) -->
-    <app-navbar ng-if="currentUser"></app-navbar>
+    <div
+      class="main-content"
+      ng-class="{'with-sidebar': currentUser && currentUser.role === 'admin'}"
+    >
+      <div
+        ng-include="'views/sidebar.html'"
+        ng-if="currentUser && currentUser.role === 'admin'"
+      ></div>
+
+  <!-- Navbar (shows only when logged in) -->
+  <!--<div ng-include="'views/navbar.html'" ng-if="currentUser"></div>-->
+  <app-navbar ng-if="currentUser"></app-navbar>
 
     <!-- Main Layout -->
     <div class="main-content" ng-class="{'with-sidebar': currentUser && currentUser.role === 'admin'}">
@@ -33,11 +44,14 @@
       <!-- Sidebar (admin only) -->
       <app-sidebar ng-if="currentUser && currentUser.role === 'admin'"></app-sidebar>
 
-      <!-- Pages load here -->
+    <!-- Pages load here -->
+    <div class="content-area">
+      <ng-view></ng-view>
+=======
       <div class="content-area">
         <ng-view></ng-view>
       </div>
-
+>>>>>>> 2ba2b7547517500635504b61e9588d09dd885655
     </div>
 
     <!-- Footer -->
