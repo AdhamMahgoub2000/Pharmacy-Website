@@ -65,12 +65,12 @@ angular.module('pharmacyApp', ['ngRoute'])
 
     // ─── TEMPORARY: Fake customer login for testing ───
     // we need to delete once login page is ready 
-    // $rootScope.currentUser = {
-    //     id: '123',
-    //     name: 'Youmna',
-    //     email: 'youmna@test.com',
-    //     role: 'customer'
-    // };
+     $rootScope.currentUser = {
+        id: '123',
+        name: 'Youmna',
+        email: 'youmna@test.com',
+        role: 'customer'
+     };
     // ─────────────────────────────────────────────────
 
     const customerPages = ['/shop', '/confirmation', '/orders', '/account'];
