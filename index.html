@@ -76,17 +76,14 @@
     <app-navbar ng-if="currentUser && currentUser.role === 'customer'"></app-navbar>
     <dashboard-navbar ng-if="currentUser && currentUser.role === 'admin'"></dashboard-navbar>
 
-    <!-- Main layout -->
     <div
       class="main-content"
       ng-class="{'with-sidebar': currentUser && currentUser.role === 'admin'}"
     >
-      <!-- Sidebar: admin only -->
       <app-sidebar
         ng-if="currentUser && currentUser.role === 'admin'"
       ></app-sidebar>
 
-      <!-- Page content -->
       <div class="content-area">
         <ng-view></ng-view>
       </div>
