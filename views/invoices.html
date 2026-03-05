@@ -1,0 +1,80 @@
+<div class="container mt-5">
+  <!-- Loading -->
+  <div ng-if="loading" class="text-center mt-5">
+    <div class="spinner-border"></div>
+  </div>
+
+  <div ng-if="!loading && order">
+    <!-- Back -->
+    <button class="btn btn-outline-secondary mb-4" ng-click="goBack()">
+      ← Back to Customer
+    </button>
+
+    <!-- Invoice Header -->
+    <div class="card shadow-sm mb-4">
+      <div class="card-body d-flex justify-content-between">
+        <div>
+          <h3>Invoice</h3>
+          <p class="text-muted">{{order.id}}</p>
+        </div>
+
+        <div class="text-end">
+          <p><strong>Date:</strong> {{order.created_at | date:'medium'}}</p>
+          <p><strong>Status:</strong> {{order.status}}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Customer -->
+    <div class="card shadow-sm mb-4">
+      <div class="card-body">
+        <h5>Customer</h5>
+
+        <p class="mb-1">{{customer.full_name || customer.name}}</p>
+
+        <p class="text-muted">{{customer.email}}</p>
+      </div>
+    </div>
+
+    <!-- Items -->
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="mb-4">Invoice Items</h5>
+
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead class="table-dark">
+              <tr>
+                <th>Medicine</th>
+                <th>Category</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Subtotal</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr ng-repeat="item in order.invoice_items">
+                <td>{{item.medicines.name}}</td>
+
+                <td>{{item.medicines.category}}</td>
+
+                <td>{{item.quantity}}</td>
+
+                <td>{{item.unit_price | currency}}</td>
+
+                <td>{{item.quantity * item.unit_price | currency}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Total -->
+
+        <div class="text-end mt-4">
+          <h4>Total: {{order.total | currency}}</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

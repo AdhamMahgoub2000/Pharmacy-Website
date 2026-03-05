@@ -1,0 +1,256 @@
+<div class="container mt-5" ng-controller="CustomerProfileController">
+  <!-- Back Button -->
+  <div class="mb-4">
+    <button class="btn btn-outline-secondary" ng-click="goBack()">
+      <i class="bi bi-arrow-left"></i> Back to Customers
+    </button>
+  </div>
+
+  <!-- Loading -->
+  <div ng-if="loading" class="text-center my-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Error -->
+  <div ng-if="error" class="alert alert-danger">{{ error }}</div>
+
+  <!-- Customer Profile -->
+  <div ng-if="!loading && customer">
+    <div class="row g-4 mb-4">
+      <!-- Customer Info Card -->
+      <div class="col-12 col-md-6">
+        <div class="profile-card p-4 shadow-sm rounded-4 bg-white">
+          <div class="d-flex align-items-center mb-3">
+            <div
+              class="avatar rounded-circle bg-primary text-white d-flex justify-content-center align-items-center me-3"
+              style="width: 60px; height: 60px; font-size: 24px"
+            >
+              {{ customer.full_name ? (customer.full_name.charAt(0) +
+              (customer.full_name.split(' ')[1] ? customer.full_name.split('
+              ')[1].charAt(0) : '')) : customer.name.charAt(0) }}
+            </div>
+            <div>
+              <h4 class="mb-0">{{ customer.full_name || customer.name }}</h4>
+              <small class="text-muted">{{ customer.email }}</small>
+            </div>
+          </div>
+
+          <div class="d-flex gap-2 mt-3">
+            <button
+              class="btn btn-outline-primary flex-fill"
+              ng-click="editCustomer(customer)"
+            >
+              <i class="bi bi-pencil"></i> Edit
+            </button>
+            <button
+              class="btn btn-outline-danger flex-fill"
+              ng-click="deleteCustomer(customer)"
+            >
+              <i class="bi bi-trash"></i> Delete
+            </button>
+          </div>
+
+          <div class="mt-4">
+            <p><strong>Role:</strong> {{ customer.role }}</p>
+            <p>
+              <strong>Created At:</strong> {{ customer.created_at |
+              date:'medium' }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="col-12 col-md-6">
+        <div class="row g-3">
+          <div class="col-12" ng-repeat="stat in stats">
+            <div
+              class="stat-card p-3 shadow-sm rounded-4 bg-white d-flex justify-content-between align-items-center"
+            >
+              <div class="d-flex align-items-center gap-3">
+                <div class="stat-icon {{ stat.iconColor }}">
+                  <span class="material-symbols-outlined fs-3"
+                    >{{ stat.icon }}</span
+                  >
+                </div>
+                <div>
+                  <p class="mb-0 text-muted">{{ stat.label }}</p>
+                  <h5 class="mb-0">{{ stat.value }}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Customer Orders Table -->
+    <div class="table-card mt-4">
+      <div
+        class="table-header d-flex justify-content-between align-items-center mb-3"
+      >
+        <h3 class="table-title">Customer Orders</h3>
+        <!-- Add filters/buttons here if needed -->
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead class="table-dark">
+            <tr>
+              <th>Order ID</th>
+              <th>Date</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="order in orders">
+              <td>{{ order.id }}</td>
+              <td>{{ order.created_at | date:'short' }}</td>
+              <td>{{ order.total | currency }}</td>
+              <td>
+                <span
+                  class="badge bg-{{ order.status === 'pending' ? 'warning' : order.status === 'completed' ? 'success' : 'secondary' }}"
+                >
+                  {{ order.status }}
+                </span>
+              </td>
+              <td class="text-end">
+                <button
+                  class="btn btn-sm btn-outline-info"
+                  ng-click="viewInvoice(order)"
+                >
+                  View
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div ng-if="!orders.length" class="text-center p-4 text-muted">
+        No orders found for this customer.
+      </div>
+      <div
+        class="modal fade"
+        id="editCustomerModal"
+        tabindex="-1"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Edit Customer</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form name="editForm">
+                <div class="mb-3">
+                  <label class="form-label">Full Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    ng-model="selectedCustomer.full_name"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    ng-model="selectedCustomer.email"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Role</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    ng-model="selectedCustomer.role"
+                  />
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" data-bs-dismiss="modal">
+                Cancel
+              </button>
+              <button class="btn btn-primary" ng-click="saveCustomer()">
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Invoice Modal -->
+  <div class="modal fade" id="invoiceModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Invoice - {{ selectedOrder.id }}</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div ng-if="selectedOrder">
+            <p>
+              <strong>Date:</strong> {{ selectedOrder.created_at | date:'medium'
+              }}
+            </p>
+            <p><strong>Status:</strong> {{ selectedOrder.status }}</p>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Medicine</th>
+                  <th>Category</th>
+                  <th>Quantity</th>
+                  <th>Unit Price</th>
+                  <th>Subtotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in selectedOrder.invoice_items">
+                  <td>{{ item.medicines.name }}</td>
+                  <td>{{ item.medicines.category }}</td>
+                  <td>{{ item.quantity }}</td>
+                  <td>{{ item.unit_price | currency }}</td>
+                  <td>{{ (item.quantity * item.unit_price) | currency }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="text-end fw-bold">
+              Total: {{ selectedOrder.total | currency }}
+            </p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-primary"
+            ng-click="showFullInvoice(selectedOrder)"
+          >
+            Show Complete Invoice
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

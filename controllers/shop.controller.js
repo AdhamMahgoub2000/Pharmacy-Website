@@ -1,6 +1,6 @@
 angular.module('pharmacyApp')
-.controller('ShopController', ['$scope', '$rootScope', '$location', 'MedicinesService',
-function($scope, $rootScope, $location, MedicinesService) {
+.controller('ShopController', ['$scope', '$rootScope', '$location', 'MedicinesService','OrdersService',
+ function($scope, $rootScope, $location, MedicinesService) {
 
     // ── Cart ──────────────────────────────────
     $rootScope.cart = $rootScope.cart || [];

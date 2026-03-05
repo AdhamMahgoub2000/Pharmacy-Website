@@ -37,10 +37,14 @@ angular.module('pharmacyApp', ['ngRoute'])
         templateUrl: 'views/customers.html',
         controller: 'CustomersController'
     })
-    .when('/invoices', {
-        templateUrl: 'views/invoices.html',
-        controller: 'InvoiceController'
+    .when('/customers/:id', {
+      templateUrl: 'views/customer-profile.html',
+      controller: 'CustomerProfileController'
     })
+  .when('/invoice/:orderId', {
+      templateUrl: 'views/invoices.html',
+      controller: 'InvoiceController'
+  })
     .when('/users', {
         templateUrl: 'views/users.html',
         controller: 'UsersController'
@@ -52,7 +56,7 @@ angular.module('pharmacyApp', ['ngRoute'])
 function($rootScope, $location, AuthService) {
 
     const customerPages = ['/shop', '/confirmation', '/orders', '/account'];
-    const adminPages    = ['/dashboard', '/medicines', '/customers', '/invoices', '/users'];
+    const adminPages    = ['/dashboard', '/medicines', '/customers', '/users'];
 
     // ── Restore session on page refresh ──
     // ── Restore session on page refresh ──
