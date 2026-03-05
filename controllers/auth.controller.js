@@ -5,7 +5,11 @@ angular.module('pharmacyApp')
   'AuthService',
   function($scope, $location, AuthService) {
 
-
+    $scope.user = AuthService.getUser();
+                if ($scope.user.role === 'admin') {
+                $location.path('/dashboard');
+                } else if ($scope.user.role === 'customer') {
+                $location.path('/shop');}
     $scope.user = {};
     $scope.loginError = null;
     $scope.loading = false;
@@ -34,6 +38,11 @@ angular.module('pharmacyApp')
            try {
             const data = await AuthService.getUserData(session.user.id);
             $scope.$apply(() => {
+
+                $scope.$apply(() => {
+                AuthService.setUser(user);
+                $location.path("/dashboard");
+                });
                 if (data.role === 'admin') {
                 $location.path('/dashboard');
                 } else if (data.role === 'customer') {

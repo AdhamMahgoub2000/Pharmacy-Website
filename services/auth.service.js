@@ -1,8 +1,8 @@
 angular.module('pharmacyApp')
-.service('AuthService', ['SupabaseService', function(SupabaseService) {
+.service('AuthService', ['SupabaseService', function(SupabaseService,$rootScope) {
 
     const client = SupabaseService.client;
-
+    let currentUser = null
     this.login = async function(email, password) {
         return await client.auth.signInWithPassword({
             email: email,
@@ -13,7 +13,10 @@ angular.module('pharmacyApp')
         const { data } = await client.auth.getUser();
         return data.user;
         };
-
+  this.setUser = function (user) {
+    currentUser = user;
+    $rootScope.currentUser = user;
+  };
 this.getUserData = async function (userId) {
   try {
     const { data, error } = await client
@@ -24,14 +27,14 @@ this.getUserData = async function (userId) {
 
     if (error) {
       console.error("getUserData error:", error.message);
-      return null; // return null if something went wrong
+      return null; 
     }
 
     if (!data) {
       console.warn("User not found for id:", userId);
       return null;
     }
-    return data; // this is the user object
+    return data; 
   } catch (err) {
     console.error("Unexpected error in getUserData:", err);
     return null;
@@ -40,6 +43,7 @@ this.getUserData = async function (userId) {
 
     this.logout = async function () {
       await client.auth.signOut();
+      AuthService.setUser(null);
     };
     this.verifySession = async function () {
       const { data, error } = await client.auth.getSession();

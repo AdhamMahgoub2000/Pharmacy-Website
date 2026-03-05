@@ -1,0 +1,41 @@
+<header class="top-navbar" ng-controller="NavbarCtrl">
+  <!-- Search -->
+  <div class="search-wrapper">
+    <span class="material-symbols-outlined search-icon">search</span>
+    <input
+      class="search-input"
+      type="text"
+      placeholder="Search medicines, orders, customers..."
+      ng-model="searchQuery"
+    />
+  </div>
+
+  <!-- Right Controls -->
+  <div class="navbar-right">
+    <!-- Notifications -->
+    <button
+      class="icon-btn"
+      ng-click="clearNotifications()"
+      title="Notifications"
+    >
+      <span class="material-symbols-outlined">notifications</span>
+      <span class="notif-dot" ng-show="hasNotifications"></span>
+    </button>
+
+    <!-- Divider -->
+    <div class="divider-v"></div>
+
+    <!-- User Info -->
+    <div class="d-none d-sm-block text-end">
+      <p class="user-name">{{ user.name }}</p>
+      <p class="user-role">{{ user.role }}</p>
+    </div>
+
+    <!-- Avatar -->
+    <div
+      class="avatar"
+      ng-style="{ 'background-image': 'url(' + user.avatar + ')' }"
+      title="{{ user.name }}"
+    ></div>
+  </div>
+</header>

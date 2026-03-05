@@ -1,0 +1,36 @@
+
+<aside class="sidebar" ng-controller="SidebarCtrl">
+
+  <!-- Brand -->
+  <div class="sidebar-brand">
+    <div class="d-flex align-items-center gap-3">
+      <div class="brand-icon">
+        <span class="material-symbols-outlined">health_and_safety</span>
+      </div>
+      <div>
+        <h1 class="brand-title">PharmaManage</h1>
+        <p class="brand-subtitle">Pharmacy System</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="sidebar-nav">
+    <a class="nav-link-item"
+       ng-repeat="item in navItems"
+       ng-class="{ active: activeNav === item.key }"
+       ng-click="setActive(item.key)">
+      <span class="material-symbols-outlined">{{ item.icon }}</span>
+      <span>{{ item.label }}</span>
+    </a>
+  </nav>
+
+  <!-- Footer CTA -->
+  <div class="sidebar-footer">
+    <button class="btn-new-sale">
+      <span class="material-symbols-outlined" style="font-size:20px;">add</span>
+      New Sale
+    </button>
+  </div>
+
+</aside>
