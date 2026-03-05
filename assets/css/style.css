@@ -783,6 +783,49 @@
 .success-btn-secondary:hover {
   background: var(--blue); color: white;
 }
+/* ══ MEDICINES PAGE ══════════════════════════ */
+.med-modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(15,23,42,0.6);
+  z-index: 9999;
+  display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.med-modal {
+  background: white;
+  border-radius: 1rem;
+  width: 90%; max-width: 580px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.2);
+  overflow: hidden;
+  max-height: 90vh;
+  display: flex; flex-direction: column;
+}
+.med-modal-body {
+  padding: 1.5rem;
+  overflow-y: auto;
+  flex: 1;
+}
+.med-form-group { margin-bottom: 1rem; }
+.med-form-label {
+  font-size: .8rem; font-weight: 700;
+  color: var(--text-body);
+  margin-bottom: 5px; display: block;
+}
+.med-form-input {
+  width: 100%; padding: 10px 14px;
+  border: 1.5px solid var(--border-light);
+  border-radius: .5rem;
+  font-size: .875rem;
+  font-family: 'Manrope', sans-serif;
+  color: var(--text-body);
+  outline: none; transition: all .2s;
+  background: #f8fafc; resize: none;
+}
+.med-form-input:focus {
+  border-color: var(--primary);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(19,127,236,.1);
+}
 /* ══ GLOBAL SCROLL FIX ═══════════════════════ */
 html, body {
   height: auto !important;

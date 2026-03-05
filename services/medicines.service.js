@@ -72,5 +72,36 @@ angular.module('pharmacyApp')
 
         if (error) throw error;
     };
+    // Add new medicine
+    self.add = async function(medicine) {
+        const { data, error } = await db
+            .from('medicines')
+            .insert(medicine)
+            .select()
+            .single();
+        if (error) throw error;
+        return data;
+    };
+
+    // Update medicine
+    self.update = async function(id, medicine) {
+        const { data, error } = await db
+            .from('medicines')
+            .update(medicine)
+            .eq('id', id)
+            .select()
+            .single();
+        if (error) throw error;
+        return data;
+    };
+
+    // Delete medicine
+    self.delete = async function(id) {
+        const { error } = await db
+            .from('medicines')
+            .delete()
+            .eq('id', id);
+        if (error) throw error;
+    };
 
 }]);

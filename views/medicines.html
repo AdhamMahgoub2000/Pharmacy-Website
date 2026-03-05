@@ -1,0 +1,357 @@
+<div class="p-4">
+
+
+  <div class="d-flex align-items-center justify-content-between mb-4">
+    <div>
+      <h1 class="page-title">Medicines</h1>
+      <p class="page-subtitle">Manage your pharmacy inventory</p>
+    </div>
+    <button class="btn-new-sale" ng-click="openAddModal()">
+      <span class="material-symbols-outlined" style="font-size:18px">add</span>
+      Add Medicine
+    </button>
+  </div>
+
+ 
+  <div class="row g-3 mb-4">
+    <div class="col-md-3">
+      <div class="stat-card">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <div class="stat-icon blue">
+            <span class="material-symbols-outlined">medication</span>
+          </div>
+        </div>
+        <p class="stat-label">Total Medicines</p>
+        <p class="stat-value">{{ medicines.length }}</p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="stat-card">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <div class="stat-icon green">
+            <span class="material-symbols-outlined">check_circle</span>
+          </div>
+        </div>
+        <p class="stat-label">In Stock</p>
+        <p class="stat-value">{{ inStockCount() }}</p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="stat-card">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <div class="stat-icon red">
+            <span class="material-symbols-outlined">warning</span>
+          </div>
+        </div>
+        <p class="stat-label">Low Stock</p>
+        <p class="stat-value">{{ lowStockCount() }}</p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="stat-card">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <div class="stat-icon purple">
+            <span class="material-symbols-outlined">category</span>
+          </div>
+        </div>
+        <p class="stat-label">Categories</p>
+        <p class="stat-value">{{ categories.length }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-card">
+
+
+    <div class="table-header d-flex align-items-center justify-content-between">
+      <h2 class="table-title">All Medicines</h2>
+      <div class="d-flex align-items-center gap-3">
+
+      
+        <div class="si-search-wrap">
+          <span class="material-symbols-outlined si-search-icon">search</span>
+          <input type="text" class="si-search-input"
+            placeholder="Search medicines..."
+            ng-model="searchQuery"/>
+        </div>
+
+       
+        <select class="si-search-input" style="width:160px"
+          ng-model="selectedCategory"
+          ng-change="filterMedicines()">
+          <option value="">All Categories</option>
+          <option ng-repeat="cat in categories" value="{{ cat }}">
+            {{ cat }}
+          </option>
+        </select>
+
+      </div>
+    </div>
+
+   
+    <div ng-if="loading" class="text-center py-5">
+      <div class="spinner-border text-primary"></div>
+      <p class="mt-2 text-muted">Loading medicines...</p>
+    </div>
+
+
+    <div ng-if="error" class="alert alert-danger m-3">{{ error }}</div>
+
+  
+    <div ng-if="!loading" class="table-responsive">
+      <table class="inv-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Medicine</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Status</th>
+            <th style="text-align:right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-if="filteredMedicines().length === 0">
+            <td colspan="7" class="si-empty">
+              <span class="material-symbols-outlined si-empty-icon">
+                medication
+              </span>
+              <p class="si-empty-title">No medicines found</p>
+              <p class="si-empty-sub">Try a different search or category</p>
+            </td>
+          </tr>
+          <tr ng-repeat="med in filteredMedicines()">
+            <td style="color:var(--text-faint);font-size:.8rem">
+              {{ $index + 1 }}
+            </td>
+            <td>
+              <div class="d-flex align-items-center gap-2">
+                <div class="si-avatar">
+                  {{ med.name.charAt(0) }}
+                </div>
+                <div>
+                  <p style="font-weight:700;color:var(--text-body);margin:0">
+                    {{ med.name }}
+                  </p>
+                  <p style="font-size:.75rem;color:var(--text-muted);margin:0">
+                    {{ med.description | limitTo:40 }}...
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="si-category-tag">{{ med.category }}</span>
+            </td>
+            <td style="font-weight:700;color:var(--text-body)">
+              EGP {{ med.price }}
+            </td>
+            <td>
+              <span style="font-weight:700"
+                ng-class="{
+                  'text-danger':  med.stock === 0,
+                  'text-warning': med.stock > 0 && med.stock < 20,
+                  'text-success': med.stock >= 20
+                }">
+                {{ med.stock }}
+              </span>
+            </td>
+            <td>
+              <span class="status-badge"
+                ng-class="{
+                  'paid':    med.stock >= 20,
+                  'pending': med.stock > 0 && med.stock < 20,
+                  'cancelled': med.stock === 0
+                }">
+                {{ med.stock === 0 ? 'Out of Stock' :
+                   med.stock < 20  ? 'Low Stock'    : 'In Stock' }}
+              </span>
+            </td>
+            <td style="text-align:right">
+              <div class="d-flex justify-content-end gap-2">
+                <button class="si-btn-view" ng-click="openEditModal(med)">
+                  <span class="material-symbols-outlined"
+                    style="font-size:16px">edit</span>
+                  Edit
+                </button>
+                <button class="btn-more" ng-click="deleteMedicine(med)"
+                  title="Delete">
+                  <span class="material-symbols-outlined"
+                    style="font-size:20px;color:#ef4444">delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+   
+    <div class="table-footer">
+      <p style="color:var(--text-muted);font-size:.875rem;margin:0">
+        Showing <strong>{{ filteredMedicines().length }}</strong>
+        of <strong>{{ medicines.length }}</strong> medicines
+      </p>
+    </div>
+
+  </div>
+
+
+  <div class="med-modal-overlay" ng-if="showModal" ng-click="closeModal($event)">
+    <div class="med-modal">
+
+   
+      <div class="si-modal-header">
+        <div class="d-flex align-items-center gap-3">
+          <div class="si-modal-icon">
+            <span class="material-symbols-outlined">
+              {{ editMode ? 'edit' : 'add_circle' }}
+            </span>
+          </div>
+          <div>
+            <p class="si-modal-label">Medicines</p>
+            <p class="si-modal-id">
+              {{ editMode ? 'Edit Medicine' : 'Add New Medicine' }}
+            </p>
+          </div>
+        </div>
+        <button class="si-modal-close" ng-click="showModal = false">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+   
+      <div class="med-modal-body">
+
+       
+        <div class="alert alert-danger" ng-if="modalError">
+          {{ modalError }}
+        </div>
+
+   
+        <div class="med-form-group">
+          <label class="med-form-label">Medicine Name *</label>
+          <input type="text" class="med-form-input"
+            placeholder="e.g. Panadol 500mg"
+            ng-model="form.name"/>
+        </div>
+
+        
+        <div class="med-form-group">
+          <label class="med-form-label">Description *</label>
+          <textarea class="med-form-input" rows="2"
+            placeholder="Brief description of the medicine"
+            ng-model="form.description"></textarea>
+        </div>
+
+       
+        <div class="row g-3">
+          <div class="col-6">
+            <div class="med-form-group">
+              <label class="med-form-label">Category *</label>
+              <select class="med-form-input" ng-model="form.category">
+                <option value="">Select category</option>
+                <option ng-repeat="cat in categories" value="{{ cat }}">
+                  {{ cat }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="med-form-group">
+              <label class="med-form-label">Price (EGP) *</label>
+              <input type="number" class="med-form-input"
+                placeholder="0.00" min="0"
+                ng-model="form.price"/>
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="row g-3">
+          <div class="col-6">
+            <div class="med-form-group">
+              <label class="med-form-label">Stock Quantity *</label>
+              <input type="number" class="med-form-input"
+                placeholder="0" min="0"
+                ng-model="form.stock"/>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="med-form-group">
+              <label class="med-form-label">Image URL</label>
+              <input type="text" class="med-form-input"
+                placeholder="https://..."
+                ng-model="form.image_url"/>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="si-modal-footer">
+        <button class="btn-action" ng-click="showModal = false">
+          Cancel
+        </button>
+        <button class="si-btn-full" ng-click="saveMedicine()"
+          ng-disabled="saving">
+          <span class="material-symbols-outlined" style="font-size:18px">
+            {{ saving ? 'hourglass_empty' : 'save' }}
+          </span>
+          {{ saving ? 'Saving...' : (editMode ? 'Save Changes' : 'Add Medicine') }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+ 
+  <div class="med-modal-overlay"
+    ng-if="showDeleteModal"
+    ng-click="closeDeleteModal($event)">
+    <div class="med-modal" style="max-width:420px">
+      <div class="si-modal-header" style="background:linear-gradient(135deg,#ef4444,#dc2626)">
+        <div class="d-flex align-items-center gap-3">
+          <div class="si-modal-icon">
+            <span class="material-symbols-outlined">delete</span>
+          </div>
+          <div>
+            <p class="si-modal-label">Confirm Action</p>
+            <p class="si-modal-id">Delete Medicine</p>
+          </div>
+        </div>
+        <button class="si-modal-close" ng-click="showDeleteModal = false">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <div class="med-modal-body text-center">
+        <span class="material-symbols-outlined"
+          style="font-size:3rem;color:#ef4444">warning</span>
+        <p style="font-weight:700;color:var(--text-body);margin:1rem 0 .5rem">
+          Are you sure?
+        </p>
+        <p style="color:var(--text-muted);font-size:.875rem">
+          You are about to delete
+          <strong>{{ medicineToDelete.name }}</strong>.
+          This cannot be undone.
+        </p>
+      </div>
+      <div class="si-modal-footer">
+        <button class="btn-action" ng-click="showDeleteModal = false">
+          Cancel
+        </button>
+        <button class="si-btn-full"
+          style="background:#ef4444"
+          ng-click="confirmDelete()"
+          ng-disabled="deleting">
+          <span class="material-symbols-outlined" style="font-size:18px">
+            delete
+          </span>
+          {{ deleting ? 'Deleting...' : 'Yes, Delete' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
