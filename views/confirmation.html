@@ -1,0 +1,163 @@
+<div class="confirmation-page">
+
+  <!-- ── HEADER ─────────────────────────────── -->
+  <div class="conf-header">
+    <div class="conf-header-inner">
+      <button class="back-btn" ng-click="backToShop()">
+        <i class="bi bi-arrow-left me-2"></i> Back to Shop
+      </button>
+      <div>
+        <h1 class="conf-title">Order Confirmation</h1>
+        <p class="conf-subtitle">Review your order and fill delivery details</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid px-4 pb-5">
+    <div class="row g-4">
+
+      <!-- ── LEFT: Cart Items ──────────────────── -->
+      <div class="col-lg-7">
+        <div class="conf-card">
+          <div class="conf-card-header">
+            <h5 class="conf-card-title">
+              <i class="fas fa-shopping-cart me-2" style="color:var(--blue)"></i>
+              Order Items
+              <span class="items-badge">{{ cartCount() }} items</span>
+            </h5>
+          </div>
+
+          <div class="conf-items">
+            <div class="conf-item" ng-repeat="item in cart">
+              <img
+                ng-src="{{ item.image_url || getCategoryImage(item.category) }}"
+                class="conf-item-img"
+                alt="{{ item.name }}"/>
+              <div class="conf-item-info">
+                <p class="conf-item-name">{{ item.name }}</p>
+                <p class="conf-item-cat">{{ item.category }}</p>
+              </div>
+              <div class="conf-item-qty">
+                <span class="qty-chip">× {{ item.qty }}</span>
+              </div>
+              <div class="conf-item-price">
+                EGP {{ item.price * item.qty }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Total -->
+          <div class="conf-total-row">
+            <span class="conf-total-label">Order Total</span>
+            <span class="conf-total-amount">EGP {{ cartTotal() }}</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── RIGHT: Delivery Form ──────────────── -->
+      <div class="col-lg-5">
+        <div class="conf-card">
+          <div class="conf-card-header">
+            <h5 class="conf-card-title">
+              <i class="fas fa-map-marker-alt me-2" style="color:var(--blue)"></i>
+              Delivery Details
+            </h5>
+          </div>
+
+          <!-- Error -->
+          <div class="alert alert-danger mx-3 mt-3"
+            ng-if="error">
+            {{ error }}
+          </div>
+
+          <div class="conf-form">
+
+            <!-- Name -->
+            <div class="form-group-custom">
+              <label class="form-label-custom">
+                Full Name <span class="required">*</span>
+              </label>
+              <input
+                type="text"
+                class="form-input-custom"
+                placeholder="Enter your full name"
+                ng-model="delivery.name"/>
+            </div>
+
+            <!-- Phone -->
+            <div class="form-group-custom">
+              <label class="form-label-custom">
+                Phone Number <span class="required">*</span>
+              </label>
+              <input
+                type="tel"
+                class="form-input-custom"
+                placeholder="Enter your phone number"
+                ng-model="delivery.phone"/>
+            </div>
+
+            <!-- Address -->
+            <div class="form-group-custom">
+              <label class="form-label-custom">
+                Delivery Address <span class="required">*</span>
+              </label>
+              <textarea
+                class="form-input-custom"
+                placeholder="Enter your full address"
+                rows="3"
+                ng-model="delivery.address">
+              </textarea>
+            </div>
+
+            <!-- Notes -->
+            <div class="form-group-custom">
+              <label class="form-label-custom">
+                Notes <span class="optional">(optional)</span>
+              </label>
+              <textarea
+                class="form-input-custom"
+                placeholder="Any special instructions?"
+                rows="2"
+                ng-model="delivery.notes">
+              </textarea>
+            </div>
+
+            <!-- Summary box -->
+            <div class="order-summary-box">
+              <div class="summary-row">
+                <span>Items</span>
+                <span>{{ cartCount() }}</span>
+              </div>
+              <div class="summary-row">
+                <span>Delivery</span>
+                <span class="text-success">Free</span>
+              </div>
+              <div class="summary-row total">
+                <span>Total</span>
+                <span>EGP {{ cartTotal() }}</span>
+              </div>
+            </div>
+
+            <!-- Place Order Button -->
+            <button
+              class="place-order-btn"
+              ng-click="placeOrder()"
+              ng-disabled="loading">
+              <span ng-if="!loading">
+                <i class="fas fa-check-circle me-2"></i>
+                Place Order
+              </span>
+              <span ng-if="loading">
+                <i class="fas fa-spinner fa-spin me-2"></i>
+                Placing Order...
+              </span>
+            </button>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
