@@ -19,7 +19,7 @@ angular.module('pharmacyApp')
                     <a class="nav-link-item" href="#/shop">
                         <i class="fas fa-store me-1"></i> Shop
                     </a>
-                    <a class="nav-link-item" href="#/orders">
+                    <a class="nav-link-item" ng-href="#!/customers/{{currentUser.id}}" >
                         <i class="fas fa-box me-1"></i> My Orders
                     </a>
                 </div>
@@ -44,10 +44,10 @@ angular.module('pharmacyApp')
                 <div class="nav-right">
 
                     <div class="welcome-chip" ng-if="currentUser">
-                        👋 <span>{{ currentUser.name }}</span>
+                         <span>{{ currentUser.name }}</span>
                     </div>
 
-                    <a class="nav-icon-btn" href="#/account"
+                    <a class="nav-icon-btn" ng-href="#!/customers/{{currentUser.id}}"
                         ng-if="currentUser.role === 'customer'"
                         title="My Account">
                         <i class="fas fa-user"></i>

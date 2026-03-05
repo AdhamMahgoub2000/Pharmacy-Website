@@ -60,7 +60,7 @@ angular.module('pharmacyApp', ['ngRoute'])
 function($rootScope, $location, AuthService) {
 
     const customerPages = ['/shop', '/confirmation', '/orders', '/account'];
-    const adminPages    = ['/dashboard', '/medicines', '/customers', '/invoices', '/users'];
+    const adminPages    = ['/dashboard', '/medicines', '/users'];
 
     // ── Restore session on page refresh ──
     // ── Restore session on page refresh ──

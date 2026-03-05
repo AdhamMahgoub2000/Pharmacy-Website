@@ -21,7 +21,6 @@ function($scope, $routeParams, $location, CustomersService, OrdersService) {
       const customer = allCustomers.find(c => c.id === customerId);
 
       if (!customer) throw new Error('Customer not found');
-
       // Get customer orders
       let orders = [];
       try {
