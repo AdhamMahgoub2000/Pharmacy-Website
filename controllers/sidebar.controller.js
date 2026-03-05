@@ -1,20 +1,28 @@
-angular.module('pharmacyApp').controller('SidebarCtrl', function ($scope, $location) {
+// controllers/sidebar.controller.js
+// Used by: directives/sidebar.directive.js  →  <app-sidebar>
+// Template: views/sideBar.html
+//
+// BUG FIXED: No DI array — unsafe for minification.
+//            Also fixed: missing closing semicolon (was `})` not `});`)
 
-    $scope.navItems = [
-      { key: 'dashboard', icon: 'dashboard',   label: 'Dashboard'      },
-      { key: 'medicines', icon: 'pill',         label: 'Medicines'      },
-      { key: 'customers', icon: 'group',        label: 'Customers'      },
-      { key: 'invoices',  icon: 'receipt_long', label: 'Sales Invoices' },
-      { key: 'inventory', icon: 'inventory_2',  label: 'Inventory'      },
-      { key: 'reports',   icon: 'bar_chart',    label: 'Reports'        },
-      { key: 'settings',  icon: 'settings',     label: 'Settings'       },
-    ];
+angular.module('pharmacyApp')
+.controller('SidebarCtrl', ['$scope', '$location', function($scope, $location) {
 
-    // Keep active nav in sync with the current route
-    $scope.activeNav = $location.path().replace('/', '') || 'dashboard';
+  // Nav items — keys match $routeProvider admin route paths exactly
+  $scope.navItems = [
+    { key: 'dashboard', icon: 'dashboard',      label: 'Dashboard'      },
+    { key: 'medicines', icon: 'pill',            label: 'Medicines'      },
+    { key: 'customers', icon: 'group',           label: 'Customers'      },
+    { key: 'invoices',  icon: 'receipt_long',    label: 'Sales Invoices' },
+    { key: 'users',     icon: 'manage_accounts', label: 'Users'          },
+  ];
 
-    $scope.setActive = function (key) {
-      $scope.activeNav = key;
-      $location.path('/' + key);
-    };
-  })
+  // Sync active item with current URL on controller load
+  $scope.activeNav = $location.path().replace('/', '') || 'dashboard';
+
+  $scope.setActive = function(key) {
+    $scope.activeNav = key;
+    $location.path('/' + key);
+  };
+
+}]);

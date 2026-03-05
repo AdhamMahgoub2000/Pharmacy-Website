@@ -1,15 +1,46 @@
-  angular.module('pharmacyApp').controller('NavbarCtrl', function ($scope) {
+// controllers/navbar-dashboard.controller.js
+// Used by: directives/navbar-dashboard.js  →  <dashboard-navbar>
+// Template: views/navbarDashboard.html
+//
+// BUGS FIXED:
+//   1. No DI array — unsafe for minification and $rootScope was never injected.
+//   2. Hardcoded $scope.user object instead of reading from $rootScope.currentUser
+//      (set by AuthService.setUser after login). The navbar was showing a fake user
+//      instead of the real logged-in user.
+//   3. No logout function.
+
+angular.module('pharmacyApp')
+.controller('NavbarCtrl', ['$scope', '$rootScope', '$location', 'AuthService',
+  function($scope, $rootScope, $location, AuthService) {
 
     $scope.searchQuery      = '';
     $scope.hasNotifications = true;
 
-    $scope.user = {
-      name:   'Dr. Sarah Smith',
-      role:   'Administrator',
-      avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCeU_v8Y91neiuShx9Z-dZT4oOuV1ZPNGn_DNZrwrTt2caONaUIWQBmiFWDeGX9G9azhEV5YjjYHEq6qmVq2kPmbTNUFfEkfIQi9BeKo5X1E5rzv4YzToMFdqQfjkGCUToVEljPKw3g1v1X-966S7aL_SFxpzamcglqocerb_hcMDi1IeEPaaUY6b04FEDXoTwDCgIbPPf_6wIOJLkqDeeHiZcNm1XYV0as7CgEnvEWcYu7s2wCzLkqDVmjvklvBana335aSdNQOFOi'
+    // Mirror $rootScope.currentUser so the template can use {{ currentUser.name }}
+    $scope.currentUser = $rootScope.currentUser;
+
+    // Keep in sync if currentUser changes after login (e.g. page refresh)
+    $rootScope.$watch('currentUser', function(val) {
+      $scope.currentUser = val;
+    });
+
+    // Initials fallback for avatar (e.g. "Sarah Smith" → "SS")
+    $scope.getInitials = function(name) {
+      if (!name) return '?';
+      return name.split(' ').map(function(n) { return n[0]; }).join('').toUpperCase().slice(0, 2);
     };
 
-    $scope.clearNotifications = function () {
+    $scope.clearNotifications = function() {
       $scope.hasNotifications = false;
     };
-  })
+
+    $scope.logout = function() {
+      AuthService.logout().then(function() {
+        $scope.$applyAsync(function() {
+          $location.path('/login');
+        });
+      });
+    };
+
+  }
+]);

@@ -89,13 +89,11 @@ angular.module('pharmacyApp')
 
             $scope.logout = function() {
                 AuthService.logout().then(function() {
-                    $rootScope.$apply(function() {
-                        $rootScope.currentUser = null;
-                        $rootScope.cart = [];
-                        $location.path('/login');
-                    });
+                    $rootScope.currentUser = null;
+                    $rootScope.cart = [];
+                    $location.path('/login');
                 });
-            };
+                };
 
         }]
     };

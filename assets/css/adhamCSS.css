@@ -19,7 +19,32 @@
   --text-muted:     #64748b;
   --text-faint:     #94a3b8;
 }
+p{
+    margin: 0;
+}
+/* main container */
+.main-content {
+    display: flex;
+    min-height: calc(100vh - 60px); /* minus navbar height */
+}
 
+/* sidebar */
+app-sidebar {
+    width: 260px;
+    flex-shrink: 0;
+}
+
+/* content */
+.content-area {
+    flex: 1;
+    padding: 20px;
+    background: #f8f9fa;
+}
+
+/* if user is not admin (no sidebar) */
+.main-content:not(.with-sidebar) {
+    display: block;
+}
 /* =====================
    RESET / BASE
    ===================== */
@@ -287,9 +312,6 @@ body.auth-page {
 
 .btn-new-sale:hover { background: var(--primary-dark); }
 
-/* ============================================================
-   NAVBAR  (top header)
-   ============================================================ */
 .top-navbar {
   height: 64px;
   flex-shrink: 0;
