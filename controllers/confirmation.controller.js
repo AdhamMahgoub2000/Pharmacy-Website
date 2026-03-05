@@ -9,10 +9,11 @@ function($scope, $rootScope, $location, OrdersService) {
     }
 
     // ── State ──────────────────────────────────
-    $scope.cart        = $rootScope.cart;
-    $scope.currentUser = $rootScope.currentUser;
-    $scope.loading     = false;
-    $scope.error       = null;
+    $scope.cart         = $rootScope.cart;
+    $scope.currentUser  = $rootScope.currentUser;
+    $scope.loading      = false;
+    $scope.error        = null;
+    $scope.orderSuccess = false;
 
     $scope.delivery = {
         name:    $rootScope.currentUser.name    || '',
@@ -78,10 +79,8 @@ function($scope, $rootScope, $location, OrdersService) {
         $scope.$apply(function() {
             $scope.loading = false;
             if (result.success) {
-                // Clear cart after order
-                $rootScope.cart = [];
-                // Go to orders history
-                $location.path('/orders');
+                $rootScope.cart     = [];
+                $scope.orderSuccess = true;
             } else {
                 $scope.error = 'Failed to place order. Please try again.';
             }
