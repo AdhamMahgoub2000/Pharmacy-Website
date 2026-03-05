@@ -54,6 +54,24 @@ angular.module('pharmacyApp')
         }
     };
 
+    // ── Get all invoices (admin) ───────────────
+    this.getAllInvoices = async function() {
+        const { data, error } = await client
+            .from('invoices')
+            .select(`
+                *,
+                users ( name, email ),
+                invoice_items (
+                    *,
+                    medicines ( name, category )
+                )
+            `)
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        return data;
+    };
+
     // ── Get customer orders ────────────────────
     this.getCustomerOrders = async function(customerId) {
         const { data, error } = await client

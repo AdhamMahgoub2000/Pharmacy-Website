@@ -1,7 +1,7 @@
 angular.module('pharmacyApp')
 .controller('InvoiceController',
-['$scope','$routeParams','$location','CustomersService',
-function($scope,$routeParams,$location,CustomersService){
+['$scope','$routeParams','$location','CustomersService','OrdersService',
+function($scope,$routeParams,$location,CustomersService,OrdersService){
 
     $scope.loading = true;
     $scope.order = null;
@@ -10,47 +10,46 @@ function($scope,$routeParams,$location,CustomersService){
     const orderId = $routeParams.orderId;
 
     async function loadInvoice(){
-
         try{
-
+            // Step 1: Get all customers to find who owns this order
             const customers = await CustomersService.getAllCustomers();
 
+            // Step 2: For each customer, fetch their orders and find the matching one
             let foundOrder = null;
             let foundCustomer = null;
 
-            customers.forEach(c => {
-
-                if(c.orders){
-                    const order = c.orders.find(o => o.id === orderId);
-
-                    if(order){
-                        foundOrder = order;
-                        foundCustomer = c;
-                    }
+            for(const c of customers){
+                const orders = await OrdersService.getCustomerOrders(c.id);
+                const match = orders.find(o => o.id === orderId);
+                if(match){
+                    foundOrder = match;
+                    foundCustomer = c;
+                    break;
                 }
+            }
 
+            $scope.$apply(function(){
+                $scope.order = foundOrder;
+                $scope.customer = foundCustomer;
+                $scope.loading = false;
             });
 
-            $scope.order = foundOrder;
-            $scope.customer = foundCustomer;
-
-            $scope.loading = false;
-            $scope.$apply();
-
         }catch(err){
-
             console.error(err);
-            $scope.loading = false;
+            $scope.$apply(function(){
+                $scope.loading = false;
+            });
         }
-
     }
 
     loadInvoice();
 
     $scope.goBack = function(){
-
-        $location.path('/customers/' + $scope.customer.id);
-
+        if($scope.customer){
+            $location.path('/customers/' + $scope.customer.id);
+        } else {
+            $location.path('/customers');
+        }
     };
 
 }]);

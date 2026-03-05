@@ -728,30 +728,3 @@
 .place-order-btn:disabled {
   opacity: 0.7; cursor: not-allowed; transform: none;
 }
-
-/*  page scroll */
-.confirmation-page {
-  overflow-y: auto !important;
-  height: auto !important;
-}
-
-.content-area {
-  overflow-y: auto !important;
-  height: auto !important;
-}
-/* ══ GLOBAL SCROLL FIX ═══════════════════════ */
-html, body {
-  height: auto !important;
-  overflow-y: auto !important;
-}
-
-.main-content {
-  height: auto !important;
-  overflow: visible !important;
-}
-
-.content-area {
-  height: auto !important;
-  overflow: visible !important;
-  min-height: calc(100vh - 65px);
-}
