@@ -597,3 +597,134 @@
   background: #ff4757; color: white;
   border-color: #ff4757;
 }
+
+/* ══ CONFIRMATION PAGE ═══════════════════════ */
+.confirmation-page { background: var(--soft); min-height: 100vh; }
+.conf-header {
+  background: white;
+  padding: 1.5rem 2.5rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 2rem;
+}
+.conf-header-inner {
+  display: flex; align-items: center; gap: 1.5rem;
+}
+.back-btn {
+  background: var(--light-blue); color: var(--blue);
+  border: none; padding: 10px 20px; border-radius: 50px;
+  font-weight: 600; cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s; white-space: nowrap;
+}
+.back-btn:hover { background: var(--blue); color: white; }
+.conf-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem; font-weight: 700;
+  color: var(--navy); margin: 0;
+}
+.conf-subtitle { color: var(--gray); margin: 0; font-size: 0.9rem; }
+.conf-card {
+  background: white; border-radius: 20px;
+  box-shadow: var(--shadow); overflow: hidden;
+}
+.conf-card-header {
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid #f0f4ff;
+}
+.conf-card-title {
+  font-weight: 700; color: var(--navy);
+  margin: 0; font-size: 1rem;
+  display: flex; align-items: center; gap: 8px;
+}
+.items-badge {
+  background: var(--light-blue); color: var(--blue);
+  padding: 3px 10px; border-radius: 50px;
+  font-size: 0.78rem; font-weight: 700;
+}
+.conf-items { padding: 0.5rem 1.5rem; }
+.conf-item {
+  display: flex; align-items: center;
+  gap: 12px; padding: 12px 0;
+  border-bottom: 1px solid #f0f4ff;
+}
+.conf-item:last-child { border-bottom: none; }
+.conf-item-img {
+  width: 56px; height: 56px; border-radius: 12px;
+  object-fit: cover; background: var(--light-blue);
+  flex-shrink: 0;
+}
+.conf-item-info { flex: 1; }
+.conf-item-name {
+  font-weight: 700; font-size: 0.9rem;
+  color: var(--navy); margin: 0;
+}
+.conf-item-cat {
+  font-size: 0.75rem; color: var(--gray); margin: 2px 0 0;
+}
+.qty-chip {
+  background: var(--light-blue); color: var(--blue);
+  padding: 4px 10px; border-radius: 50px;
+  font-size: 0.82rem; font-weight: 700;
+}
+.conf-item-price {
+  font-weight: 800; color: var(--blue);
+  font-size: 0.95rem; white-space: nowrap;
+}
+.conf-total-row {
+  display: flex; justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 1.5rem;
+  border-top: 2px solid #f0f4ff;
+  background: var(--soft);
+}
+.conf-total-label { font-weight: 700; color: var(--navy); font-size: 1rem; }
+.conf-total-amount { font-size: 1.5rem; font-weight: 800; color: var(--blue); }
+.conf-form { padding: 1.2rem 1.5rem; }
+.form-group-custom { margin-bottom: 1.2rem; }
+.form-label-custom {
+  font-weight: 600; font-size: 0.88rem;
+  color: var(--navy); margin-bottom: 6px; display: block;
+}
+.required { color: #ff4757; }
+.optional { color: var(--gray); font-weight: 400; font-size: 0.82rem; }
+.form-input-custom {
+  width: 100%; padding: 10px 16px;
+  border: 1.5px solid #dde6f5; border-radius: 12px;
+  font-size: 0.9rem; font-family: 'DM Sans', sans-serif;
+  color: var(--dark); outline: none; transition: all 0.2s;
+  background: var(--soft); resize: none;
+}
+.form-input-custom:focus {
+  border-color: var(--sky); background: white;
+  box-shadow: 0 0 0 3px rgba(61,142,248,0.12);
+}
+.order-summary-box {
+  background: var(--soft); border-radius: 14px;
+  padding: 1rem 1.2rem; margin-bottom: 1.2rem;
+}
+.summary-row {
+  display: flex; justify-content: space-between;
+  font-size: 0.9rem; color: var(--gray);
+  padding: 5px 0;
+}
+.summary-row.total {
+  font-weight: 800; color: var(--navy);
+  font-size: 1.1rem; border-top: 1px solid #dde6f5;
+  margin-top: 8px; padding-top: 10px;
+}
+.place-order-btn {
+  width: 100%; padding: 14px;
+  background: linear-gradient(135deg, var(--blue), var(--sky));
+  color: white; border: none; border-radius: 14px;
+  font-weight: 700; font-size: 1rem; cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  box-shadow: 0 6px 20px rgba(30,95,194,0.35);
+  transition: all 0.25s;
+}
+.place-order-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(30,95,194,0.45);
+}
+.place-order-btn:disabled {
+  opacity: 0.7; cursor: not-allowed; transform: none;
+}
