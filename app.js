@@ -41,6 +41,10 @@ angular.module('pharmacyApp', ['ngRoute'])
       templateUrl: 'views/customer-profile.html',
       controller: 'CustomerProfileController'
     })
+  .when('/invoices', {
+      templateUrl: 'views/sales-invoices.html',
+      controller: 'SalesInvoicesController'
+  })
   .when('/invoice/:orderId', {
       templateUrl: 'views/invoices.html',
       controller: 'InvoiceController'
@@ -56,7 +60,7 @@ angular.module('pharmacyApp', ['ngRoute'])
 function($rootScope, $location, AuthService) {
 
     const customerPages = ['/shop', '/confirmation', '/orders', '/account'];
-    const adminPages    = ['/dashboard', '/medicines', '/customers', '/users'];
+    const adminPages    = ['/dashboard', '/medicines', '/customers', '/invoices', '/users'];
 
     // ── Restore session on page refresh ──
     // ── Restore session on page refresh ──
@@ -97,7 +101,7 @@ AuthService.verifySession().then(async function(result) {
             $location.path('/login');
             return;
         }
-        if (user && user.role === 'customer' && adminPages.includes(path)) {
+        if (user && user.role === 'customer' && (adminPages.includes(path) || path.startsWith('/invoice/'))) {
             $location.path('/shop');
             return;
         }

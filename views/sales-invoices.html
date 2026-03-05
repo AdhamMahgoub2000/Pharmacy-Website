@@ -1,0 +1,263 @@
+<div class="container-fluid px-0">
+
+  <!-- ── Page Header ────────────────────────────────── -->
+  <div class="mb-4 d-flex align-items-center justify-content-between flex-wrap gap-3">
+    <div>
+      <h2 class="page-title">Sales Invoices</h2>
+      <p class="page-subtitle">Browse, filter and review all customer invoices.</p>
+    </div>
+  </div>
+
+  <!-- ── Stat Cards ─────────────────────────────────── -->
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-lg-3">
+      <div class="stat-card">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          <div class="stat-icon blue">
+            <span class="material-symbols-outlined">receipt_long</span>
+          </div>
+        </div>
+        <p class="stat-label">Total Invoices</p>
+        <p class="stat-value">{{stats.total}}</p>
+      </div>
+    </div>
+    <div class="col-6 col-lg-3">
+      <div class="stat-card">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          <div class="stat-icon green">
+            <span class="material-symbols-outlined">check_circle</span>
+          </div>
+        </div>
+        <p class="stat-label">Paid</p>
+        <p class="stat-value">{{stats.paid}}</p>
+      </div>
+    </div>
+    <div class="col-6 col-lg-3">
+      <div class="stat-card">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          <div class="stat-icon" style="background:#fef3c7;color:#d97706;">
+            <span class="material-symbols-outlined">schedule</span>
+          </div>
+        </div>
+        <p class="stat-label">Pending</p>
+        <p class="stat-value">{{stats.pending}}</p>
+      </div>
+    </div>
+    <div class="col-6 col-lg-3">
+      <div class="stat-card">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          <div class="stat-icon purple">
+            <span class="material-symbols-outlined">payments</span>
+          </div>
+        </div>
+        <p class="stat-label">Total Revenue</p>
+        <p class="stat-value">{{stats.revenue | currency}}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Table Card ─────────────────────────────────── -->
+  <div class="table-card">
+
+    <!-- toolbar -->
+    <div class="table-header d-flex align-items-center justify-content-between flex-wrap gap-3">
+      <span class="table-title">All Invoices</span>
+
+      <div class="d-flex align-items-center gap-2 flex-wrap">
+        <!-- search -->
+        <div class="si-search-wrap">
+          <span class="material-symbols-outlined si-search-icon">search</span>
+          <input
+            class="si-search-input"
+            type="text"
+            placeholder="Search by ID or customer…"
+            ng-model="search"
+            ng-change="onSearch()"
+          />
+        </div>
+
+        <!-- status tabs -->
+        <div class="si-tabs">
+          <button class="si-tab" ng-class="{active: statusFilter==='all'}"     ng-click="setStatus('all')">All</button>
+          <button class="si-tab" ng-class="{active: statusFilter==='paid'}"    ng-click="setStatus('paid')">Paid</button>
+          <button class="si-tab" ng-class="{active: statusFilter==='pending'}" ng-click="setStatus('pending')">Pending</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- loading -->
+    <div ng-if="loading" class="text-center py-5">
+      <div class="spinner-border" style="color:var(--primary);" role="status"></div>
+      <p class="mt-3" style="color:var(--text-muted);font-size:.875rem;">Loading invoices…</p>
+    </div>
+
+    <!-- empty -->
+    <div ng-if="!loading && !filtered.length" class="si-empty">
+      <span class="material-symbols-outlined si-empty-icon">receipt_long</span>
+      <p class="si-empty-title">No invoices found</p>
+      <p class="si-empty-sub">Try changing your search or filter.</p>
+    </div>
+
+    <!-- table -->
+    <div ng-if="!loading && filtered.length" class="table-responsive">
+      <table class="inv-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Customer</th>
+            <th>Date</th>
+            <th>Items</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th style="text-align:right;">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="inv in filtered">
+            <td><span class="inv-id">{{inv.id | limitTo:8}}…</span></td>
+
+            <td>
+              <div class="d-flex align-items-center gap-2">
+                <div class="si-avatar">{{getCustomerInitial(inv)}}</div>
+                <div>
+                  <p class="customer-name mb-0">{{getCustomerName(inv)}}</p>
+                  <p class="mb-0" style="font-size:.75rem;color:var(--text-muted);">{{inv.users.email}}</p>
+                </div>
+              </div>
+            </td>
+
+            <td><span class="inv-date">{{inv.created_at | date:'MMM d, y'}}</span></td>
+
+            <td>
+              <span class="si-item-count">{{invoiceItemCount(inv)}} item{{invoiceItemCount(inv) !== 1 ? 's' : ''}}</span>
+            </td>
+
+            <td><span class="inv-amount">{{inv.total | currency}}</span></td>
+
+            <td>
+              <span class="status-badge" ng-class="inv.status">{{inv.status}}</span>
+            </td>
+
+            <td style="text-align:right;">
+              <button class="si-btn-view" ng-click="previewInvoice(inv)">
+                <span class="material-symbols-outlined" style="font-size:16px;">visibility</span>
+                View Invoice
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- footer count -->
+    <div ng-if="!loading && filtered.length" class="table-footer">
+      <p style="font-size:.8rem;color:var(--text-muted);margin:0;">
+        Showing <strong>{{filtered.length}}</strong> of <strong>{{allInvoices.length}}</strong> invoices
+      </p>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     INVOICE PREVIEW MODAL
+════════════════════════════════════════════════ -->
+<div class="modal fade" id="invoicePreviewModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
+    <div class="modal-content si-modal-content" ng-if="selectedInvoice">
+
+      <!-- colored header -->
+      <div class="si-modal-header">
+        <div class="d-flex align-items-center gap-3">
+          <div class="si-modal-icon">
+            <span class="material-symbols-outlined">receipt_long</span>
+          </div>
+          <div>
+            <p class="si-modal-label">Invoice</p>
+            <p class="si-modal-id">#{{selectedInvoice.id | limitTo:12}}…</p>
+          </div>
+        </div>
+        <button type="button" class="si-modal-close" data-bs-dismiss="modal">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <!-- body -->
+      <div class="modal-body p-4">
+
+        <!-- meta row -->
+        <div class="row g-3 mb-4">
+          <div class="col-sm-6">
+            <div class="si-meta-card">
+              <p class="si-meta-label">Customer</p>
+              <div class="d-flex align-items-center gap-2 mt-1">
+                <div class="si-avatar si-avatar-lg">{{getCustomerInitial(selectedInvoice)}}</div>
+                <div>
+                  <p class="si-meta-value mb-0">{{getCustomerName(selectedInvoice)}}</p>
+                  <p class="mb-0" style="font-size:.75rem;color:var(--text-muted);">{{selectedInvoice.users.email}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="si-meta-card">
+              <p class="si-meta-label">Date</p>
+              <p class="si-meta-value">{{selectedInvoice.created_at | date:'MMM d, y'}}</p>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="si-meta-card">
+              <p class="si-meta-label">Status</p>
+              <span class="status-badge" ng-class="selectedInvoice.status" style="font-size:.75rem;padding:.35rem .75rem;">
+                {{selectedInvoice.status}}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- items table -->
+        <div class="si-items-card">
+          <p class="si-items-title">Invoice Items</p>
+          <table class="inv-table" style="margin-bottom:0;">
+            <thead>
+              <tr>
+                <th>Medicine</th>
+                <th>Category</th>
+                <th style="text-align:center;">Qty</th>
+                <th style="text-align:right;">Unit Price</th>
+                <th style="text-align:right;">Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in selectedInvoice.invoice_items">
+                <td style="font-weight:600;">{{item.medicines.name}}</td>
+                <td><span class="si-category-tag">{{item.medicines.category}}</span></td>
+                <td style="text-align:center;">{{item.quantity}}</td>
+                <td style="text-align:right;color:var(--text-muted);">{{item.unit_price | currency}}</td>
+                <td style="text-align:right;font-weight:700;">{{item.quantity * item.unit_price | currency}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- total -->
+        <div class="si-total-row">
+          <span>Total Amount</span>
+          <span class="si-total-value">{{selectedInvoice.total | currency}}</span>
+        </div>
+
+      </div>
+
+      <!-- footer -->
+      <div class="si-modal-footer">
+        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="si-btn-full" ng-click="openFullInvoice(selectedInvoice)">
+          <span class="material-symbols-outlined" style="font-size:16px;">open_in_full</span>
+          Full Invoice Page
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
