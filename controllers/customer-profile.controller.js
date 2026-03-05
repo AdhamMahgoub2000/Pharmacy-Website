@@ -108,21 +108,14 @@ $scope.viewInvoice = function(order){
 };
 
 $scope.showFullInvoice = function(order){
+
   const modalEl = document.getElementById('invoiceModal');
   const modalInstance = bootstrap.Modal.getInstance(modalEl);
-  if(modalInstance){ modalInstance.hide(); }
 
-  // Wait for modal to fully close before navigating
-  modalEl.addEventListener('hidden.bs.modal', function handler(){
-    modalEl.removeEventListener('hidden.bs.modal', handler);
-    // Remove any leftover backdrop just in case
-    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
-    document.body.classList.remove('modal-open');
-    document.body.style.overflow = '';
-    document.body.style.paddingRight = '';
-    $scope.$apply(function(){
-      $location.path('/invoice/' + order.id);
-    });
-  }, { once: true });
+  if(modalInstance){
+    modalInstance.hide();
+  }
+
+  $location.path('/invoice/' + order.id);
 };
 }]);

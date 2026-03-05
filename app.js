@@ -101,10 +101,10 @@ AuthService.verifySession().then(async function(result) {
             $location.path('/login');
             return;
         }
-        if (user && user.role === 'customer' && (adminPages.includes(path) || path.startsWith('/invoice/'))) {
-            $location.path('/shop');
-            return;
-        }
+        // if (user && user.role === 'customer' && (adminPages.includes(path) || path.startsWith('/invoice/'))) {
+        //     $location.path('/shop');
+        //     return;
+        // }
         if (user && user.role === 'admin' && customerPages.includes(path)) {
             $location.path('/dashboard');
             return;
@@ -116,3 +116,4 @@ AuthService.verifySession().then(async function(result) {
     });
 
 }]);
+// TODO : CHECK ROUTING CONSTRAINTS
