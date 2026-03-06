@@ -1,95 +1,74 @@
 <div class="shop-page">
 
-  <!-- ══ HERO SLIDER ══════════════════════════ -->
+  <!-- ══ HERO SLIDER ══════════════════════════════════════════════════ -->
   <section class="hero-section">
 
-    <!-- Slide 1 -->
     <div class="hero-slide active">
-      <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1920&q=80')"></div>
+      <div class="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1920&q=80')"></div>
       <div class="hero-content">
         <div class="hero-tag">Trusted Since 2020</div>
         <h1 class="hero-title">Your Health,<br/>Our Priority</h1>
-        <p class="hero-subtitle">Shop from 40+ trusted medicines & beauty products with fast delivery across Egypt</p>
+        <p class="hero-subtitle">Shop from 40+ trusted medicines &amp; wellness products with same-day delivery across Egypt</p>
         <div class="hero-cta">
-          <button class="btn-hero-primary" ng-click="scrollToShop()">Shop Now →</button>
+          <button class="btn-hero-primary" ng-click="scrollToShop()">Browse Products →</button>
           <button class="btn-hero-secondary" ng-click="scrollToShop()">View Categories</button>
         </div>
       </div>
     </div>
 
-    <!-- Slide 2 -->
     <div class="hero-slide">
-      <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=1920&q=80')"></div>
+      <div class="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=1920&q=80')"></div>
       <div class="hero-content">
         <div class="hero-tag">New Arrivals</div>
-        <h1 class="hero-title">Beauty &<br/>Personal Care</h1>
-        <p class="hero-subtitle">Discover skincare essentials, moisturizers and premium beauty products</p>
+        <h1 class="hero-title">Beauty &amp;<br/>Personal Care</h1>
+        <p class="hero-subtitle">Skincare essentials, moisturizers and everything your skin deserves</p>
         <div class="hero-cta">
-          <button class="btn-hero-primary" ng-click="selectCategory('Beauty & Personal Care')">Explore Now →</button>
-          <button class="btn-hero-secondary">Learn More</button>
+          <button class="btn-hero-primary" ng-click="selectCategory('Beauty & Personal Care')">Shop Beauty →</button>
+          <button class="btn-hero-secondary" ng-click="scrollToShop()">Learn More</button>
         </div>
       </div>
     </div>
 
-    <!-- Slide 3 -->
     <div class="hero-slide">
-      <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1550572017-edd951b55104?w=1920&q=80')"></div>
+      <div class="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1550572017-edd951b55104?w=1920&q=80')"></div>
       <div class="hero-content">
         <div class="hero-tag">Best Sellers</div>
-        <h1 class="hero-title">Vitamins &<br/>Supplements</h1>
-        <p class="hero-subtitle">Boost your immunity with our top-rated vitamins and daily supplements</p>
+        <h1 class="hero-title">Vitamins &amp;<br/>Supplements</h1>
+        <p class="hero-subtitle">Give your body what it needs — daily vitamins and immunity boosters</p>
         <div class="hero-cta">
-          <button class="btn-hero-primary" ng-click="selectCategory('Vitamins & Supplements')">Shop Now →</button>
-          <button class="btn-hero-secondary">View All</button>
+          <button class="btn-hero-primary" ng-click="selectCategory('Vitamins & Supplements')">Shop Vitamins →</button>
+          <button class="btn-hero-secondary" ng-click="scrollToShop()">View All</button>
         </div>
       </div>
     </div>
 
-    <!-- Arrows -->
-    <button class="slider-arrow prev" ng-click="prevSlide()">
-      <i class="bi bi-chevron-left"></i>
-    </button>
-    <button class="slider-arrow next" ng-click="nextSlide()">
-      <i class="bi bi-chevron-right"></i>
-    </button>
+    <button class="slider-arrow prev" ng-click="prevSlide()"><i class="bi bi-chevron-left"></i></button>
+    <button class="slider-arrow next" ng-click="nextSlide()"><i class="bi bi-chevron-right"></i></button>
 
-    <!-- Dots -->
     <div class="slider-controls">
       <span class="slider-dot active" ng-click="goToSlide(0)"></span>
-      <span class="slider-dot" ng-click="goToSlide(1)"></span>
-      <span class="slider-dot" ng-click="goToSlide(2)"></span>
+      <span class="slider-dot"        ng-click="goToSlide(1)"></span>
+      <span class="slider-dot"        ng-click="goToSlide(2)"></span>
     </div>
 
-    <!-- Stats -->
     <div class="hero-stats">
-      <div class="hero-stat">
-        <div class="hero-stat-num">40+</div>
-        <div class="hero-stat-label">Products</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">9</div>
-        <div class="hero-stat-label">Categories</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">24h</div>
-        <div class="hero-stat-label">Delivery</div>
-      </div>
+      <div class="hero-stat"><div class="hero-stat-num">{{ medicines.length || '40' }}+</div><div class="hero-stat-label">Products</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">{{ categories.length > 1 ? categories.length - 1 : '9' }}</div><div class="hero-stat-label">Categories</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">24h</div><div class="hero-stat-label">Delivery</div></div>
     </div>
-
   </section>
 
-  <!-- ══ FEATURED COLLECTIONS ═════════════════ -->
+
+  <!-- ══ FEATURED COLLECTIONS ═════════════════════════════════════════ -->
   <div class="container-fluid px-4 mt-5">
     <div class="section-header">
       <div class="section-label">Browse Collections</div>
-      <h2 class="section-title">Featured Categories</h2>
+      <h2 class="section-title">Shop by Category</h2>
     </div>
     <div class="row g-4">
       <div class="col-md-4">
         <div class="collection-card" ng-click="selectCategory('Painkillers')">
-          <div class="collection-bg"
-            style="background-image: url('https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&q=80')">
-          </div>
+          <div class="collection-bg" style="background-image:url('https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&q=80')"></div>
           <div class="collection-content">
             <div class="collection-tag">Most Popular</div>
             <h3>Medicines</h3>
@@ -100,22 +79,18 @@
       </div>
       <div class="col-md-4">
         <div class="collection-card" ng-click="selectCategory('Beauty & Personal Care')">
-          <div class="collection-bg"
-            style="background-image: url('https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&q=80')">
-          </div>
+          <div class="collection-bg" style="background-image:url('https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&q=80')"></div>
           <div class="collection-content">
             <div class="collection-tag">New Arrivals</div>
             <h3>Beauty Care</h3>
-            <p>Skincare, moisturizers & more</p>
+            <p>Skincare, moisturizers &amp; more</p>
             <button class="btn-collection">Shop Beauty</button>
           </div>
         </div>
       </div>
       <div class="col-md-4">
         <div class="collection-card" ng-click="selectCategory('Vitamins & Supplements')">
-          <div class="collection-bg"
-            style="background-image: url('https://images.unsplash.com/photo-1550572017-edd951b55104?w=800&q=80')">
-          </div>
+          <div class="collection-bg" style="background-image:url('https://images.unsplash.com/photo-1550572017-edd951b55104?w=800&q=80')"></div>
           <div class="collection-content">
             <div class="collection-tag">Best Sellers</div>
             <h3>Vitamins</h3>
@@ -127,26 +102,22 @@
     </div>
   </div>
 
-  <!-- ══ SEARCH BAR ════════════════════════════ -->
+
+  <!-- ══ SEARCH + CART BAR ════════════════════════════════════════════ -->
   <div class="container-fluid px-4 mt-4">
     <div class="shop-search-bar">
       <i class="fas fa-search"></i>
-      <input
-        type="text"
-        placeholder="Search medicines, beauty products..."
-        ng-model="searchQuery"/>
-      <button class="cart-open-btn"
-        data-bs-toggle="offcanvas"
-        data-bs-target="#cartOffcanvas">
-        <i class="fas fa-shopping-cart me-2"></i> My Cart
-        <span class="cart-count-badge" ng-show="cartCount() > 0">
-          {{ cartCount() }}
-        </span>
+      <input type="text" placeholder="Search medicines, beauty products…" ng-model="searchQuery"/>
+      <button class="cart-open-btn" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+        <i class="fas fa-shopping-cart me-2"></i>
+        <span class="d-none d-sm-inline">My Cart</span>
+        <span class="cart-count-badge" ng-show="cartCount() > 0">{{ cartCount() }}</span>
       </button>
     </div>
   </div>
 
-  <!-- ══ CATEGORIES BAR ════════════════════════ -->
+
+  <!-- ══ CATEGORIES BAR ════════════════════════════════════════════════ -->
   <div class="container-fluid px-4 mt-3" id="shopSection">
     <div class="categories-bar">
       <span class="categories-label">Filter:</span>
@@ -159,91 +130,83 @@
     </div>
   </div>
 
-  <!-- ══ PRODUCTS SECTION ══════════════════════ -->
+
+  <!-- ══ PRODUCTS GRID ═════════════════════════════════════════════════ -->
   <div class="container-fluid px-4 mt-4 pb-5">
 
-    <!-- Header -->
+    <!-- Header row -->
     <div class="products-header">
-      <div class="products-count">
-        Showing <strong>{{ filteredMedicines().length }}</strong> products
-        <span ng-if="selectedCategory !== 'All'">
-          in <strong>{{ selectedCategory }}</strong>
+      <div class="products-count" ng-if="!loading">
+        <span ng-if="filteredMedicines().length > 0">
+          Showing
+          <strong>{{ (currentPage - 1) * perPage + 1 }}–{{ getPageEnd() }}</strong>
+          of <strong>{{ filteredMedicines().length }}</strong> products
+          <span ng-if="selectedCategory !== 'All'"> in <strong>{{ selectedCategory }}</strong></span>
         </span>
+        <span ng-if="filteredMedicines().length === 0">No products found</span>
+      </div>
+      <!-- Active filter chip -->
+      <div ng-if="selectedCategory !== 'All'" class="shop-active-filter">
+        <span>{{ selectedCategory }}</span>
+        <button ng-click="selectCategory('All')">×</button>
       </div>
     </div>
 
     <!-- Loading -->
     <div ng-if="loading" class="text-center py-5">
-      <div class="spinner-border" style="color:var(--blue);width:3rem;height:3rem"></div>
-      <p class="mt-3 text-muted">Loading products...</p>
+      <div class="spinner-border" style="color:var(--blue);width:3rem;height:3rem;"></div>
+      <p class="mt-3 text-muted">Loading products…</p>
     </div>
 
     <!-- Error -->
     <div ng-if="error" class="alert alert-danger">{{ error }}</div>
 
-    <!-- No results -->
-    <div ng-if="!loading && filteredMedicines().length === 0"
-      class="text-center py-5">
-      <i class="fas fa-box-open fa-3x mb-3" style="color:var(--gray)"></i>
-      <p style="color:var(--gray)">No products found</p>
+    <!-- Empty -->
+    <div ng-if="!loading && filteredMedicines().length === 0" class="shop-empty">
+      <i class="fas fa-box-open"></i>
+      <p>Nothing found for "{{ searchQuery }}"</p>
+      <button class="cat-pill active" ng-click="searchQuery = ''; selectCategory('All')">Clear filters</button>
     </div>
 
-    <!-- Grid -->
-    <div class="row g-4" ng-if="!loading">
+    <!-- Grid — shows current page slice -->
+    <div class="row g-4" ng-if="!loading && pagedMedicines().length > 0">
       <div class="col-xl-3 col-md-4 col-sm-6"
-        ng-repeat="medicine in filteredMedicines()">
+           ng-repeat="medicine in pagedMedicines()">
         <div class="product-card">
 
-          <!-- Image -->
           <div class="product-image-wrapper">
-            <span ng-if="medicine.stock === 0"
-              class="product-badge out">Out of Stock</span>
-            <img
-              ng-src="{{ medicine.image_url || getCategoryImage(medicine.category) }}"
-              class="product-image"
-              alt="{{ medicine.name }}"/>
-            <!-- Hover overlay -->
+            <span ng-if="medicine.stock === 0" class="product-badge out">Out of Stock</span>
+            <span ng-if="medicine.stock > 0 && medicine.stock < 10" class="product-badge low-badge">Low Stock</span>
+            <img ng-src="{{ medicine.image_url || getCategoryImage(medicine.category) }}"
+                 class="product-image" alt="{{ medicine.name }}"/>
             <div class="product-overlay">
-              <button class="overlay-btn" title="Quick View"
-                ng-click="quickView(medicine)">
+              <button class="overlay-btn" title="Quick view" ng-click="quickView(medicine)">
                 <i class="bi bi-eye"></i>
               </button>
-              <button class="overlay-btn" title="Add to Cart"
-                ng-click="addToCart(medicine)"
-                ng-disabled="medicine.stock === 0">
+              <button class="overlay-btn" title="Add to cart"
+                ng-click="addToCart(medicine)" ng-disabled="medicine.stock === 0">
                 <i class="bi bi-cart-plus"></i>
               </button>
             </div>
           </div>
 
-          <!-- Info -->
           <div class="product-info">
             <div class="product-category">{{ medicine.category }}</div>
             <h5 class="product-title">{{ medicine.name }}</h5>
             <p class="product-desc">{{ medicine.description }}</p>
             <div class="product-footer">
               <div class="product-price">EGP {{ medicine.price }}</div>
-              <div class="product-stock"
-                ng-class="medicine.stock < 20 ? 'low' : 'ok'">
+              <div class="product-stock" ng-class="medicine.stock < 20 ? 'low' : 'ok'">
                 <i class="fas fa-box me-1"></i>{{ medicine.stock }} left
               </div>
             </div>
             <button class="add-btn"
               ng-click="addToCart(medicine)"
               ng-disabled="medicine.stock === 0"
-              ng-class="{
-                'added':    isInCart(medicine),
-                'disabled': medicine.stock === 0
-              }">
-              <span ng-if="medicine.stock === 0">
-                <i class="fas fa-times me-1"></i> Out of Stock
-              </span>
-              <span ng-if="medicine.stock > 0 && !isInCart(medicine)">
-                <i class="fas fa-cart-plus me-1"></i> Add to Cart
-              </span>
-              <span ng-if="medicine.stock > 0 && isInCart(medicine)">
-                <i class="fas fa-check me-1"></i> Added!
-              </span>
+              ng-class="{'added': isInCart(medicine), 'disabled': medicine.stock === 0}">
+              <span ng-if="medicine.stock === 0"><i class="fas fa-times me-1"></i>Out of Stock</span>
+              <span ng-if="medicine.stock > 0 && !isInCart(medicine)"><i class="fas fa-cart-plus me-1"></i>Add to Cart</span>
+              <span ng-if="medicine.stock > 0 && isInCart(medicine)"><i class="fas fa-check me-1"></i>In Cart</span>
             </button>
           </div>
 
@@ -251,41 +214,70 @@
       </div>
     </div>
 
+
+    <!-- ── PAGINATION ──────────────────────────────────────────────── -->
+    <div class="shop-pagination" ng-if="!loading && totalPages() > 1">
+
+      <!-- Summary -->
+      <p class="pagination-summary">
+        Page {{ currentPage }} of {{ totalPages() }}
+        &nbsp;·&nbsp;
+        {{ filteredMedicines().length }} products total
+      </p>
+
+      <div class="pagination-controls">
+        <!-- Prev -->
+        <button class="page-btn page-arrow"
+          ng-click="prevPage()"
+          ng-disabled="currentPage === 1"
+          title="Previous page">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+
+        <!-- Page numbers -->
+        <button ng-repeat="p in pageNumbers() track by $index"
+          class="page-btn"
+          ng-class="{'active': p === currentPage, 'ellipsis': p === '…'}"
+          ng-click="goToPage(p)"
+          ng-disabled="p === '…'">
+          {{ p }}
+        </button>
+
+        <!-- Next -->
+        <button class="page-btn page-arrow"
+          ng-click="nextPage()"
+          ng-disabled="currentPage === totalPages()"
+          title="Next page">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+      </div>
+
+    </div>
+
   </div>
 
-  <!-- ══ CART OFFCANVAS ════════════════════════ -->
-  <div class="offcanvas offcanvas-end" id="cartOffcanvas"
-    style="width:400px">
+
+  <!-- ══ CART OFFCANVAS ════════════════════════════════════════════════ -->
+  <div class="offcanvas offcanvas-end" id="cartOffcanvas" style="width:400px;">
     <div class="offcanvas-header border-bottom">
-      <h5 class="fw-bold" style="color:var(--navy)">
-        <i class="fas fa-shopping-cart me-2" style="color:var(--blue)"></i>
-        My Cart
+      <h5 class="fw-bold" style="color:var(--navy);">
+        <i class="fas fa-shopping-cart me-2" style="color:var(--blue);"></i>My Cart
       </h5>
       <button class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
 
     <div class="offcanvas-body d-flex flex-column p-0">
 
-      <!-- Empty -->
       <div ng-if="cart.length === 0"
-        class="text-center py-5 flex-grow-1
-               d-flex flex-column align-items-center justify-content-center">
-        <img
-          src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=120&q=60"
-          style="width:80px;opacity:0.25;border-radius:12px"
-          class="mb-3"/>
-        <p class="fw-bold" style="color:var(--navy)">Your cart is empty</p>
-        <small style="color:var(--gray)">Add some products to get started!</small>
+           class="text-center py-5 flex-grow-1 d-flex flex-column align-items-center justify-content-center">
+        <i class="fas fa-shopping-basket fa-3x mb-3" style="color:#dde6f5;"></i>
+        <p class="fw-bold" style="color:var(--navy);">Your cart is empty</p>
+        <small style="color:var(--gray);">Add some products to get started</small>
       </div>
 
-      <!-- Items -->
-      <div ng-if="cart.length > 0"
-        class="flex-grow-1 overflow-auto px-3">
+      <div ng-if="cart.length > 0" class="flex-grow-1 overflow-auto px-3">
         <div ng-repeat="item in cart" class="cart-item">
-          <img
-            ng-src="{{ getCategoryImage(item.category) }}"
-            class="cart-item-img"
-            alt="{{ item.name }}"/>
+          <img ng-src="{{ getCategoryImage(item.category) }}" class="cart-item-img" alt="{{ item.name }}"/>
           <div class="cart-item-info">
             <p class="cart-item-name">{{ item.name }}</p>
             <p class="cart-item-price">EGP {{ item.price }} each</p>
@@ -294,49 +286,42 @@
             <button class="qty-btn" ng-click="decreaseQty(item)">−</button>
             <span class="qty-num">{{ item.qty }}</span>
             <button class="qty-btn" ng-click="increaseQty(item)">+</button>
-            <button class="remove-btn" ng-click="removeFromCart(item)">
-              <i class="fas fa-trash"></i>
-            </button>
+            <button class="remove-btn" ng-click="removeFromCart(item)"><i class="fas fa-trash"></i></button>
           </div>
         </div>
       </div>
 
-      <!-- Footer -->
       <div ng-if="cart.length > 0" class="cart-footer-wrap">
         <div class="cart-total-row">
           <span class="cart-total-label">Total</span>
           <span class="cart-total-amount">EGP {{ cartTotal() }}</span>
         </div>
         <button class="checkout-btn" ng-click="checkout()">
-          <i class="fas fa-check-circle me-2"></i> Checkout
+          <i class="fas fa-check-circle me-2"></i>Checkout
         </button>
       </div>
 
     </div>
   </div>
 
-  <!-- ══ QUICK VIEW MODAL ══════════════════════ -->
-  <div class="quick-view-overlay"
-    ng-show="quickViewProduct"
-    ng-click="closeQuickView($event)">
+
+  <!-- ══ QUICK VIEW MODAL ══════════════════════════════════════════════ -->
+  <div class="quick-view-overlay" ng-show="quickViewProduct" ng-click="closeQuickView($event)">
     <div class="quick-view-modal">
       <button class="qv-close" ng-click="quickViewProduct = null">×</button>
       <div class="qv-image">
         <img ng-src="{{ quickViewProduct.image_url || getCategoryImage(quickViewProduct.category) }}"
-          alt="{{ quickViewProduct.name }}"/>
+             alt="{{ quickViewProduct.name }}"/>
       </div>
       <div class="qv-info">
         <div class="product-category">{{ quickViewProduct.category }}</div>
         <h2 class="qv-title">{{ quickViewProduct.name }}</h2>
         <p class="qv-desc">{{ quickViewProduct.description }}</p>
         <div class="qv-price">EGP {{ quickViewProduct.price }}</div>
-        <div class="qv-stock">
-          <i class="fas fa-box me-1"></i>
-          {{ quickViewProduct.stock }} in stock
-        </div>
+        <div class="qv-stock"><i class="fas fa-box me-1"></i>{{ quickViewProduct.stock }} in stock</div>
         <button class="checkout-btn mt-3"
           ng-click="addToCart(quickViewProduct); quickViewProduct = null">
-          <i class="fas fa-cart-plus me-2"></i> Add to Cart
+          <i class="fas fa-cart-plus me-2"></i>Add to Cart
         </button>
       </div>
     </div>
