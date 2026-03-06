@@ -7,7 +7,6 @@ angular.module('pharmacyApp')
             .select('*')
             .eq('role', 'customer')
             .order('created_at', { ascending: false });
-        console.log(data)
         if (error) throw error;
         return data;
     };
