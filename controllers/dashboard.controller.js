@@ -5,8 +5,10 @@ function($scope, $location, MedicinesService, CustomersService, OrdersService) {
 
   $scope.loading = true;
 
+  // ── Stat cards (populated after data loads) ────────────────────────────
   $scope.statCards = [];
 
+  // ── Chart ──────────────────────────────────────────────────────────────
   $scope.chartTab      = 'monthly';
   $scope.chartBars     = [];
   $scope.chartBarsData = { monthly: [], daily: [] };

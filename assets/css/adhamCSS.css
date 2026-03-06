@@ -1244,3 +1244,152 @@ body.auth-page {
   padding: 0 1px;
   font-style: normal;
 }
+
+
+/* ============================================================
+   FOOTER — CUSTOMER
+   ============================================================ */
+.pf-footer {
+  background: #0f172a;
+  color: #94a3b8;
+  font-family: 'Manrope', sans-serif;
+  margin-top: auto;
+}
+
+.pf-footer-top {
+  padding: 4rem 0 3rem;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+
+/* Brand */
+.pf-brand-icon {
+  width: 44px; height: 44px;
+  background: var(--primary);
+  border-radius: .625rem;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; flex-shrink: 0;
+}
+.pf-brand-icon .material-symbols-outlined { font-size: 24px; }
+.pf-brand-name {
+  font-size: 1.05rem; font-weight: 800;
+  color: #fff; margin: 0; line-height: 1.2;
+}
+.pf-brand-sub {
+  font-size: .7rem; color: #64748b; margin: 0;
+}
+.pf-desc {
+  font-size: .825rem; line-height: 1.7;
+  color: #64748b; margin-bottom: 1.25rem;
+}
+
+/* Socials */
+.pf-socials { display: flex; gap: .6rem; }
+.pf-social-btn {
+  width: 36px; height: 36px;
+  border-radius: .5rem;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.08);
+  color: #94a3b8;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .9rem;
+  text-decoration: none;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.pf-social-btn:hover {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+/* Column titles */
+.pf-col-title {
+  font-size: .8rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: .08em;
+  color: #e2e8f0; margin-bottom: 1.1rem;
+}
+
+/* Link list */
+.pf-link-list {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: .55rem;
+}
+.pf-link-list li {
+  display: flex; align-items: center; gap: .4rem;
+  font-size: .825rem; color: #64748b;
+}
+.pf-link-list a {
+  font-size: .825rem; color: #64748b;
+  text-decoration: none;
+  transition: color .15s;
+}
+.pf-link-list a:hover { color: #fff; }
+.pf-list-icon {
+  font-size: 16px;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+/* Contact */
+.pf-contact-list { display: flex; flex-direction: column; gap: .75rem; }
+.pf-contact-row {
+  display: flex; align-items: flex-start; gap: .65rem;
+  font-size: .825rem; color: #64748b;
+}
+.pf-contact-icon {
+  width: 30px; height: 30px;
+  background: rgba(19,127,236,.15);
+  border-radius: .4rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: var(--primary);
+}
+.pf-contact-icon .material-symbols-outlined { font-size: 16px; }
+
+/* Bottom bar */
+.pf-footer-bottom {
+  padding: 1.1rem 0;
+  font-size: .78rem; color: #475569;
+}
+.pf-bottom-links {
+  display: flex; gap: 1.25rem;
+}
+.pf-bottom-links a {
+  color: #475569; text-decoration: none;
+  transition: color .15s;
+}
+.pf-bottom-links a:hover { color: #94a3b8; }
+
+
+/* ============================================================
+   FOOTER — ADMIN
+   ============================================================ */
+.pf-admin-footer {
+  height: 52px;
+  background: #fff;
+  border-top: 1px solid var(--border-light);
+  display: flex; align-items: center;
+  padding: 0 2rem;
+  font-family: 'Manrope', sans-serif;
+  flex-shrink: 0;
+}
+.pf-admin-footer .container-fluid { width: 100%; }
+
+.pf-admin-icon {
+  width: 24px; height: 24px;
+  background: var(--primary);
+  border-radius: .3rem;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; flex-shrink: 0;
+}
+.pf-admin-icon .material-symbols-outlined { font-size: 14px; }
+.pf-admin-brand  { font-size: .8rem; font-weight: 800; color: var(--text-body); }
+.pf-admin-sep    { color: var(--text-faint); font-size: .75rem; }
+.pf-admin-version { font-size: .75rem; color: var(--text-faint); }
+
+.pf-admin-stat {
+  display: flex; align-items: center; gap: .3rem;
+  font-size: .75rem; color: var(--text-muted);
+}
+.pf-admin-stat .material-symbols-outlined { font-size: 15px; color: var(--text-faint); }
+
+.pf-admin-copy { font-size: .75rem; color: var(--text-faint); }
