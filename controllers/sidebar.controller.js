@@ -11,8 +11,6 @@ angular.module('pharmacyApp')
   $scope.activeNav  = $location.path().replace('/', '') || 'dashboard';
   $scope.sidebarOpen = false;
 
-  // Listen for toggle events from the navbar hamburger
-  // NOTE: $broadcast already runs inside a digest — never call $apply here
   $rootScope.$on('toggleSidebar', function() {
     $scope.sidebarOpen = !$scope.sidebarOpen;
   });
@@ -23,11 +21,10 @@ angular.module('pharmacyApp')
 
   $scope.setActive = function(key) {
     $scope.activeNav   = key;
-    $scope.sidebarOpen = false; // auto-close on mobile after navigation
+    $scope.sidebarOpen = false;
     $location.path('/' + key);
   };
 
-  // Keep activeNav in sync when navigating via URL
   $scope.$on('$routeChangeSuccess', function() {
     $scope.activeNav = $location.path().replace('/', '') || 'dashboard';
   });

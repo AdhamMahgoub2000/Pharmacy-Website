@@ -117,7 +117,7 @@
                 {{ med.stock }}
               </span>
             </td>
-            <td>
+            <td style="padding: 0px;">
               <span class="status-badge"
                 ng-class="{'paid':med.stock>=20,'pending':med.stock>0&&med.stock<20,'cancelled':med.stock===0}">
                 {{ med.stock===0 ? 'Out of Stock' : med.stock<20 ? 'Low Stock' : 'In Stock' }}
