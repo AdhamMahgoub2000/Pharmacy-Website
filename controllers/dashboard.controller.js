@@ -115,8 +115,8 @@ function($scope, $location, MedicinesService, CustomersService, OrdersService) {
       const lowStockCnt    = lowStock.length;
       const today          = new Date().toISOString().slice(0, 10);
       const todayInvoices  = invoices.filter(i => i.created_at && i.created_at.slice(0,10) === today);
-      const todayRevenue   = todayInvoices.reduce((s, i) => s + (i.total || 0), 0);
-      const totalRevenue   = invoices.reduce((s, i) => s + (i.total || 0), 0);
+      const todayRevenue   = todayInvoices.reduce((s, i) => s + ((i.status === 'paid' ? i.total : 0) || 0), 0);
+      const totalRevenue   = invoices.reduce((s, i) => s + ((i.status === 'paid' ? i.total : 0)|| 0), 0);
 
       // Inventory alerts — worst low-stock first (max 4 items)
       const sortedLow = lowStock.slice().sort((a, b) => a.stock - b.stock).slice(0, 4);

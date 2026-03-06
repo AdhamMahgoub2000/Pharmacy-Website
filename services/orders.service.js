@@ -89,5 +89,21 @@ angular.module('pharmacyApp')
         if (error) throw error;
         return data;
     };
+this.updatePayment = async function (invoice_id, newStatus) {
+  try {
+    const { data, error } = await client
+      .from('invoices')
+      .update({ status: newStatus })
+      .eq('id', invoice_id)
+      .select();   // return the updated row
 
+    if (error) throw error;
+
+    return data;
+
+  } catch (error) {
+    console.error('Update payment error:', error);
+    throw error;
+  }
+};
 }]);

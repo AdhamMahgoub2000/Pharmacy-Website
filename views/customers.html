@@ -121,4 +121,26 @@
       </div>
     </div>
   </div>
+  <div
+    class="toast-container"
+    style="position: fixed; top: 1rem; right: 1rem; z-index: 1055"
+  >
+    <div
+      ng-repeat="toast in toasts"
+      class="toast show mb-2"
+      ng-class="{'bg-success text-white': toast.type==='success', 'bg-danger text-white': toast.type==='danger', 'bg-warning text-dark': toast.type==='warning'}"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+    >
+      <div class="toast-body">
+        {{ toast.message }}
+        <button
+          type="button"
+          class="btn-close float-end"
+          ng-click="removeToast($index)"
+        ></button>
+      </div>
+    </div>
+  </div>
 </div>

@@ -34,7 +34,10 @@ function($scope, $location, OrdersService) {
         $scope.stats.total   = inv.length;
         $scope.stats.paid    = inv.filter(i => i.status === 'paid').length;
         $scope.stats.pending = inv.filter(i => i.status === 'pending').length;
-        $scope.stats.revenue = inv.reduce((s, i) => s + (i.total || 0), 0);
+        $scope.stats.revenue = inv.reduce(
+            (s, i) => s + ((i.status === 'paid' ? i.total : 0) || 0),
+            0
+            );
     }
 
     function applyFilters() {
@@ -94,7 +97,52 @@ function($scope, $location, OrdersService) {
     $scope.invoiceItemCount = function(inv) {
         return (inv.invoice_items && inv.invoice_items.length) || 0;
     };
+    $scope.updatePayment = function(invoice) {
+    $scope.selectedInvoice = angular.copy(invoice);
+    $scope.showPaymentModal = true;
+};
 
+$scope.ApprovePayment = async function () {
+    try {
+
+        const { data, error } = await OrdersService.updatePayment(
+            $scope.selectedInvoice.id,
+            'paid'
+        );
+
+        if (error) throw error;
+
+        $scope.showPaymentModal = false;
+
+        loadInvoices();
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+$scope.CancelPayment = async function () {
+    try {
+
+        const { data, error } = await OrdersService.updatePayment(
+            $scope.selectedInvoice.id,
+            'cancelled'
+        );
+
+        if (error) throw error;
+
+        $scope.showPaymentModal = false;
+        loadInvoices();
+        
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+$scope.closePaymentModal = function (event) {
+    if (event.target.classList.contains('med-modal-overlay')) {
+        $scope.showPaymentModal = false;
+    }
+};
     loadInvoices();
 
 }]);

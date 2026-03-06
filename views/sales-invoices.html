@@ -1,10 +1,13 @@
 <div class="container-fluid px-0">
-
   <!-- Header -->
-  <div class="mb-4 d-flex align-items-center justify-content-between flex-wrap gap-2">
+  <div
+    class="mb-4 d-flex align-items-center justify-content-between flex-wrap gap-2"
+  >
     <div>
       <h2 class="page-title">Sales Invoices</h2>
-      <p class="page-subtitle">Browse, filter and review all customer invoices.</p>
+      <p class="page-subtitle">
+        Browse, filter and review all customer invoices.
+      </p>
     </div>
   </div>
 
@@ -12,21 +15,25 @@
   <div class="row g-3 mb-4">
     <div class="col-6 col-lg-3">
       <div class="stat-card">
-        <div class="stat-icon blue mb-2"><span class="material-symbols-outlined">receipt_long</span></div>
+        <div class="stat-icon blue mb-2">
+          <span class="material-symbols-outlined">receipt_long</span>
+        </div>
         <p class="stat-label">Total Invoices</p>
         <p class="stat-value resp-stat-value">{{stats.total}}</p>
       </div>
     </div>
     <div class="col-6 col-lg-3">
       <div class="stat-card">
-        <div class="stat-icon green mb-2"><span class="material-symbols-outlined">check_circle</span></div>
+        <div class="stat-icon green mb-2">
+          <span class="material-symbols-outlined">check_circle</span>
+        </div>
         <p class="stat-label">Paid</p>
         <p class="stat-value resp-stat-value">{{stats.paid}}</p>
       </div>
     </div>
     <div class="col-6 col-lg-3">
       <div class="stat-card">
-        <div class="stat-icon mb-2" style="background:#fef3c7;color:#d97706;">
+        <div class="stat-icon mb-2" style="background: #fef3c7; color: #d97706">
           <span class="material-symbols-outlined">schedule</span>
         </div>
         <p class="stat-label">Pending</p>
@@ -35,7 +42,9 @@
     </div>
     <div class="col-6 col-lg-3">
       <div class="stat-card">
-        <div class="stat-icon purple mb-2"><span class="material-symbols-outlined">payments</span></div>
+        <div class="stat-icon purple mb-2">
+          <span class="material-symbols-outlined">payments</span>
+        </div>
         <p class="stat-label">Total Revenue</p>
         <p class="stat-value resp-stat-value">{{stats.revenue | currency}}</p>
       </div>
@@ -44,22 +53,45 @@
 
   <!-- Table Card -->
   <div class="table-card">
-
     <!-- Toolbar -->
     <div class="table-header">
-      <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+      <div
+        class="d-flex align-items-center justify-content-between flex-wrap gap-3"
+      >
         <span class="table-title">All Invoices</span>
         <div class="d-flex align-items-center gap-2 flex-wrap w-100 w-md-auto">
           <div class="si-search-wrap flex-grow-1">
             <span class="material-symbols-outlined si-search-icon">search</span>
-            <input class="si-search-input w-100" type="text"
+            <input
+              class="si-search-input w-100"
+              type="text"
               placeholder="Search by ID or customer…"
-              ng-model="search" ng-change="onSearch()"/>
+              ng-model="search"
+              ng-change="onSearch()"
+            />
           </div>
           <div class="si-tabs flex-shrink-0">
-            <button class="si-tab" ng-class="{active:statusFilter==='all'}"     ng-click="setStatus('all')">All</button>
-            <button class="si-tab" ng-class="{active:statusFilter==='paid'}"    ng-click="setStatus('paid')">Paid</button>
-            <button class="si-tab" ng-class="{active:statusFilter==='pending'}" ng-click="setStatus('pending')">Pending</button>
+            <button
+              class="si-tab"
+              ng-class="{active:statusFilter==='all'}"
+              ng-click="setStatus('all')"
+            >
+              All
+            </button>
+            <button
+              class="si-tab"
+              ng-class="{active:statusFilter==='paid'}"
+              ng-click="setStatus('paid')"
+            >
+              Paid
+            </button>
+            <button
+              class="si-tab"
+              ng-class="{active:statusFilter==='pending'}"
+              ng-click="setStatus('pending')"
+            >
+              Pending
+            </button>
           </div>
         </div>
       </div>
@@ -67,8 +99,14 @@
 
     <!-- Loading -->
     <div ng-if="loading" class="text-center py-5">
-      <div class="spinner-border" style="color:var(--primary);" role="status"></div>
-      <p class="mt-3" style="color:var(--text-muted);font-size:.875rem;">Loading invoices…</p>
+      <div
+        class="spinner-border"
+        style="color: var(--primary)"
+        role="status"
+      ></div>
+      <p class="mt-3" style="color: var(--text-muted); font-size: 0.875rem">
+        Loading invoices…
+      </p>
     </div>
 
     <!-- Empty -->
@@ -79,7 +117,10 @@
     </div>
 
     <!-- Desktop table -->
-    <div ng-if="!loading && filtered.length" class="table-responsive resp-table-desktop">
+    <div
+      ng-if="!loading && filtered.length"
+      class="table-responsive resp-table-desktop"
+    >
       <table class="inv-table">
         <thead>
           <tr>
@@ -89,29 +130,47 @@
             <th>Items</th>
             <th>Amount</th>
             <th>Status</th>
-            <th style="text-align:right;">Action</th>
+            <th style="text-align: right">Approve</th>
           </tr>
         </thead>
         <tbody>
           <tr ng-repeat="inv in filtered">
             <td><span class="inv-id">{{inv.id | limitTo:8}}…</span></td>
-            <td>
+            <td ng-click="previewInvoice(inv)">
               <div class="d-flex align-items-center gap-2">
                 <div class="si-avatar">{{getCustomerInitial(inv)}}</div>
                 <div>
                   <p class="customer-name mb-0">{{getCustomerName(inv)}}</p>
-                  <p class="mb-0" style="font-size:.75rem;color:var(--text-muted);">{{inv.users.email}}</p>
+                  <p
+                    class="mb-0"
+                    style="font-size: 0.75rem; color: var(--text-muted)"
+                  >
+                    {{inv.users.email}}
+                  </p>
                 </div>
               </div>
             </td>
-            <td><span class="inv-date">{{inv.created_at | date:'MMM d, y'}}</span></td>
-            <td><span class="si-item-count">{{invoiceItemCount(inv)}} item{{invoiceItemCount(inv)!==1?'s':''}}</span></td>
+            <td>
+              <span class="inv-date">{{inv.created_at | date:'MMM d, y'}}</span>
+            </td>
+            <td>
+              <span class="si-item-count"
+                >{{invoiceItemCount(inv)}}
+                item{{invoiceItemCount(inv)!==1?'s':''}}</span
+              >
+            </td>
             <td><span class="inv-amount">{{inv.total | currency}}</span></td>
-            <td><span class="status-badge" ng-class="inv.status">{{inv.status}}</span></td>
-            <td style="text-align:right;">
-              <button class="si-btn-view" ng-click="previewInvoice(inv)">
-                <span class="material-symbols-outlined" style="font-size:16px;">visibility</span>
-                View
+            <td>
+              <span class="status-badge" ng-class="inv.status"
+                >{{inv.status}}</span
+              >
+            </td>
+            <td style="text-align: right">
+              <button class="si-btn-view" ng-click="updatePayment(inv)">
+                <span class="material-symbols-outlined" style="font-size: 16px"
+                  >Payment</span
+                >
+                Approve
               </button>
             </td>
           </tr>
@@ -121,21 +180,40 @@
 
     <!-- Mobile cards -->
     <div ng-if="!loading && filtered.length" class="resp-card-list">
-      <div class="resp-inv-card" ng-repeat="inv in filtered" ng-click="previewInvoice(inv)">
+      <div
+        class="resp-inv-card"
+        ng-repeat="inv in filtered"
+        ng-click="previewInvoice(inv)"
+      >
         <div class="d-flex align-items-center gap-2 mb-2">
           <div class="si-avatar flex-shrink-0">{{getCustomerInitial(inv)}}</div>
           <div class="flex-grow-1 min-w-0">
             <p class="customer-name mb-0">{{getCustomerName(inv)}}</p>
-            <p class="mb-0" style="font-size:.72rem;color:var(--text-muted);">{{inv.users.email}}</p>
+            <p
+              class="mb-0"
+              style="font-size: 0.72rem; color: var(--text-muted)"
+            >
+              {{inv.users.email}}
+            </p>
           </div>
-          <span class="status-badge flex-shrink-0" ng-class="inv.status">{{inv.status}}</span>
+          <span class="status-badge flex-shrink-0" ng-class="inv.status"
+            >{{inv.status}}</span
+          >
         </div>
         <div class="d-flex justify-content-between align-items-center">
           <div>
-            <span class="inv-id" style="font-size:.72rem;">{{inv.id | limitTo:8}}…</span>
-            <span style="font-size:.72rem;color:var(--text-muted);margin-left:.5rem;">
-              · {{inv.created_at | date:'MMM d, y'}}
-              · {{invoiceItemCount(inv)}} item{{invoiceItemCount(inv)!==1?'s':''}}
+            <span class="inv-id" style="font-size: 0.72rem"
+              >{{inv.id | limitTo:8}}…</span
+            >
+            <span
+              style="
+                font-size: 0.72rem;
+                color: var(--text-muted);
+                margin-left: 0.5rem;
+              "
+            >
+              · {{inv.created_at | date:'MMM d, y'}} · {{invoiceItemCount(inv)}}
+              item{{invoiceItemCount(inv)!==1?'s':''}}
             </span>
           </div>
           <span class="inv-amount">{{inv.total | currency}}</span>
@@ -145,20 +223,103 @@
 
     <!-- Footer -->
     <div ng-if="!loading && filtered.length" class="table-footer">
-      <p style="font-size:.8rem;color:var(--text-muted);margin:0;">
-        Showing <strong>{{filtered.length}}</strong> of <strong>{{allInvoices.length}}</strong> invoices
+      <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0">
+        Showing <strong>{{filtered.length}}</strong> of
+        <strong>{{allInvoices.length}}</strong> invoices
       </p>
     </div>
   </div>
-
 </div>
+<!-- approval modal -->
+<div
+  class="med-modal-overlay"
+  ng-if="showPaymentModal"
+  ng-click="closePaymentModal($event)"
+>
+  <div class="med-modal" style="max-width: 420px">
+    <!-- Header -->
+    <div
+      class="si-modal-header"
+      style="background: linear-gradient(135deg, #10b981, #059669)"
+    >
+      <div class="d-flex align-items-center gap-3">
+        <div class="si-modal-icon">
+          <span class="material-symbols-outlined">payments</span>
+        </div>
 
+        <div>
+          <p class="si-modal-label">Update Payment</p>
+          <p class="si-modal-id">Invoice #{{ selectedInvoice.id }}</p>
+        </div>
+      </div>
 
+      <button class="si-modal-close" ng-click="showPaymentModal=false">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="med-modal-body text-center">
+      <span
+        class="material-symbols-outlined"
+        style="font-size: 3rem; color: #10b981"
+      >
+        credit_card
+      </span>
+
+      <p
+        style="font-weight: 700; color: var(--text-body); margin: 1rem 0 0.5rem"
+      >
+        Confirm Payment Action
+      </p>
+
+      <p style="color: var(--text-muted); font-size: 0.875rem">
+        You are about to update the payment status for
+        <strong>Invoice {{ selectedInvoice.id }}</strong>.
+      </p>
+
+      <p
+        style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.85rem"
+      >
+        Total Amount:
+        <strong style="color: #059669">
+          {{ selectedInvoice.total | currency }}
+        </strong>
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div class="si-modal-footer">
+      <button class="btn-action" ng-click="CancelPayment()">
+        Cancel Payment
+      </button>
+
+      <button
+        class="si-btn-full"
+        style="background: #10b981"
+        ng-click="ApprovePayment(selectedInvoice)"
+        ng-disabled="processingPayment"
+      >
+        <span class="material-symbols-outlined" style="font-size: 18px">
+          check_circle
+        </span>
+
+        {{ processingPayment ? 'Processing...' : 'Approve Payment' }}
+      </button>
+    </div>
+  </div>
+</div>
 <!-- Invoice Preview Modal -->
-<div class="modal fade" id="invoicePreviewModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
+<div
+  class="modal fade"
+  id="invoicePreviewModal"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  <div
+    class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered"
+  >
     <div class="modal-content si-modal-content" ng-if="selectedInvoice">
-
       <div class="si-modal-header">
         <div class="d-flex align-items-center gap-3">
           <div class="si-modal-icon">
@@ -180,10 +341,19 @@
             <div class="si-meta-card">
               <p class="si-meta-label">Customer</p>
               <div class="d-flex align-items-center gap-2 mt-1">
-                <div class="si-avatar si-avatar-lg">{{getCustomerInitial(selectedInvoice)}}</div>
+                <div class="si-avatar si-avatar-lg">
+                  {{getCustomerInitial(selectedInvoice)}}
+                </div>
                 <div class="min-w-0">
-                  <p class="si-meta-value mb-0">{{getCustomerName(selectedInvoice)}}</p>
-                  <p class="mb-0" style="font-size:.75rem;color:var(--text-muted);">{{selectedInvoice.users.email}}</p>
+                  <p class="si-meta-value mb-0">
+                    {{getCustomerName(selectedInvoice)}}
+                  </p>
+                  <p
+                    class="mb-0"
+                    style="font-size: 0.75rem; color: var(--text-muted)"
+                  >
+                    {{selectedInvoice.users.email}}
+                  </p>
                 </div>
               </div>
             </div>
@@ -191,13 +361,19 @@
           <div class="col-6 col-sm-3">
             <div class="si-meta-card h-100">
               <p class="si-meta-label">Date</p>
-              <p class="si-meta-value">{{selectedInvoice.created_at | date:'MMM d, y'}}</p>
+              <p class="si-meta-value">
+                {{selectedInvoice.created_at | date:'MMM d, y'}}
+              </p>
             </div>
           </div>
           <div class="col-6 col-sm-3">
             <div class="si-meta-card h-100">
               <p class="si-meta-label">Status</p>
-              <span class="status-badge" ng-class="selectedInvoice.status" style="font-size:.75rem;padding:.35rem .75rem;">
+              <span
+                class="status-badge"
+                ng-class="selectedInvoice.status"
+                style="font-size: 0.75rem; padding: 0.35rem 0.75rem"
+              >
                 {{selectedInvoice.status}}
               </span>
             </div>
@@ -208,38 +384,70 @@
           <p class="si-items-title">Invoice Items</p>
           <!-- Desktop items table -->
           <div class="table-responsive resp-table-desktop">
-            <table class="inv-table" style="margin-bottom:0;">
+            <table class="inv-table" style="margin-bottom: 0">
               <thead>
                 <tr>
                   <th>Medicine</th>
                   <th>Category</th>
-                  <th style="text-align:center;">Qty</th>
-                  <th style="text-align:right;">Unit Price</th>
-                  <th style="text-align:right;">Subtotal</th>
+                  <th style="text-align: center">Qty</th>
+                  <th style="text-align: right">Unit Price</th>
+                  <th style="text-align: right">Subtotal</th>
                 </tr>
               </thead>
               <tbody>
                 <tr ng-repeat="item in selectedInvoice.invoice_items">
-                  <td style="font-weight:600;">{{item.medicines.name}}</td>
-                  <td><span class="si-category-tag">{{item.medicines.category}}</span></td>
-                  <td style="text-align:center;">{{item.quantity}}</td>
-                  <td style="text-align:right;color:var(--text-muted);">{{item.unit_price | currency}}</td>
-                  <td style="text-align:right;font-weight:700;">{{item.quantity * item.unit_price | currency}}</td>
+                  <td style="font-weight: 600">{{item.medicines.name}}</td>
+                  <td>
+                    <span class="si-category-tag"
+                      >{{item.medicines.category}}</span
+                    >
+                  </td>
+                  <td style="text-align: center">{{item.quantity}}</td>
+                  <td style="text-align: right; color: var(--text-muted)">
+                    {{item.unit_price | currency}}
+                  </td>
+                  <td style="text-align: right; font-weight: 700">
+                    {{item.quantity * item.unit_price | currency}}
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
           <!-- Mobile items list -->
-          <div class="resp-card-list" style="padding:.5rem;">
-            <div class="resp-item-row" ng-repeat="item in selectedInvoice.invoice_items">
+          <div class="resp-card-list" style="padding: 0.5rem">
+            <div
+              class="resp-item-row"
+              ng-repeat="item in selectedInvoice.invoice_items"
+            >
               <div class="d-flex justify-content-between align-items-start">
                 <div>
-                  <p style="font-weight:700;color:var(--text-body);margin:0;font-size:.875rem;">{{item.medicines.name}}</p>
-                  <span class="si-category-tag" style="margin-top:4px;display:inline-block;">{{item.medicines.category}}</span>
+                  <p
+                    style="
+                      font-weight: 700;
+                      color: var(--text-body);
+                      margin: 0;
+                      font-size: 0.875rem;
+                    "
+                  >
+                    {{item.medicines.name}}
+                  </p>
+                  <span
+                    class="si-category-tag"
+                    style="margin-top: 4px; display: inline-block"
+                    >{{item.medicines.category}}</span
+                  >
                 </div>
-                <p style="font-weight:700;color:var(--text-body);margin:0;">{{item.quantity * item.unit_price | currency}}</p>
+                <p style="font-weight: 700; color: var(--text-body); margin: 0">
+                  {{item.quantity * item.unit_price | currency}}
+                </p>
               </div>
-              <p style="font-size:.75rem;color:var(--text-muted);margin:4px 0 0;">
+              <p
+                style="
+                  font-size: 0.75rem;
+                  color: var(--text-muted);
+                  margin: 4px 0 0;
+                "
+              >
                 {{item.quantity}} × {{item.unit_price | currency}}
               </p>
             </div>
@@ -248,18 +456,31 @@
 
         <div class="si-total-row mt-3">
           <span>Total Amount</span>
-          <span class="si-total-value">{{selectedInvoice.total | currency}}</span>
+          <span class="si-total-value"
+            >{{selectedInvoice.total | currency}}</span
+          >
         </div>
       </div>
 
       <div class="si-modal-footer">
-        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="si-btn-full" ng-click="openFullInvoice(selectedInvoice)">
-          <span class="material-symbols-outlined" style="font-size:16px;">open_in_full</span>
+        <button
+          type="button"
+          class="btn btn-outline-secondary btn-sm"
+          data-bs-dismiss="modal"
+        >
+          Close
+        </button>
+        <button
+          type="button"
+          class="si-btn-full"
+          ng-click="openFullInvoice(selectedInvoice)"
+        >
+          <span class="material-symbols-outlined" style="font-size: 16px"
+            >open_in_full</span
+          >
           Full Invoice
         </button>
       </div>
-
     </div>
   </div>
 </div>
