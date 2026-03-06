@@ -1,28 +1,35 @@
-// controllers/sidebar.controller.js
-// Used by: directives/sidebar.directive.js  →  <app-sidebar>
-// Template: views/sideBar.html
-//
-// BUG FIXED: No DI array — unsafe for minification.
-//            Also fixed: missing closing semicolon (was `})` not `});`)
-
 angular.module('pharmacyApp')
-.controller('SidebarCtrl', ['$scope', '$location', function($scope, $location) {
+.controller('SidebarCtrl', ['$scope', '$location', '$rootScope', function($scope, $location, $rootScope) {
 
-  // Nav items — keys match $routeProvider admin route paths exactly
   $scope.navItems = [
     { key: 'dashboard', icon: 'dashboard',      label: 'Dashboard'      },
     { key: 'medicines', icon: 'pill',            label: 'Medicines'      },
     { key: 'customers', icon: 'group',           label: 'Customers'      },
     { key: 'invoices',  icon: 'receipt_long',    label: 'Sales Invoices' },
-    { key: 'users',     icon: 'manage_accounts', label: 'Users'          },
   ];
 
-  // Sync active item with current URL on controller load
-  $scope.activeNav = $location.path().replace('/', '') || 'dashboard';
+  $scope.activeNav  = $location.path().replace('/', '') || 'dashboard';
+  $scope.sidebarOpen = false;
+
+  // Listen for toggle events from the navbar hamburger
+  // NOTE: $broadcast already runs inside a digest — never call $apply here
+  $rootScope.$on('toggleSidebar', function() {
+    $scope.sidebarOpen = !$scope.sidebarOpen;
+  });
+
+  $scope.closeSidebar = function() {
+    $scope.sidebarOpen = false;
+  };
 
   $scope.setActive = function(key) {
-    $scope.activeNav = key;
+    $scope.activeNav   = key;
+    $scope.sidebarOpen = false; // auto-close on mobile after navigation
     $location.path('/' + key);
   };
+
+  // Keep activeNav in sync when navigating via URL
+  $scope.$on('$routeChangeSuccess', function() {
+    $scope.activeNav = $location.path().replace('/', '') || 'dashboard';
+  });
 
 }]);

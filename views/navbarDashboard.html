@@ -1,5 +1,10 @@
 <header class="top-navbar" ng-controller="NavbarCtrl">
 
+  <!-- ── Hamburger (mobile only) ────────────────────────────────────── -->
+  <button class="hamburger-btn" ng-click="toggleSidebar()" title="Toggle menu">
+    <span class="material-symbols-outlined">menu</span>
+  </button>
+
   <!-- ── Search ─────────────────────────────────────────────────────── -->
   <div class="search-wrapper" ng-class="{'search-active': searchQuery.length > 0}">
     <span class="material-symbols-outlined search-icon">search</span>

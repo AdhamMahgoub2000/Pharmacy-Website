@@ -1393,3 +1393,447 @@ body.auth-page {
 .pf-admin-stat .material-symbols-outlined { font-size: 15px; color: var(--text-faint); }
 
 .pf-admin-copy { font-size: .75rem; color: var(--text-faint); }
+
+
+/* ============================================================
+   RESPONSIVE ADMIN LAYOUT  — mobile sidebar toggle
+   ============================================================ */
+
+/* ── Hamburger button (hidden on desktop) ── */
+.hamburger-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px; height: 40px;
+  border: none;
+  border-radius: .5rem;
+  background: transparent;
+  color: #475569;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background .15s;
+}
+.hamburger-btn:hover { background: #f1f5f9; }
+.hamburger-btn .material-symbols-outlined { font-size: 24px; }
+
+/* ── Sidebar close button (hidden on desktop) ── */
+.sidebar-close-btn {
+  display: none;
+  position: absolute;
+  top: .75rem; right: .75rem;
+  width: 32px; height: 32px;
+  border: none; border-radius: .5rem;
+  background: #f1f5f9; color: #475569;
+  cursor: pointer;
+  align-items: center; justify-content: center;
+  transition: background .15s;
+  z-index: 10;
+}
+.sidebar-close-btn:hover { background: #e2e8f0; }
+.sidebar-close-btn .material-symbols-outlined { font-size: 18px; }
+
+/* ── Backdrop overlay ── */
+.sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  z-index: 999;
+  backdrop-filter: blur(2px);
+}
+
+/* ── Tablet  (≤ 1024px) — collapse sidebar to icon-only rail ── */
+@media (max-width: 1024px) {
+
+  .hamburger-btn      { display: flex; }
+  .sidebar-close-btn  { display: flex; }
+  .sidebar-backdrop   { display: block; }
+
+  /* Sidebar slides off-screen by default */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform .28s cubic-bezier(.4,0,.2,1);
+    box-shadow: none;
+  }
+
+  /* Slide in when open */
+  .sidebar.sidebar-open {
+    transform: translateX(0);
+    box-shadow: 4px 0 32px rgba(0,0,0,.18);
+  }
+
+  /* Main content takes full width */
+  .main-content.with-sidebar {
+    margin-left: 0 !important;
+  }
+
+  app-sidebar {
+    width: 0 !important;
+    flex-shrink: 0;
+  }
+}
+
+/* ── Mobile (≤ 640px) — extra content padding adjustments ── */
+@media (max-width: 640px) {
+
+  .top-navbar {
+    padding: 0 1rem;
+    gap: .5rem;
+  }
+
+  .search-wrapper {
+    max-width: unset;
+    flex: 1;
+  }
+
+  .search-input {
+    font-size: .8rem;
+  }
+
+  /* Hide user name text on very small screens */
+  .user-name, .user-role { display: none; }
+
+  .main-content {
+    padding: 1rem !important;
+  }
+
+  /* Stack stat cards 2-per-row on small screens */
+  .stat-card { padding: 1rem; }
+  .stat-value { font-size: 1.4rem; }
+
+  /* Full-width table cards */
+  .table-card, .chart-card, .alert-card { border-radius: .5rem; }
+
+  /* Invoice table — hide less important cols */
+  .inv-table th:nth-child(3),
+  .inv-table td:nth-child(3) { display: none; } /* Date */
+
+  /* Page title sizing */
+  .page-title { font-size: 1.4rem; }
+
+  /* Search dropdown full width */
+  .search-dropdown { min-width: unset; width: calc(100vw - 2rem); left: 0; }
+
+  /* Admin footer — single line */
+  .pf-admin-footer { height: auto; padding: .6rem 1rem; }
+}
+
+/* ── Keep with-sidebar working on desktop ── */
+@media (min-width: 1025px) {
+  .main-content.with-sidebar {
+    display: flex;
+  }
+  app-sidebar {
+    width: 256px;
+    flex-shrink: 0;
+  }
+}
+
+
+/* ============================================================
+   RESPONSIVE — DASHBOARD, MEDICINES, INVOICES
+   ============================================================ */
+
+/* ── Shared: mobile card list (replaces table on small screens) ── */
+.resp-card-list  { display: none; }
+.resp-table-desktop { display: block; }
+
+/* ── Shared: stat value smaller on mobile ── */
+.resp-stat-value { font-size: 1.875rem; }
+
+/* ── Shared: search full-width on mobile ── */
+.resp-search { width: 200px; }
+.resp-select { width: 150px; }
+
+/* ── Invoice / medicine mobile card ── */
+.resp-inv-card {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-light);
+  cursor: pointer;
+  transition: background .12s;
+}
+.resp-inv-card:last-child { border-bottom: none; }
+.resp-inv-card:hover { background: #f8fafc; }
+
+.resp-med-card {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-light);
+}
+.resp-med-card:last-child { border-bottom: none; }
+
+/* Delete button on mobile medicine card */
+.resp-delete-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 40px; height: 38px; flex-shrink: 0;
+  border: 1px solid #fee2e2; border-radius: .5rem;
+  background: #fef2f2; color: #ef4444;
+  cursor: pointer; transition: background .15s;
+}
+.resp-delete-btn:hover { background: #fee2e2; }
+
+/* Invoice modal item row (mobile) */
+.resp-item-row {
+  padding: .65rem 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.resp-item-row:last-child { border-bottom: none; }
+
+/* Alerts 2-col grid on mid-size screens */
+.resp-alerts-grid { display: flex; flex-direction: column; gap: 0; }
+
+/* Chart height responsive */
+.resp-chart { height: 200px; }
+
+/* ── Tablet (≤ 768px) — switch to card layout ── */
+@media (max-width: 768px) {
+
+  /* Show cards, hide table */
+  .resp-card-list     { display: block; }
+  .resp-table-desktop { display: none !important; }
+
+  /* Smaller stat values */
+  .resp-stat-value { font-size: 1.4rem; }
+
+  /* Stat card compact */
+  .stat-card { padding: 1rem; }
+  .stat-label { font-size: .78rem; }
+
+  /* Search full width */
+  .resp-search { width: 100%; }
+  .resp-select { width: 100%; }
+  .si-search-wrap { width: 100%; }
+  .si-search-input { width: 100%; }
+
+  /* Toolbar stacks vertically */
+  .table-header { padding: 1rem; }
+
+  /* Chart shorter on mobile */
+  .resp-chart { height: 160px; }
+  .bar-chart-wrap { height: 160px; }
+
+  /* Alerts 2-col grid */
+  .resp-alerts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .75rem;
+  }
+  .inventory-alert {
+    margin-bottom: 0 !important;
+    border-radius: .625rem;
+  }
+
+  /* Page title smaller */
+  .page-title { font-size: 1.4rem; }
+
+  /* Modal full-screen feel */
+  .modal-dialog { margin: .5rem; }
+  .med-modal { max-height: 95vh; overflow-y: auto; margin: .5rem; }
+
+  /* Invoice stat value - currency wraps */
+  .stat-value { font-size: 1.2rem; word-break: break-all; }
+}
+
+/* ── Small mobile (≤ 480px) ── */
+@media (max-width: 480px) {
+
+  /* Alerts single column */
+  .resp-alerts-grid { grid-template-columns: 1fr; }
+
+  /* Stat cards: tighter */
+  .stat-card { padding: .75rem; }
+  .resp-stat-value { font-size: 1.25rem; }
+  .stat-label { font-size: .72rem; }
+  .stat-icon { width: 32px; height: 32px; }
+  .stat-icon .material-symbols-outlined { font-size: 16px; }
+
+  /* Badge wraps or hides on tiny cards */
+  .resp-badge { display: none; }
+
+  /* Chart even shorter */
+  .resp-chart  { height: 130px; }
+  .bar-chart-wrap { height: 130px; }
+  .bar-label { font-size: .55rem; }
+
+  /* Content padding */
+  .content-area { padding: 12px !important; }
+
+  /* Table card header stacks */
+  .table-header .d-flex { flex-direction: column; align-items: flex-start !important; }
+  .table-title { font-size: 1rem; }
+
+  /* Invoice total row wraps */
+  .si-total-row { flex-wrap: wrap; gap: .5rem; }
+}
+
+
+/* ============================================================
+   MEDICINES MODAL  (med-modal-overlay, med-form-*)
+   ============================================================ */
+
+.med-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  backdrop-filter: blur(3px);
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.med-modal {
+  background: #fff;
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 560px;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,.18);
+  animation: modalIn .22s ease;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(16px) scale(.97); }
+  to   { opacity: 1; transform: translateY(0)   scale(1);    }
+}
+
+.med-modal-body {
+  padding: 1.5rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* Form elements */
+.med-form-group {
+  margin-bottom: 1rem;
+}
+
+.med-form-label {
+  display: block;
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--text-body);
+  margin-bottom: .4rem;
+  letter-spacing: .01em;
+}
+
+.med-form-input {
+  width: 100%;
+  padding: .55rem .875rem;
+  border: 1.5px solid var(--border-light);
+  border-radius: .5rem;
+  font-size: .875rem;
+  font-family: 'Manrope', sans-serif;
+  color: var(--text-body);
+  background: #fff;
+  transition: border-color .15s, box-shadow .15s;
+  outline: none;
+}
+
+.med-form-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(19,127,236,.12);
+}
+
+.med-form-input::placeholder { color: var(--text-faint); }
+
+textarea.med-form-input {
+  resize: vertical;
+  min-height: 72px;
+}
+
+select.med-form-input {
+  cursor: pointer;
+  appearance: auto;
+}
+
+/* ── Mobile tweaks for the modal ── */
+@media (max-width: 600px) {
+  .med-modal-overlay { padding: 0; align-items: flex-end; }
+  .med-modal {
+    max-width: 100%;
+    border-radius: 1rem 1rem 0 0;
+    max-height: 90vh;
+  }
+}
+
+
+/* ============================================================
+   RESPONSIVE FIXES — DASHBOARD, MEDICINES, INVOICES
+   (supplements the existing resp- block above)
+   ============================================================ */
+
+/* ── Toolbar search+filter row wraps cleanly ── */
+@media (max-width: 768px) {
+
+  /* Invoices toolbar: search takes full width, tabs stay inline */
+  .si-search-wrap { flex: 1; min-width: 0; }
+  .si-tabs { flex-shrink: 0; }
+
+  /* Medicines toolbar stacks search + select */
+  .resp-search,
+  .resp-select { width: 100% !important; }
+
+  /* Chart bar labels — fewer chars */
+  .bar-label { font-size: .6rem; }
+
+  /* Stat card icon smaller */
+  .stat-icon { width: 36px; height: 36px; }
+
+  /* Invoice modal dialog fills screen better */
+  .modal-dialog.modal-lg { max-width: calc(100vw - 1rem); }
+
+  /* Med modal body padding tighter */
+  .med-modal-body { padding: 1rem; }
+
+  /* page content padding */
+  .content-area { padding: 1rem !important; }
+}
+
+@media (max-width: 480px) {
+
+  /* Stat cards: 2-per-row, very compact */
+  .stat-card { padding: .625rem; }
+  .stat-value { font-size: 1.1rem !important; }
+  .stat-label { font-size: .7rem; }
+
+  /* Hide badge text on tiny stat cards */
+  .stat-badge { font-size: .65rem; }
+
+  /* Chart even smaller */
+  .bar-chart-wrap { gap: .3rem; }
+
+  /* Invoice cards tighter */
+  .resp-inv-card { padding: .75rem; }
+  .resp-med-card { padding: .75rem; }
+
+  /* Alert card items: single column, compact */
+  .inventory-alert { padding: .625rem; }
+  .alert-icon { width: 32px; height: 32px; }
+  .alert-icon .material-symbols-outlined { font-size: 16px; }
+  .alert-name  { font-size: .8rem; }
+  .alert-stock { font-size: .7rem; }
+
+  /* Table footer text */
+  .table-footer { padding: .75rem 1rem; }
+
+  /* Modal footer buttons full-width on tiny phones */
+  .si-modal-footer { flex-direction: column; gap: .5rem; }
+  .si-modal-footer .btn,
+  .si-modal-footer .si-btn-full,
+  .si-modal-footer .btn-action { width: 100%; justify-content: center; }
+
+  /* Med form two-col collapses to one */
+  .med-modal-body .row .col-12.col-sm-6 { width: 100% !important; }
+
+  /* Page title */
+  .page-title { font-size: 1.2rem; }
+  .page-subtitle { font-size: .8rem; }
+}

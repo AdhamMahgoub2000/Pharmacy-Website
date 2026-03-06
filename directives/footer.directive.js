@@ -49,8 +49,8 @@ angular.module('pharmacyApp')
           <h6 class="pf-col-title">Quick Links</h6>
           <ul class="pf-link-list">
             <li><a href="#!/shop">Browse Medicines</a></li>
-            <li><a href="#!/customers/{{currentUser.id}}">My Orders</a></li>
-            <li><a href="#!/customers/{{currentUser.id}}">My Account</a></li>
+            <li><a href="#!/orders">My Orders</a></li>
+            <li><a href="#!/account">My Account</a></li>
             <li><a href="#">About Us</a></li>
             <li><a href="#">Contact Us</a></li>
           </ul>
@@ -133,7 +133,9 @@ angular.module('pharmacyApp')
 </footer>
 
 
-<!-- ADMIN FOOTER  (shown only for admins) -->
+<!-- ═══════════════════════════════════════════════════
+     ADMIN FOOTER  (shown only for admins)
+════════════════════════════════════════════════════ -->
 <footer class="pf-admin-footer" ng-if="isAdmin()">
   <div class="container-fluid">
     <div class="d-flex flex-column flex-sm-row align-items-center justify-content-between gap-2">

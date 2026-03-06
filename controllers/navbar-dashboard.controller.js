@@ -4,8 +4,6 @@ angular.module('pharmacyApp')
 'AuthService', 'MedicinesService', 'CustomersService',
 function($scope, $rootScope, $location, $sce, $timeout,
          AuthService, MedicinesService, CustomersService) {
-
-  // ── User ──────────────────────────────────────────────────────────────
   $scope.hasNotifications = true;
   $scope.currentUser      = $rootScope.currentUser;
   $rootScope.$watch('currentUser', function(val) { $scope.currentUser = val; });
@@ -16,6 +14,10 @@ function($scope, $rootScope, $location, $sce, $timeout,
   };
 
   $scope.clearNotifications = function() { $scope.hasNotifications = false; };
+
+  $scope.toggleSidebar = function() {
+    $rootScope.$broadcast('toggleSidebar');
+  };
 
   $scope.logout = function() {
     AuthService.logout().then(function() {

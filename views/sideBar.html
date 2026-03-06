@@ -1,5 +1,9 @@
+<aside class="sidebar" ng-controller="SidebarCtrl" ng-class="{'sidebar-open': sidebarOpen}">
 
-<aside class="sidebar" ng-controller="SidebarCtrl">
+  <!-- Close button (mobile only) -->
+  <button class="sidebar-close-btn" ng-click="closeSidebar()">
+    <span class="material-symbols-outlined">close</span>
+  </button>
 
   <!-- Brand -->
   <div class="sidebar-brand">
@@ -27,10 +31,13 @@
 
   <!-- Footer CTA -->
   <div class="sidebar-footer">
-    <button class="btn-new-sale">
+    <button class="btn-new-sale" ng-click="setActive('invoices')">
       <span class="material-symbols-outlined" style="font-size:20px;">add</span>
       New Sale
     </button>
   </div>
 
 </aside>
+
+<!-- Backdrop (mobile overlay) -->
+<div class="sidebar-backdrop" ng-show="sidebarOpen" ng-click="closeSidebar()"></div>
