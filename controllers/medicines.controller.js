@@ -3,7 +3,7 @@ angular.module('pharmacyApp')
 '$scope', 'MedicinesService',
 function($scope, MedicinesService) {
 
-    // ── State ──────────────────────────────────
+    
     $scope.medicines         = [];
     $scope.categories        = [];
     $scope.loading           = true;

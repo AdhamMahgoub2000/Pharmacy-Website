@@ -2,13 +2,11 @@ angular.module('pharmacyApp')
 .controller('ConfirmationController', ['$scope', '$rootScope', '$location', 'OrdersService',
 function($scope, $rootScope, $location, OrdersService) {
 
-    // ── Redirect if cart is empty ──────────────
     if (!$rootScope.cart || $rootScope.cart.length === 0) {
         $location.path('/shop');
         return;
     }
 
-    // ── State ──────────────────────────────────
     $scope.cart         = $rootScope.cart;
     $scope.currentUser  = $rootScope.currentUser;
     $scope.loading      = false;
@@ -22,17 +20,16 @@ function($scope, $rootScope, $location, OrdersService) {
         notes:   ''
     };
 
-    // ── Cart total ─────────────────────────────
     $scope.cartTotal = function() {
         return $rootScope.cart.reduce((s, i) => s + i.price * i.qty, 0);
     };
 
-    // ── Cart count ─────────────────────────────
+    
     $scope.cartCount = function() {
         return $rootScope.cart.reduce((s, i) => s + i.qty, 0);
     };
 
-    // ── Category images ────────────────────────
+    
     $scope.getCategoryImage = function(category) {
         const images = {
             'Painkillers':
@@ -58,12 +55,12 @@ function($scope, $rootScope, $location, OrdersService) {
             'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=100&q=80';
     };
 
-    // ── Place order ────────────────────────────
+    
     $scope.placeOrder = async function() {
         if (!$scope.delivery.name ||
             !$scope.delivery.phone ||
             !$scope.delivery.address) {
-            $scope.error = 'Please fill all required fields.';
+            $scope.error = 'Please fill  required fields.';
             return;
         }
 
@@ -82,12 +79,11 @@ function($scope, $rootScope, $location, OrdersService) {
                 $rootScope.cart     = [];
                 $scope.orderSuccess = true;
             } else {
-                $scope.error = 'Failed to place order. Please try again.';
+                $scope.error = 'Failed to place order.  try again.';
             }
         });
     };
 
-    // ── Back to shop ───────────────────────────
     $scope.backToShop = function() {
         $location.path('/shop');
     };
