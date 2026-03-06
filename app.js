@@ -67,8 +67,6 @@ function($rootScope, $location, AuthService) {
 $rootScope.currentUser = null;
 $rootScope.appReady = false;
 
-$rootScope.currentUser = null;
-
 AuthService.verifySession().then(async function(result) {
     if (result.session) {
         const data = await AuthService.getUserData(result.session.user.id);
@@ -85,7 +83,6 @@ AuthService.verifySession().then(async function(result) {
             });
         }
     } else {
-        // No session → clear everything
         $rootScope.$apply(function() {
             $rootScope.currentUser = null;
         });
