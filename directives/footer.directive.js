@@ -7,7 +7,7 @@ angular.module('pharmacyApp')
 <!-- ═══════════════════════════════════════════════════
      CUSTOMER FOOTER  (shown only for customers)
 ════════════════════════════════════════════════════ -->
-<footer class="pf-footer" ng-if="isCustomer()">
+<footer class="pf-footer" ng-if="!isAdmin()">
 
   <div class="pf-footer-top">
     <div class="container">

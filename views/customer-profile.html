@@ -112,11 +112,9 @@
               <td>{{ order.created_at | date:'short' }}</td>
               <td>{{ order.total | currency }}</td>
               <td>
-                <span
-                  class="badge bg-{{ order.status === 'pending' ? 'warning' : order.status === 'completed' ? 'success' : 'secondary' }}"
-                >
-                  {{ order.status }}
-                </span>
+              <span class="status-badge" ng-class="order.status"
+                >{{order.status}}</span
+              >
               </td>
               <td class="text-end">
                 <button
