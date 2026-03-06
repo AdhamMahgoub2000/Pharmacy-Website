@@ -1,16 +1,101 @@
-
 <header class="top-navbar" ng-controller="NavbarCtrl">
 
-  <!-- Search -->
-  <div class="search-wrapper">
+  <!-- ── Search ─────────────────────────────────────────────────────── -->
+  <div class="search-wrapper" ng-class="{'search-active': searchQuery.length > 0}">
     <span class="material-symbols-outlined search-icon">search</span>
+
     <input
       class="search-input"
       type="text"
-      placeholder="Search medicines, orders, customers..."
-      ng-model="searchQuery"/>
+      placeholder="Search medicines or customers…"
+      ng-model="searchQuery"
+      ng-change="onSearch()"
+      ng-focus="onFocus()"
+      ng-blur="onBlur()"
+      autocomplete="off"
+    />
+
+    <!-- Clear button -->
+    <button class="search-clear-btn" ng-if="searchQuery.length > 0" ng-mousedown="clearSearch($event)">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+
+    <!-- ── Dropdown Results ──────────────────────────────────────── -->
+    <div class="search-dropdown" ng-show="showDropdown">
+
+      <!-- Loading -->
+      <div class="search-loading" ng-if="searching">
+        <div class="search-spinner"></div>
+        <span>Searching…</span>
+      </div>
+
+      <!-- No results -->
+      <div class="search-empty" ng-if="!searching && searchQuery.length >= 2 && medicines.length === 0 && customers.length === 0">
+        <span class="material-symbols-outlined">search_off</span>
+        <p>No results for <strong>"{{ searchQuery }}"</strong></p>
+      </div>
+
+      <!-- Prompt -->
+      <div class="search-empty" ng-if="!searching && searchQuery.length > 0 && searchQuery.length < 2">
+        <span class="material-symbols-outlined">keyboard</span>
+        <p>Keep typing to search…</p>
+      </div>
+
+      <!-- Medicines section -->
+      <div ng-if="!searching && medicines.length > 0">
+        <div class="search-section-header">
+          <span class="material-symbols-outlined">pill</span>
+          Medicines
+          <span class="search-section-count">{{ medicines.length }}</span>
+        </div>
+        <div
+          class="search-result-item"
+          ng-repeat="m in medicines"
+          ng-mousedown="goToMedicines($event)"
+        >
+          <div class="search-result-icon medicine">
+            <span class="material-symbols-outlined">pill</span>
+          </div>
+          <div class="search-result-info">
+            <p class="search-result-name" ng-bind-html="highlight(m.name, searchQuery)"></p>
+            <p class="search-result-sub">{{ m.category }} &nbsp;·&nbsp;
+              <span ng-class="m.stock < 20 ? 'search-low-stock' : 'search-in-stock'">
+                {{ m.stock }} in stock
+              </span>
+            </p>
+          </div>
+          <span class="search-result-price">{{ m.price | currency }}</span>
+        </div>
+      </div>
+
+      <!-- Customers section -->
+      <div ng-if="!searching && customers.length > 0">
+        <div class="search-section-header">
+          <span class="material-symbols-outlined">group</span>
+          Customers
+          <span class="search-section-count">{{ customers.length }}</span>
+        </div>
+        <div
+          class="search-result-item"
+          ng-repeat="c in customers"
+          ng-mousedown="goToCustomer(c, $event)"
+        >
+          <div class="search-result-avatar">
+            {{ getInitials(c.name || c.full_name || c.email) }}
+          </div>
+          <div class="search-result-info">
+            <p class="search-result-name" ng-bind-html="highlight(c.name || c.full_name || c.email, searchQuery)"></p>
+            <p class="search-result-sub">{{ c.email }}</p>
+          </div>
+          <span class="search-result-badge">Customer</span>
+        </div>
+      </div>
+
+    </div>
+    <!-- /dropdown -->
   </div>
 
+  <!-- ── Right side ──────────────────────────────────────────────────── -->
   <div class="navbar-right">
 
     <button class="icon-btn" ng-click="clearNotifications()" title="Notifications">
@@ -34,7 +119,6 @@
       {{ getInitials(currentUser.name || currentUser.first_name || currentUser.email) }}
     </div>
 
-    <!-- Logout -->
     <button class="icon-btn ms-1" ng-click="logout()" title="Logout">
       <span class="material-symbols-outlined">logout</span>
     </button>

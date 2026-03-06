@@ -1,166 +1,170 @@
-
 <div ng-controller="DashboardController">
-  <!-- Page Title -->
+
+  <!-- ── Page Title ────────────────────────────────────── -->
   <div class="mb-4">
     <h2 class="page-title">Dashboard Overview</h2>
-    <p class="page-subtitle">
-      Real-time performance metrics for your pharmacy operations.
-    </p>
+    <p class="page-subtitle">Real-time performance metrics for your pharmacy operations.</p>
   </div>
 
-  <!-- ===== STAT CARDS ===== -->
-  <div class="row g-4 mb-4">
-    <div class="col-12 col-md-6 col-lg-3" ng-repeat="card in statCards">
-      <div class="stat-card">
-        <div class="d-flex justify-content-between align-items-start mb-3">
-          <div class="stat-icon {{ card.iconColor }}">
-            <span class="material-symbols-outlined">{{ card.icon }}</span>
-          </div>
-          <span class="stat-badge {{ card.badgeClass }}">
-            <span class="material-symbols-outlined" ng-if="card.trend"
-              >{{ card.trend }}</span
-            >
-            {{ card.badge }}
-          </span>
-        </div>
-        <p class="stat-label">{{ card.label }}</p>
-        <p class="stat-value">{{ card.value }}</p>
-      </div>
-    </div>
+  <!-- ── Full-page loading spinner ─────────────────────── -->
+  <div ng-if="loading" class="text-center py-5">
+    <div class="spinner-border" style="color:var(--primary);" role="status"></div>
+    <p class="mt-3" style="color:var(--text-muted);font-size:.875rem;">Loading dashboard data…</p>
   </div>
 
-  <!-- ===== CHART + ALERTS ===== -->
-  <div class="row g-4 mb-4">
-    <!-- Sales Chart -->
-    <div class="col-12 col-xl-8">
-      <div class="chart-card h-100">
-        <div class="d-flex align-items-start justify-content-between mb-4">
-          <div>
-            <p class="chart-title">Sales Performance</p>
-            <p class="chart-subtitle">Monthly revenue comparison for 2024</p>
-          </div>
-          <div class="d-flex gap-2">
-            <button
-              class="btn-chart"
-              ng-class="{ 'active-tab': chartTab === 'daily' }"
-              ng-click="setChartTab('daily')"
-            >
-              Daily
-            </button>
-            <button
-              class="btn-chart"
-              ng-class="{ 'active-tab': chartTab === 'monthly' }"
-              ng-click="setChartTab('monthly')"
-            >
-              Monthly
-            </button>
-          </div>
-        </div>
+  <div ng-if="!loading">
 
-        <div class="bar-chart-wrap">
-          <div class="bar-col" ng-repeat="bar in chartBars">
-            <div
-              class="bar-fill"
-              ng-class="{ highlighted: bar.highlight }"
-              ng-style="{ height: bar.height }"
-            ></div>
-            <span class="bar-label" ng-class="{ highlighted: bar.highlight }"
-              >{{ bar.month }}</span
-            >
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Inventory Alerts -->
-    <div class="col-12 col-xl-4">
-      <div class="alert-card h-100">
-        <div class="d-flex align-items-center justify-content-between mb-3">
-          <h3 class="alert-card-title">Inventory Alerts</h3>
-          <button class="btn-view-all">View All</button>
-        </div>
-        <div ng-repeat="item in inventoryAlerts">
-          <div class="inventory-alert {{ item.cardClass }}">
-            <div class="alert-icon {{ item.iconClass }}">
-              <span class="material-symbols-outlined">{{ item.icon }}</span>
+    <!-- ── Stat Cards ─────────────────────────────────── -->
+    <div class="row g-4 mb-4">
+      <div class="col-12 col-md-6 col-lg-3" ng-repeat="card in statCards">
+        <div class="stat-card">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <div class="stat-icon {{ card.iconColor }}">
+              <span class="material-symbols-outlined">{{ card.icon }}</span>
             </div>
+            <span class="stat-badge {{ card.badgeClass }}">
+              <span class="material-symbols-outlined" ng-if="card.trend">{{ card.trend }}</span>
+              {{ card.badge }}
+            </span>
+          </div>
+          <p class="stat-label">{{ card.label }}</p>
+          <p class="stat-value">{{ card.value }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Chart + Alerts ────────────────────────────── -->
+    <div class="row g-4 mb-4">
+
+      <!-- Sales Chart -->
+      <div class="col-12 col-xl-8">
+        <div class="chart-card h-100">
+          <div class="d-flex align-items-start justify-content-between mb-2">
             <div>
-              <p class="alert-name">{{ item.name }}</p>
-              <p class="alert-stock">{{ item.detail }}</p>
-              <p class="alert-status {{ item.statusClass }}">
-                {{ item.status }}
+              <p class="chart-title">Sales Performance</p>
+              <p class="chart-subtitle">
+                Revenue by
+                <span ng-if="chartTab === 'monthly'">month — {{ chartBars[0] && chartBars[0].month | limitTo:0 }} current year</span>
+                <span ng-if="chartTab === 'daily'">day — last 10 days</span>
               </p>
             </div>
+            <div class="d-flex gap-2">
+              <button class="btn-chart" ng-class="{'active-tab': chartTab === 'daily'}"   ng-click="setChartTab('daily')">Daily</button>
+              <button class="btn-chart" ng-class="{'active-tab': chartTab === 'monthly'}" ng-click="setChartTab('monthly')">Monthly</button>
+            </div>
+          </div>
+
+          <!-- No data state -->
+          <div ng-if="chartBars.length === 0" class="d-flex align-items-center justify-content-center" style="height:256px;">
+            <p style="color:var(--text-faint);font-size:.875rem;">No sales data yet.</p>
+          </div>
+
+          <div class="bar-chart-wrap" ng-if="chartBars.length > 0">
+            <div class="bar-col" ng-repeat="bar in chartBars">
+              <div
+                class="bar-fill"
+                ng-class="{ highlighted: bar.highlight }"
+                ng-style="{ height: bar.height }"
+                title="{{ bar.month }}: ${{ bar.value.toFixed(2) }}"
+              ></div>
+              <span class="bar-label" ng-class="{ highlighted: bar.highlight }">{{ bar.month }}</span>
+            </div>
+          </div>
+
+          <!-- Revenue summary under chart -->
+          <div class="d-flex justify-content-end mt-3 pt-3" style="border-top:1px solid var(--border-light);">
+            <p style="font-size:.8rem;color:var(--text-muted);margin:0;">
+              All-time revenue: <strong style="color:var(--text-body);">{{ totalRevenue }}</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inventory Alerts -->
+      <div class="col-12 col-xl-4">
+        <div class="alert-card h-100">
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <h3 class="alert-card-title">Inventory Alerts</h3>
+            <button class="btn-view-all" ng-click="goToMedicines()">View All</button>
+          </div>
+
+          <div ng-if="inventoryAlerts.length === 0" class="text-center py-4">
+            <span class="material-symbols-outlined" style="font-size:2rem;color:var(--text-faint);">check_circle</span>
+            <p style="font-size:.8rem;color:var(--text-muted);margin-top:.5rem;">All stock levels are healthy.</p>
+          </div>
+
+          <div ng-repeat="item in inventoryAlerts">
+            <div class="inventory-alert {{ item.cardClass }}">
+              <div class="alert-icon {{ item.iconClass }}">
+                <span class="material-symbols-outlined">{{ item.icon }}</span>
+              </div>
+              <div>
+                <p class="alert-name">{{ item.name }}</p>
+                <p class="alert-stock">{{ item.detail }}</p>
+                <p class="alert-status {{ item.statusClass }}">{{ item.status }}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- ===== INVOICES TABLE ===== -->
-  <div class="table-card">
-    <div class="table-header d-flex align-items-center justify-content-between">
-      <h3 class="table-title">Recent Sales Invoices</h3>
-      <div class="d-flex gap-2">
-        <button class="btn-action">
-          <span class="material-symbols-outlined" style="font-size: 18px"
-            >filter_list</span
-          >
-          Filter
+    <!-- ── Recent Invoices Table ──────────────────────── -->
+    <div class="table-card">
+      <div class="table-header d-flex align-items-center justify-content-between">
+        <h3 class="table-title">Recent Sales Invoices</h3>
+        <button class="btn-action" ng-click="goToInvoices()">
+          <span class="material-symbols-outlined" style="font-size:18px;">open_in_new</span>
+          View All
         </button>
-        <button class="btn-action">
-          <span class="material-symbols-outlined" style="font-size: 18px"
-            >download</span
-          >
-          Export
+      </div>
+
+      <!-- Empty state -->
+      <div ng-if="recentInvoices.length === 0" class="text-center py-5">
+        <span class="material-symbols-outlined" style="font-size:2.5rem;color:var(--text-faint);">receipt_long</span>
+        <p style="color:var(--text-muted);font-size:.875rem;margin-top:.5rem;">No invoices yet.</p>
+      </div>
+
+      <div class="table-responsive" ng-if="recentInvoices.length > 0">
+        <table class="inv-table">
+          <thead>
+            <tr>
+              <th>Invoice ID</th>
+              <th>Customer</th>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th class="text-end">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="inv in recentInvoices">
+              <td class="inv-id">{{ inv.id }}</td>
+              <td>
+                <div class="d-flex align-items-center gap-2">
+                  <div class="customer-avatar">{{ inv.initials }}</div>
+                  <span class="customer-name">{{ inv.customer }}</span>
+                </div>
+              </td>
+              <td class="inv-date">{{ inv.date }}</td>
+              <td class="inv-amount">{{ inv.amount }}</td>
+              <td><span class="status-badge {{ inv.statusClass }}">{{ inv.status }}</span></td>
+              <td class="text-end">
+                <button class="btn-more" ng-click="viewInvoice(inv)" title="View Invoice">
+                  <span class="material-symbols-outlined" style="font-size:20px;">open_in_new</span>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-footer" ng-if="recentInvoices.length > 0">
+        <button class="btn-view-transactions" ng-click="goToInvoices()">
+          View All Transactions
         </button>
       </div>
     </div>
 
-    <div class="table-responsive">
-      <table class="inv-table">
-        <thead>
-          <tr>
-            <th>Invoice ID</th>
-            <th>Customer</th>
-            <th>Date</th>
-            <th>Amount</th>
-            <th>Status</th>
-            <th class="text-end">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="inv in invoices">
-            <td class="inv-id">{{ inv.id }}</td>
-            <td>
-              <div class="d-flex align-items-center gap-2">
-                <div class="customer-avatar">{{ inv.initials }}</div>
-                <span class="customer-name">{{ inv.customer }}</span>
-              </div>
-            </td>
-            <td class="inv-date">{{ inv.date }}</td>
-            <td class="inv-amount">{{ inv.amount }}</td>
-            <td>
-              <span class="status-badge {{ inv.statusClass }}"
-                >{{ inv.status }}</span
-              >
-            </td>
-            <td class="text-end">
-              <button class="btn-more">
-                <span class="material-symbols-outlined" style="font-size: 20px"
-                  >more_vert</span
-                >
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="table-footer">
-      <button class="btn-view-transactions" ng-click="goToInvoices()">
-        View All Transactions
-      </button>
-    </div>
-  </div>
+  </div><!-- /ng-if !loading -->
 </div>

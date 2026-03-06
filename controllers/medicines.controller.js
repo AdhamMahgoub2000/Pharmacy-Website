@@ -50,7 +50,7 @@ function($scope, MedicinesService) {
     };
 
     $scope.lowStockCount = function() {
-        return $scope.medicines.filter(m => m.stock > 0 && m.stock < 20).length;
+        return $scope.medicines.filter(m => m.stock >= 0 && m.stock < 20).length;
     };
 
     // ── Filter ────────────────────────────────
