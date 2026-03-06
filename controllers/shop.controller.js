@@ -96,7 +96,7 @@ angular.module('pharmacyApp')
                 qty:      1
             });
         }
-        $scope.showToast(medicine.name + ' added to cart! 🛒');
+        $scope.showToast(medicine.name + ' added to cart! ');
     };
 
     $scope.removeFromCart = function(item) {
@@ -141,7 +141,7 @@ angular.module('pharmacyApp')
         const t = document.createElement('div');
         t.style.cssText = `
             position:fixed; top:90px; right:24px;
-            background:linear-gradient(135deg,#1e5fc2,#3d8ef8);
+            background:var(--blue);
             color:white; padding:12px 20px; border-radius:12px;
             font-weight:600; font-size:0.88rem; z-index:9999;
             box-shadow:0 6px 20px rgba(30,95,194,0.4);
