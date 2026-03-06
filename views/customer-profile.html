@@ -166,7 +166,7 @@
                     ng-model="selectedCustomer.email"
                   />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" ng-if="currentUser.role==='admin'">
                   <label class="form-label">Role</label>
                   <input
                     type="text"
