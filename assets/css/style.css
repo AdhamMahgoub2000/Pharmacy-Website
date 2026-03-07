@@ -997,13 +997,11 @@ html, body {
   background: white; border-radius: 20px;
   padding: 2rem 1.5rem; text-align: center;
   box-shadow: var(--shadow);
-  transition: all 0.3s; height: 100%;
+ height: 100%;
   border-bottom: 3px solid transparent;
 }
 .contact-info-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-lg);
-  border-bottom-color: var(--sky);
+  box-shadow: var(--shadow-md);
 }
 .contact-info-icon {
   width: 58px; height: 58px; border-radius: 16px;
@@ -1052,7 +1050,7 @@ html, body {
 /* Form Card */
 .contact-form-card {
   background: white; border-radius: 24px;
-  box-shadow: var(--shadow-lg); overflow: hidden;
+  box-shadow: var(--shadow-sm); overflow: hidden;
 }
 .contact-form-header {
   padding: 2rem 2rem 1.5rem;
@@ -1164,16 +1162,15 @@ html, body {
 /* Submit */
 .cf-submit-btn {
   width: 100%; padding: 14px;
-  background: linear-gradient(135deg, var(--blue), var(--sky));
-  color: white; border: none; border-radius: 14px;
+  background: var(--blue);
+  color: white; border: 2px solid var(--blue) ; border-radius: 14px;
   font-weight: 700; font-size: 1rem; cursor: pointer;
   font-family: 'DM Sans', sans-serif;
-  box-shadow: 0 6px 20px rgba(30,95,194,0.35); transition: all 0.25s;
   display: flex; align-items: center; justify-content: center; gap: 8px;
 }
 .cf-submit-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(30,95,194,0.45);
+    background:white ;
+  color: var(--blue); border: 2px solid var(--blue);
 }
 .cf-submit-btn:disabled { opacity: 0.7; cursor: not-allowed; }
 .cf-spinner {
