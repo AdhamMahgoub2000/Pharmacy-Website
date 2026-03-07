@@ -153,7 +153,7 @@ function($scope, $rootScope, $location, MedicinesService) {
     // ── Toast ──────────────────────────────────────────────────────────
     $scope.showToast = function(msg) {
         var t = document.createElement('div');
-        t.style.cssText = 'position:fixed;top:90px;right:24px;background:var(--blue);color:white;padding:12px 20px;border-radius:12px;font-weight:600;font-size:0.88rem;z-index:9999;box-shadow:0 6px 20px rgba(30,95,194,0.4);font-family:\'DM Sans\',sans-serif;animation:slideInRight 0.3s ease;';
+        t.style.cssText = 'position:fixed;top:90px;right:24px;background:var(--blue);color:white;padding:12px 20px;border-radius:12px;font-weight:600;font-size:0.88rem;z-index:9999;font-family:\'DM Sans\',sans-serif;animation:slideInRight 0.3s ease;';
         t.textContent = msg;
         document.body.appendChild(t);
         setTimeout(function() {
