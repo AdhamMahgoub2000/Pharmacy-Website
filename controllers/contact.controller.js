@@ -1,6 +1,5 @@
 angular.module('pharmacyApp')
 .controller('ContactController', ['$scope','$timeout','ContactService', function($scope,$timeout,ContactService) {
-    // ── Form Model ──────────────────────────────────────────────────
     $scope.form = {
         name: '',
         email: '',
@@ -16,7 +15,6 @@ angular.module('pharmacyApp')
     $scope.submitted    = false;
     $scope.openFaq      = null;
 
-    // ── Validation ─────────────────────────────────────────────────
     function validateEmail(email) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
@@ -74,8 +72,6 @@ $scope.submitForm = async function () {
 
     });
 };
-
-    // ── Reset ──────────────────────────────────────────────────────
     $scope.resetForm = function() {
         $scope.form = {
             name: '',
@@ -89,8 +85,6 @@ $scope.submitForm = async function () {
         $scope.formErrors = {};
         $scope.submitted  = false;
     };
-
-    // ── FAQ Toggle ─────────────────────────────────────────────────
     $scope.toggleFaq = function(index) {
         $scope.openFaq = ($scope.openFaq === index) ? null : index;
     };
