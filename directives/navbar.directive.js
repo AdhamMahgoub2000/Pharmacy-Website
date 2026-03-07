@@ -22,6 +22,9 @@ angular.module('pharmacyApp')
                     <a class="nav-link-item" ng-href="#!/customers/{{currentUser.id}}" >
                         <i class="fas fa-box me-1"></i> My Orders
                     </a>
+                    <a class="nav-link-item" href="#!/contact">
+                        <i class="fas fa-headset me-1"></i> Contact Us
+                    </a>
                 </div>
 
                 <!-- Admin Links -->

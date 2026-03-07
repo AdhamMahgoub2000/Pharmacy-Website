@@ -52,7 +52,7 @@ angular.module('pharmacyApp')
             <li><a href="#!/customers/{{currentUser.id}}">My Orders</a></li>
             <li><a href="#!/customers/{{currentUser.id}}">My Account</a></li>
             <li><a href="#">About Us</a></li>
-            <li><a href="#">Contact Us</a></li>
+            <li><a href="#!/contact">Contact Us</a></li>
           </ul>
         </div>
 

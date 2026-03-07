@@ -2,7 +2,7 @@ angular.module('pharmacyApp')
 .service('AuthService', ['SupabaseService', '$rootScope', function(SupabaseService, $rootScope) {
 
   const client = SupabaseService.client;
-  const self = this; // keep reference for use inside async callbacks
+  const self = this;
 
   // ── Login ──────────────────────────────────────────────────────
   this.login = async function(email, password) {
