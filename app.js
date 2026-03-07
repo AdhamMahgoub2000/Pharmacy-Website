@@ -57,6 +57,10 @@ angular.module('pharmacyApp', ['ngRoute'])
         templateUrl: 'views/contact.html',
         controller: 'ContactController'
     })
+    .when('/contact-requests', {
+        templateUrl: 'views/contact-requests.html',
+        controller: 'ContactRequestsController'
+    })
     .otherwise({ redirectTo: '/login' });
 }])
 

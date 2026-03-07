@@ -2,10 +2,11 @@ angular.module('pharmacyApp')
 .controller('SidebarCtrl', ['$scope', '$location', '$rootScope', function($scope, $location, $rootScope) {
 
   $scope.navItems = [
-    { key: 'dashboard', icon: 'dashboard',      label: 'Dashboard'      },
-    { key: 'medicines', icon: 'pill',            label: 'Medicines'      },
-    { key: 'customers', icon: 'group',           label: 'Customers'      },
-    { key: 'invoices',  icon: 'receipt_long',    label: 'Sales Invoices' },
+    { key: 'dashboard',        icon: 'dashboard',       label: 'Dashboard'         },
+    { key: 'medicines',        icon: 'pill',             label: 'Medicines'         },
+    { key: 'customers',        icon: 'group',            label: 'Customers'         },
+    { key: 'invoices',         icon: 'receipt_long',     label: 'Sales Invoices'    },
+    { key: 'contact-requests', icon: 'contact_support',  label: 'Contact Requests'  },
   ];
 
   $scope.activeNav  = $location.path().replace('/', '') || 'dashboard';
