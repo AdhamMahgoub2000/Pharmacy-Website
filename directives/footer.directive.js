@@ -91,7 +91,7 @@ angular.module('pharmacyApp')
               <div class="pf-contact-icon">
                 <span class="material-symbols-outlined">location_on</span>
               </div>
-              <span>122 Nile St, Dokki, Giza, Egypt</span>
+              <span>123 Health Avenue, Cairo, Egypt</span>
             </div>
             <div class="pf-contact-row">
               <div class="pf-contact-icon">
