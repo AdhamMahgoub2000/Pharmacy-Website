@@ -20,7 +20,7 @@ angular.module('pharmacyApp')
               <span class="material-symbols-outlined">health_and_safety</span>
             </div>
             <div>
-              <h5 class="pf-brand-name">PharmaManage</h5>
+              <h5 class="pf-brand-name">PharmaCare</h5>
               <p class="pf-brand-sub">Your Trusted Pharmacy</p>
             </div>
           </div>
