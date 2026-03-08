@@ -768,7 +768,7 @@
   transition: all 0.25s; display: block;
 }
 .success-btn-primary:hover {
-  transform: translateY(-2px); color: white;
+  transform: translateY(-1px); color: white;
 }
 .success-btn-secondary {
   padding: 13px 24px;
@@ -1371,4 +1371,167 @@ html, body {
   line-height: 1.65; margin: 6px 0 0;
   background: var(--bg-light); border-radius: 10px;
   padding: 12px 14px; width: 100%;
+}
+/* ══ NAVBAR — RESPONSIVE ADDITIONS ══════════════════════════════════
+   Paste at the END of your main stylesheet (after all existing rules).
+   ================================================================= */
+
+/* ── Hamburger button ─────────────────────────────────────────────── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  border: 1.5px solid #dde6f5;
+  background: white;
+  cursor: pointer;
+  padding: 0 9px;
+  transition: background 0.2s, border-color 0.2s;
+  flex-shrink: 0;
+}
+.nav-hamburger span {
+  display: block;
+  height: 2px; width: 100%;
+  background: var(--navy);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+/* Animate bars → X */
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.nav-hamburger:hover { background: var(--light-blue); border-color: var(--sky); }
+
+/* ── Mobile Drawer overlay ────────────────────────────────────────── */
+/*
+   KEY FIX: never use display:none here.
+   Use opacity + pointer-events so ng-class can toggle smoothly
+   without fighting CSS display rules.
+*/
+.nav-mobile-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  background: rgba(10, 36, 99, 0.45);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
+}
+.nav-mobile-drawer.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Slide-in panel */
+.nav-mobile-inner {
+  position: absolute;
+  top: 0; right: 0;
+  width: min(300px, 85vw);
+  height: 100%;
+  background: white;
+  box-shadow: -8px 0 40px rgba(10, 36, 99, 0.18);
+  display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  pointer-events: all;
+}
+.nav-mobile-drawer.open .nav-mobile-inner {
+  transform: translateX(0);
+}
+
+/* Drawer header */
+.nav-mobile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.2rem;
+  border-bottom: 1px solid #f0f4ff;
+}
+.nav-mobile-close {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid #dde6f5;
+  background: white;
+  color: var(--navy); font-size: 0.9rem;
+  cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.nav-mobile-close:hover { background: #ff4757; color: white; border-color: #ff4757; }
+
+/* User section */
+.nav-mobile-user {
+  display: flex; align-items: center; gap: 10px;
+  padding: 1rem 1.2rem;
+  background: var(--light-blue);
+  border-bottom: 1px solid #e0eaff;
+  font-weight: 600; font-size: 0.9rem; color: var(--navy);
+}
+.nav-mobile-user-icon { font-size: 1.6rem; color: var(--blue); }
+
+/* Links list */
+.nav-mobile-links {
+  display: flex; flex-direction: column;
+  padding: 0.6rem 0;
+  flex: 1;
+}
+.nav-mobile-link {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 1.4rem;
+  font-size: 0.92rem; font-weight: 500;
+  color: var(--navy); text-decoration: none;
+  border: none; background: none;
+  width: 100%; text-align: left;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  transition: background 0.18s, color 0.18s;
+}
+.nav-mobile-link i {
+  width: 20px; text-align: center;
+  color: var(--blue); font-size: 0.95rem;
+}
+.nav-mobile-link:hover { background: var(--light-blue); color: var(--blue); }
+
+/* Footer / logout */
+.nav-mobile-footer {
+  padding: 1rem 1.2rem;
+  border-top: 1px solid #f0f4ff;
+}
+.nav-mobile-logout {
+  width: 100%;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 11px 16px;
+  border-radius: 50px;
+  border: 1.5px solid #ffe0e0;
+  background: white; color: #ff4757;
+  font-weight: 700; font-size: 0.88rem;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+}
+.nav-mobile-logout:hover { background: #ff4757; color: white; border-color: #ff4757; }
+
+/* ── Tablet (≤ 992 px) ─────────────────────────────────────────────── */
+@media (max-width: 992px) {
+  .welcome-chip { display: none; }
+  .nav-link-item { padding: 7px 11px; font-size: 0.82rem; }
+}
+
+/* ── Mobile (≤ 768 px) ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .nav-hamburger { display: flex; }
+  .nav-links        { display: none !important; }
+  .welcome-chip,
+  .nav-icon-btn,
+  .nav-cart-btn,
+  .nav-logout-btn   { display: none !important; }
+  .navbar-inner { padding: 0 1rem; }
+  .nav-brand-name { font-size: 1.15rem; }
+}
+
+/* ── Very small (≤ 360 px) ─────────────────────────────────────────── */
+@media (max-width: 360px) {
+  .nav-brand-name { display: none; }
 }

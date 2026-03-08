@@ -1,5 +1,4 @@
 <div class="confirmation-page">
-
   <!-- ── HEADER ─────────────────────────────── -->
   <div class="conf-header">
     <div class="conf-header-inner">
@@ -15,13 +14,15 @@
 
   <div class="container-fluid px-4 pb-5">
     <div class="row g-4">
-
       <!-- ── LEFT: Cart Items ──────────────────── -->
       <div class="col-lg-7">
         <div class="conf-card">
           <div class="conf-card-header">
             <h5 class="conf-card-title">
-              <i class="fas fa-shopping-cart me-2" style="color:var(--blue)"></i>
+              <i
+                class="fas fa-shopping-cart me-2"
+                style="color: var(--blue)"
+              ></i>
               Order Items
               <span class="items-badge">{{ cartCount() }} items</span>
             </h5>
@@ -32,7 +33,8 @@
               <img
                 ng-src="{{ item.image_url || getCategoryImage(item.category) }}"
                 class="conf-item-img"
-                alt="{{ item.name }}"/>
+                alt="{{ item.name }}"
+              />
               <div class="conf-item-info">
                 <p class="conf-item-name">{{ item.name }}</p>
                 <p class="conf-item-cat">{{ item.category }}</p>
@@ -40,9 +42,7 @@
               <div class="conf-item-qty">
                 <span class="qty-chip">× {{ item.qty }}</span>
               </div>
-              <div class="conf-item-price">
-                EGP {{ item.price * item.qty }}
-              </div>
+              <div class="conf-item-price">EGP {{ item.price * item.qty }}</div>
             </div>
           </div>
 
@@ -51,7 +51,6 @@
             <span class="conf-total-label">Order Total</span>
             <span class="conf-total-amount">EGP {{ cartTotal() }}</span>
           </div>
-
         </div>
       </div>
 
@@ -60,19 +59,20 @@
         <div class="conf-card">
           <div class="conf-card-header">
             <h5 class="conf-card-title">
-              <i class="fas fa-map-marker-alt me-2" style="color:var(--blue)"></i>
+              <i
+                class="fas fa-map-marker-alt me-2"
+                style="color: var(--blue)"
+              ></i>
               Delivery Details
             </h5>
           </div>
 
           <!-- Error -->
-          <div class="alert alert-danger mx-3 mt-3"
-            ng-if="error">
+          <div class="alert alert-danger mx-3 mt-3" ng-if="error">
             {{ error }}
           </div>
 
           <div class="conf-form">
-
             <!-- Name -->
             <div class="form-group-custom">
               <label class="form-label-custom">
@@ -82,7 +82,8 @@
                 type="text"
                 class="form-input-custom"
                 placeholder="Enter your full name"
-                ng-model="delivery.name"/>
+                ng-model="delivery.name"
+              />
             </div>
 
             <!-- Phone -->
@@ -94,7 +95,8 @@
                 type="tel"
                 class="form-input-custom"
                 placeholder="Enter your phone number"
-                ng-model="delivery.phone"/>
+                ng-model="delivery.phone"
+              />
             </div>
 
             <!-- Address -->
@@ -106,7 +108,8 @@
                 class="form-input-custom"
                 placeholder="Enter your full address"
                 rows="3"
-                ng-model="delivery.address">
+                ng-model="delivery.address"
+              >
               </textarea>
             </div>
 
@@ -119,7 +122,8 @@
                 class="form-input-custom"
                 placeholder="Any special instructions?"
                 rows="2"
-                ng-model="delivery.notes">
+                ng-model="delivery.notes"
+              >
               </textarea>
             </div>
 
@@ -143,7 +147,8 @@
             <button
               class="place-order-btn"
               ng-click="placeOrder()"
-              ng-disabled="loading">
+              ng-disabled="loading"
+            >
               <span ng-if="!loading">
                 <i class="fas fa-check-circle me-2"></i>
                 Place Order
@@ -153,31 +158,29 @@
                 Placing Order...
               </span>
             </button>
-
           </div>
         </div>
       </div>
-
     </div>
   </div>
-<div class="success-overlay" ng-if="orderSuccess">
-  <div class="success-modal">
-    <div class="success-icon">
-      <i class="fas fa-check-circle"></i>
-    </div>
-    <h2 class="success-title">Order Placed!</h2>
-    <p class="success-msg">
-      Your order has been placed successfully.<br/>
-      We will deliver it to you as soon as possible! 🚀
-    </p>
-    <div class="success-btns">
-      <a href="#/orders" class="success-btn-primary">
-        <i class="fas fa-box me-2"></i> Track My Orders
-      </a>
-      <a href="#/shop" class="success-btn-secondary">
-        <i class="fas fa-store me-2"></i> Continue Shopping
-      </a>
+  <div class="success-overlay" ng-if="orderSuccess">
+    <div class="success-modal">
+      <div class="success-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h2 class="success-title">Order Placed!</h2>
+      <p class="success-msg">
+        Your order has been placed successfully.<br />
+        We will deliver it to you as soon as possible!
+      </p>
+      <div class="success-btns">
+        <a href="#!/customers/{{currentUser.id}}" class="success-btn-primary">
+          <i class="fas fa-box me-2"></i> View My Orders
+        </a>
+        <a href="#/shop" class="success-btn-secondary">
+          <i class="fas fa-store me-2"></i> Continue Shopping
+        </a>
+      </div>
     </div>
   </div>
-</div>
 </div>
